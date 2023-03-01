@@ -3328,7 +3328,7 @@ __metadata:
     svelte: ^3.54.0
     tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: ^3.2.4
-    vite: ^4.0.0
+    vite: ^4.1.4
   languageName: unknown
   linkType: soft
 
@@ -4783,7 +4783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.0.0":
+"vite@npm:^4.1.4":
   version: 4.1.4
   resolution: "vite@npm:4.1.4"
   dependencies:
