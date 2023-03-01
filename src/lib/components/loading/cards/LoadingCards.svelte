@@ -9,7 +9,7 @@
     {/each}
   </div>
   <div class="pr-4 flex flex-col gap-4 md:flex-row md:p-2 md:flex-wrap">
-    <div class="w-40 h-10 animate-pulse bg-gray-200 rounded-3xl dark:bg-accent"></div>
+    <!-- <div class="w-40 h-10 animate-pulse bg-gray-200 rounded-3xl dark:bg-accent"></div> --> <!-- Recipes found -->
     {#each [1, 2, 3, 4, 5, 6] as x}
       <LoadingCard />
     {/each}

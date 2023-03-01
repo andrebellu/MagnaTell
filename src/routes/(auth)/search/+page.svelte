@@ -1,13 +1,66 @@
 <script>
-	import { recipes, searched } from '../../stores/store';
 	import Card from '$lib/components/homepage/card/Card.svelte';
+
+	import { onMount } from 'svelte';
+	import { collection, getDocs } from 'firebase/firestore';
+	import { db } from '$lib/firebase/firebase.client';
+
+	import { recipes, searched, pressed, categories } from '../../stores/store';
+	import CategoriesCarousel from '$lib/components/homepage/categories-carousel/CategoriesCarousel.svelte';
+
+	import LoadingCategoriesCarousel from '$lib/components/loading/categories-carousel/LoadingCategoriesCarousel.svelte';
 
 	let search;
 
+	onMount(async () => {
+		recipes.set([]);
+		categories.set([]);
+
+		const querySnapshot = await getDocs(collection(db, 'recipes'));
+		querySnapshot.forEach((doc) => {
+			recipes.update((recipes) => [
+				...recipes,
+				{
+					id: doc.id,
+					data: doc.data()
+				}
+			]);
+		});
+
+		const categoriesQuery = await getDocs(collection(db, 'categories'));
+		categoriesQuery.forEach((doc) => {
+			categories.update((categories) => [
+				...categories,
+				{
+					id: doc.id,
+					name: doc.data().name
+				}
+			]);
+		});
+	});
+
+	pressed.subscribe((value) => {
+		if ($pressed && (search == undefined || search == '')) {
+			searched.set($recipes.filter((recipe) => recipe.data.category.includes($pressed)));
+		} else if ($pressed && search) {
+			handleSearch();
+		}
+	});
+
 	const handleSearch = () => {
-		searched.set(
-			$recipes.filter((recipe) => recipe.data.title.toLowerCase().includes(search.toLowerCase()))
-		);
+		if ($pressed) {
+			searched.set(
+				$recipes.filter(
+					(recipe) =>
+						recipe.data.category.includes($pressed) &&
+						recipe.data.title.toLowerCase().includes(search.toLowerCase())
+				)
+			);
+		} else {
+			searched.set(
+				$recipes.filter((recipe) => recipe.data.title.toLowerCase().includes(search.toLowerCase()))
+			);
+		}
 	};
 </script>
 
@@ -25,7 +78,33 @@
 			}
 		}}
 	/>
+</div>
 
+<div class="filters">
+	{#if $categories.length == 0}
+		<div role="status" class="max-w-sm animate-pulse">
+			<div class="h-8 w-32 mt-5 mx-4 bg-gray-200 rounded-full dark:bg-accent" />
+			<span class="sr-only">Loading...</span>
+		</div>
+		<LoadingCategoriesCarousel />
+	{:else}
+		<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
+			{#each $categories as category}
+				<CategoriesCarousel {category} />
+			{/each}
+		</div>
+		{#if !$pressed}
+			<h1
+				class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
+			>
+				<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
+				tip: click on a category to filter recipes
+			</h1>
+		{/if}
+	{/if}
+</div>
+
+<div class="cards pb-4">
 	<div class="search flex flex-row flex-wrap justify-center gap-y-4 gap-x-4 pt-4 pb-4">
 		{#if $searched.length > 0}
 			{#each $searched as recipe}
@@ -33,9 +112,6 @@
 			{/each}
 		{:else if $searched.length < 1}
 			<h1 class="opacity-0 hidden">No recipes found</h1>
-			{#each $recipes as recipe}
-				<Card {recipe} />
-			{/each}
 		{/if}
 	</div>
 </div>
