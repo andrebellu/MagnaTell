@@ -28,7 +28,7 @@
 		<div class="nav"><Navbar /></div>
 	{/if}
 
-	<slot />
+	<div><slot /></div>
 
 	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup'}
 		<div class="fixed bottom-0"><Footer {photoURL} /></div>

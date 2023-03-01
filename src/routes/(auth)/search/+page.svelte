@@ -78,38 +78,40 @@
 			}
 		}}
 	/>
+</div>
 
-	<div class="cards pb-4">
-		{#if $categories.length == 0}
-			<div role="status" class="max-w-sm animate-pulse">
-				<div class="h-8 w-32 mt-5 mx-4 bg-gray-200 rounded-full dark:bg-accent" />
-				<span class="sr-only">Loading...</span>
-			</div>
-			<LoadingCategoriesCarousel />
-		{:else}
-			<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
-				{#each $categories as category}
-					<CategoriesCarousel {category} />
-				{/each}
-			</div>
-			{#if !$pressed}
-				<h1
-					class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
-				>
-					<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
-					tip: click on a category to filter recipes
-				</h1>
-			{/if}
-		{/if}
-
-		<div class="search flex flex-row flex-wrap justify-center gap-y-4 gap-x-4 pt-4 pb-4">
-			{#if $searched.length > 0}
-				{#each $searched as recipe}
-					<Card {recipe} />
-				{/each}
-			{:else if $searched.length < 1}
-				<h1 class="opacity-0 hidden">No recipes found</h1>
-			{/if}
+<div class="filters">
+	{#if $categories.length == 0}
+		<div role="status" class="max-w-sm animate-pulse">
+			<div class="h-8 w-32 mt-5 mx-4 bg-gray-200 rounded-full dark:bg-accent" />
+			<span class="sr-only">Loading...</span>
 		</div>
+		<LoadingCategoriesCarousel />
+	{:else}
+		<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
+			{#each $categories as category}
+				<CategoriesCarousel {category} />
+			{/each}
+		</div>
+		{#if !$pressed}
+			<h1
+				class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
+			>
+				<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
+				tip: click on a category to filter recipes
+			</h1>
+		{/if}
+	{/if}
+</div>
+
+<div class="cards pb-4">
+	<div class="search flex flex-row flex-wrap justify-center gap-y-4 gap-x-4 pt-4 pb-4">
+		{#if $searched.length > 0}
+			{#each $searched as recipe}
+				<Card {recipe} />
+			{/each}
+		{:else if $searched.length < 1}
+			<h1 class="opacity-0 hidden">No recipes found</h1>
+		{/if}
 	</div>
 </div>
