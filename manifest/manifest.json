@@ -1,0 +1,32 @@
+{
+    "theme_color": "#020100",
+    "background_color": "#f5f3f2",
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "https://magna-tell.vercel.app/",
+    "name": "MagnaTell",
+    "short_name": "MagnaTell",
+    "description": "A social media platform where users can discover, share, publish and save recipes.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

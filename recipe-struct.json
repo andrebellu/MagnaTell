@@ -1,0 +1,36 @@
+{
+    "copertina": "copertina",
+    "titolo": "titolo",
+    "autore": "autore",
+    "link": "link",
+    "categoria": [
+        "categoria",
+        "categoria",
+        "categoria"
+    ],
+    "difficolta": "difficolta",
+    "tempo": "tempo",
+    "descrizione": "descrizione",
+    "ingredienti": [
+        {
+            "nome": "nome",
+            "quantita": "quantita",
+            "unita": "unita"
+        },
+        {
+            "nome": "nome",
+            "quantita": "quantita",
+            "unita": "unita"
+        }
+    ],
+    "passaggi": [
+        {
+            "numero": "numero",
+            "descrizione": "descrizione"
+        },
+        {
+            "numero": "numero",
+            "descrizione": "descrizione"
+        }
+    ]
+}
