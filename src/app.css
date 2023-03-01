@@ -1,0 +1,52 @@
+p,
+h1,
+h2,
+h3 {
+	@apply font-poppins;
+}
+
+html {
+	background-image: url('/Background.svg');
+}
+
+@font-face {
+	font-family: 'loftygoals';
+	src: url('/fonts/loftygoals.otf');
+}
+
+.footer-icon {
+	@apply text-base-100 text-3xl p-0 font-normal btn btn-ghost rounded-2xl px-2;
+}
+
+.active-footer-icon {
+	@apply bg-secondary hover:bg-secondary;
+}
+
+.carousel-home {
+	@apply carousel-item w-80 h-40 rounded-3xl drop-shadow-md;
+}
+
+.input-addrecipe {
+	@apply input input-bordered input-sm border-2 border-accent bg-white outline-none;
+}
+
+.input-addrecipe:focus {
+	@apply outline-none;
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
