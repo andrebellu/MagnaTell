@@ -1,7 +1,9 @@
 <script>
 	import { recipes, categories, searched } from '../../stores/store';
+
 	import Card from '$lib/components/homepage/card/Card.svelte';
-	
+	import LoadingCards from '$lib/components/loading/cards/LoadingCards.svelte';
+
 	import { onMount } from 'svelte';
 	import { collection, getDocs } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
@@ -59,7 +61,9 @@
 	/>
 
 	<div class="search flex flex-row flex-wrap justify-center gap-y-4 gap-x-4 pt-4 pb-4">
-		{#if $searched.length > 0}
+		{#if $recipes.length == 0}
+			<LoadingCards />
+		{:else if $searched.length > 0}
 			{#each $searched as recipe}
 				<Card {recipe} />
 			{/each}
