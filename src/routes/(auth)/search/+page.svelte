@@ -1,8 +1,40 @@
 <script>
-	import { recipes, searched } from '../../stores/store';
+	import { recipes, categories, searched } from '../../stores/store';
 	import Card from '$lib/components/homepage/card/Card.svelte';
+	
+	import { onMount } from 'svelte';
+	import { collection, getDocs } from 'firebase/firestore';
+	import { db } from '$lib/firebase/firebase.client';
+
 
 	let search;
+
+	onMount(async () => {
+		recipes.set([]);
+		categories.set([]);
+
+		const querySnapshot = await getDocs(collection(db, 'recipes'));
+		querySnapshot.forEach((doc) => {
+			recipes.update((recipes) => [
+				...recipes,
+				{
+					id: doc.id,
+					data: doc.data()
+				}
+			]);
+		});
+
+		const categoriesQuery = await getDocs(collection(db, 'categories'));
+		categoriesQuery.forEach((doc) => {
+			categories.update((categories) => [
+				...categories,
+				{
+					id: doc.id,
+					name: doc.data().name
+				}
+			]);
+		});
+	});
 
 	const handleSearch = () => {
 		searched.set(
