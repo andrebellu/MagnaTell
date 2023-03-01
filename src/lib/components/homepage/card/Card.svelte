@@ -2,32 +2,48 @@
 	export let recipe;
 </script>
 
+<!-- change text font after implementation of the new font-->
+
 <a
-	class="card w-40 h-40 card-bordered bg-white rounded-3xl border-4 border-accent"
+	class="rounded-3xl flex flex-col items-center -mb-16"
 	href="/recipes/{recipe.id}"
 >
-	<img src={recipe.data.cover} alt="img" class="rounded-t-3xl h-20 object-cover" />
-	<div class="body px-2 py-1 outline-4 text-accent-content">
-		<div class="title flex items-center justify-between mb-2">
-			<h1 class="font-semibold truncate text-lg overflow-hidden text-ellipsis mr-2">
-				{recipe.data.title}
-			</h1>
-			<div class="flex flex-row text-sm font-poppins">
-				4,8
-				<div class="material-icons text-sm text-yellow-500">grade</div>
+	<img src={recipe.data.cover} alt="img" class="rounded-3xl h-32 w-32 object-cover z-10 drop-shadow-[0_5px_5px_rgba(0,0,0,1)]" />
+	<div class="card bg-accent z-0 w-40 h-40 flex justify-end -translate-y-16">
+		<div class="body px-4 pb-1 text-accent-content flex flex-col gap-y-2 -translate-y-1">
+			<div class="title flex justify-between gap-x-1">
+				<div class="flex flex-col overflow-hidden text-ellipsis">
+					<h1 class="font-bold text-lg truncate">
+						{recipe.data.title}
+					</h1>
+					<div class="flex flex-row gap-x-1">
+						<h1 class="font-semibold text-xs">
+							Chef
+						</h1>
+						<h1 class="font-medium text-xs truncate">
+							{recipe.data.author}
+						</h1>
+					</div>
+				</div>
+				<div class="material-symbols-outlined text-lg">
+					bookmark
+				</div>
+			</div>
+			<div class="valutation flex justify-between items-center">
+				<p class="text-2xl font-semibold leading-none">
+					{#if recipe.data.difficulty == 'easy'}
+						<div class="text-green-600">•</div>
+					{:else if recipe.data.difficulty == 'medium'}
+						<div class="text-amber-500">••</div>
+					{:else}
+						<div class="text-red-600">•••</div>
+					{/if}
+				</p>
+				<div class="flex flex-row text-xs font-poppins font-normal">
+					4,8
+					<div class="material-icons text-xs text-yellow-500">grade</div>
+				</div>
 			</div>
 		</div>
-		<div class="pong flex items-center justify-between flex-row-reverse">
-			<p class="text-3xl font-semibold leading-none">
-				{#if recipe.data.difficulty == 'easy'}
-					<div class="text-green-600">•</div>
-				{:else if recipe.data.difficulty == 'medium'}
-					<div class="text-amber-500">••</div>
-				{:else}
-					<div class="text-red-600">•••</div>
-				{/if}
-			</p>
-			<h2 class="text-xs truncate mr-4">@{recipe.data.author}</h2>
-		</div>
-	</div>
+	</div>	
 </a>
