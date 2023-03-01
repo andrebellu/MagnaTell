@@ -24,21 +24,12 @@
 				});
 			}
 		}
-
-		if ($active == category.name) {
-			x = true;
-		} else {
-			x = false;
-		}
 	};
 </script>
 
 <div
-	class="flex flex-col carousel-item w-20 h-32 bg-accent rounded-box active:scale-105 transition-all duration-300 {$active ==
-	category.name
-		? 'bg-secondary scale-110'
-		: ''}
-	"
+	class="flex flex-col carousel-item w-20 h-32 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-110"
+	class:active={$active == category.name}
 	on:click={() => handleOnClick(category.name)}
 	on:keydown={handleOnClick}
 >

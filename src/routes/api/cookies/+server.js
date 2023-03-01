@@ -15,7 +15,7 @@ export const POST = async (event) => {
             }
         })
     } catch (error) {
-        console.log("errore: ", error.message)
+        console.log("error: ", error.message)
     }
 }
 

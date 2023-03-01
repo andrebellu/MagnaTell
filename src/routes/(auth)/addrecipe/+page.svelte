@@ -95,7 +95,6 @@
 				steps,
 				portions
 			});
-			console.log('Document written with ID: ', docRef.id);
 			success = true;
 
 			document.getElementById('recipeAddedModal').checked = true;
@@ -105,7 +104,6 @@
 			document.getElementById('recipeAddedModal').checked = true;
 
 			success = false;
-			console.error('Error adding document: ', e);
 		}
 	}
 
@@ -121,7 +119,6 @@
 	};
 
 	const checkCategories = () => {
-		console.log(singleCategory);
 		if (singleCategory == '' || $category.includes(singleCategory)) {
 			return;
 		}
