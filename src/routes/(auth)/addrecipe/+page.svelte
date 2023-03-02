@@ -7,6 +7,7 @@
 	import { writable } from 'svelte/store';
 
 	import { onMount } from 'svelte';
+	import { connectAuthEmulator } from 'firebase/auth';
 
 	let uid = '';
 	let cover = '';
@@ -131,6 +132,18 @@
 		'badge-error',
 		'badge-neutral'
 	];
+
+
+	const handle_category = (name) => {
+		let index = $category.indexOf(name) - 1
+		category.update((data) => {
+			if (data.length == 1) {
+				return data = []
+			} else {
+				return data.splice(index, 1)
+			}
+		})
+	}
 </script>
 
 <input type="checkbox" id="recipeAddedModal" class="modal-toggle" />
@@ -199,8 +212,9 @@
 
 		<div class="badges flex flex-col flex-wrap gap-2 mt-2">
 			{#each $category as category}
-				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate">
+				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate cursor-pointer group" on:click={() => handle_category(category)}>
 					{category}
+					<p class="group-hover:text-secondary">&nbsp x</p>
 				</div>
 			{/each}
 		</div>
