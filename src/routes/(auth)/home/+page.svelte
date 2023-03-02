@@ -1,6 +1,5 @@
 <script>
 	import Carousel from '$lib/components/homepage/carousel/Carousel.svelte';
-
 	import LoadingCarousel from '$lib/components/loading/carousel/LoadingCarousel.svelte';
 
 	import { collection, getDocs } from 'firebase/firestore';
@@ -8,7 +7,8 @@
 
 	import { db } from '$lib/firebase/firebase.client';
 
-	import { recipes, categories, pressed } from '../../stores/store';
+	import { recipes, categories } from '../../stores/store';
+	import Cards from '../../../lib/components/homepage/cards/Cards.svelte';
 
 	onMount(async () => {
 		recipes.set([]);
@@ -46,20 +46,10 @@
 			<Carousel />
 		{/if}
 	</div>
-	<div>
-		<!-- {#if $categories.length == 0}
-			<div role="status" class="max-w-sm animate-pulse">
-				<div class="h-8 w-32 mt-5 mx-4 bg-gray-200 rounded-full dark:bg-accent" />
-				<span class="sr-only">Loading...</span>
-			</div>
-			<LoadingCategoriesCarousel />
-		{:else}
-			<h1 class="text-3xl font-cormorant font-bold pt-4 px-4">Categories</h1>
-			<div class="carousel carousel-center space-x-2 py-4 px-4 bg-trasparent">
-				{#each $categories as category}
-					<CategoriesCarousel {category} />
-				{/each}
-			</div>
-		{/if} -->
+
+	<div class="cards pb-4 px-4">
+		<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
+
+		<Cards />
 	</div>
 </div>

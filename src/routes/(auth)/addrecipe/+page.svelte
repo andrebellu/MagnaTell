@@ -3,12 +3,11 @@
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 	import { db } from '$lib/firebase/firebase.client';
-	import { signInWithCustomToken } from 'firebase/auth';
-	import { auth } from '$lib/firebase/firebase.client';
 
 	import { writable } from 'svelte/store';
 
 	import { onMount } from 'svelte';
+	import { connectAuthEmulator } from 'firebase/auth';
 
 	let user = '';
 	let uid = '';
@@ -139,6 +138,19 @@
 		'badge-error',
 		'badge-neutral'
 	];
+
+
+	const handle_category = (name) => {
+		let index = $category.indexOf(name)
+		category.update((data) => {
+			if (data.length === 1) {
+				return data = []
+			} else {
+				data.splice(index, 1)
+				return data
+			}
+		})
+	}
 </script>
 
 <input type="checkbox" id="recipeAddedModal" class="modal-toggle" />
@@ -207,8 +219,9 @@
 
 		<div class="badges flex flex-col flex-wrap gap-2 mt-2">
 			{#each $category as category}
-				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate">
+				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate cursor-pointer group" on:click={() => handle_category(category)}>
 					{category}
+					<p class="group-hover:text-secondary">&nbsp x</p>
 				</div>
 			{/each}
 		</div>
