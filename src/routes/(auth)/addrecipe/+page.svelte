@@ -3,8 +3,6 @@
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 	import { db } from '$lib/firebase/firebase.client';
-	import { signInWithCustomToken } from 'firebase/auth';
-	import { auth } from '$lib/firebase/firebase.client';
 
 	import { writable } from 'svelte/store';
 
@@ -76,10 +74,6 @@
 	};
 
 	async function addRecipe() {
-		const userCredential = await signInWithCustomToken(auth, customToken);
-
-		author = user.displayName;
-		uid = user.uid;
 		try {
 			const docRef = await addDoc(collection(db, 'recipes'), {
 				uid,
