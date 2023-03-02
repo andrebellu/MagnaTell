@@ -37,11 +37,11 @@
 		<img src="/category-1.svg" alt="icon" width="64" height="64" />
 	</div>
 	<div
-		class="flex flex-col justify-end font-poppins text-accent-content items-center w-full font-semibold"
+		class="flex flex-col justify-end font-poppins text-accent-content items-center w-full font-semibold overflow-hidden text-ellipsis"
 	>
 		<h1
-			class="text-center {$active == category.name ? 'text-white' : ''}
-			"
+			class="text-center [&.active]:text-white"
+			class:active={$active == category.name}
 		>
 			{category.name}
 		</h1>

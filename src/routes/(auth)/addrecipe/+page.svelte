@@ -135,12 +135,13 @@
 
 
 	const handle_category = (name) => {
-		let index = $category.indexOf(name) - 1
+		let index = $category.indexOf(name)
 		category.update((data) => {
-			if (data.length == 1) {
+			if (data.length === 1) {
 				return data = []
 			} else {
-				return data.splice(index, 1)
+				data.splice(index, 1)
+				return data
 			}
 		})
 	}
