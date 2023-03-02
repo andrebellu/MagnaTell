@@ -10,6 +10,7 @@
 
 	import { onMount } from 'svelte';
 
+	let user = '';
 	let uid = '';
 	let cover = '';
 	let title = '';
@@ -76,8 +77,9 @@
 	};
 
 	async function addRecipe() {
-		const userCredential = await signInWithCustomToken(auth, customToken);
-
+		user = JSON.parse(
+			localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+		);
 		author = user.displayName;
 		uid = user.uid;
 		try {
