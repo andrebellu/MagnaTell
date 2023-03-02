@@ -219,7 +219,7 @@
 
 		<div class="badges flex flex-col flex-wrap gap-2 mt-2">
 			{#each $category as category}
-				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate cursor-pointer group" on:click={() => handle_category(category)}>
+				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate cursor-pointer group" on:keypress on:click={() => handle_category(category)}>
 					{category}
 					<p class="group-hover:text-secondary">&nbsp x</p>
 				</div>
