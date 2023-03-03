@@ -10,20 +10,31 @@
 	import { recipes, categories } from '../../stores/store';
 	import Cards from '../../../lib/components/homepage/cards/Cards.svelte';
 
+	import { storage } from '$lib/firebase/firebase.client';
+	import { ref, getDownloadURL } from 'firebase/storage';
+
+	let cover;
+
 	onMount(async () => {
 		recipes.set([]);
 		categories.set([]);
 
 		const querySnapshot = await getDocs(collection(db, 'recipes'));
-		querySnapshot.forEach((doc) => {
+		for (let i = 0; i < querySnapshot.docs.length; i++) {
+			try{
+				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then((url) => {cover = url});
+			}catch{
+				cover = "/no-image.svg"
+			}
 			recipes.update((recipes) => [
 				...recipes,
 				{
-					id: doc.id,
-					data: doc.data()
+					id: querySnapshot.docs[i].id,
+					data: querySnapshot.docs[i].data(),
+					cover
 				}
 			]);
-		});
+		}
 
 		const categoriesQuery = await getDocs(collection(db, 'categories'));
 		categoriesQuery.forEach((doc) => {

@@ -6,7 +6,7 @@
 	{#each $recipes as recipe}
 		<div
 			class="carousel-home"
-			style="background:url({recipe.data.cover});background-size:cover;background-position:center;"
+			style="background:url({recipe.cover});background-size:cover;background-position:center;"
 		>
 			<a href="/recipes/{recipe.id}">
 				<div class="carousel-home bg-gradient-to-t from-secondary to-transparent">

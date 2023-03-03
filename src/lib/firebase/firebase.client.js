@@ -1,6 +1,7 @@
 import { getApp, getApps, initializeApp, deleteApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, setPersistence, inMemoryPersistence, browserLocalPersistence } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
 
 
 export let customToken = ''
@@ -37,5 +38,6 @@ if (!getApps().length) {
 
 export const db = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp)
+export const storage = getStorage(firebaseApp)
 
 setPersistence(auth, browserLocalPersistence)

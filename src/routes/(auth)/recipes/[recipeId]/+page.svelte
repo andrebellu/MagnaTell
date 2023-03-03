@@ -3,9 +3,10 @@
 	import { onMount } from 'svelte';
 	import { doc, getDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
-	import { signInWithCustomToken } from 'firebase/auth';
-	import { auth } from '$lib/firebase/firebase.client';
 	import LoadingRecipe from '../../../../lib/components/loading/recipe/LoadingRecipe.svelte';
+
+	import { storage } from '$lib/firebase/firebase.client';
+	import { getDownloadURL, ref } from 'firebase/storage';
 
 	const recipeId = $page.params.recipeId;
 	let recipe = {};
@@ -13,11 +14,19 @@
 	let categories = [];
 	let steps = [];
 	let link = '';
+	let cover;
 
 	onMount(async () => {
 
 		const querySnapshot = await getDoc(doc(db, 'recipes', recipeId));
 		recipe = querySnapshot.data();
+		try{
+			await getDownloadURL(ref(storage, 'recipes-covers/' + recipeId)).then((url) => {
+				cover = url;
+			});
+		}catch{
+			cover = "/no-image.svg"
+		}
 		ingredients = recipe.ingredients;
 
 		categories = recipe.category;
@@ -54,7 +63,7 @@
 			{/each}
 		</div>
 
-		<img src={recipe.cover} alt={recipe.title} class="w-full h-40 object-cover rounded-xl mb-2" />
+		<img src={cover} alt={recipe.title} class="w-full h-40 object-cover rounded-xl mb-2" />
 
 		<h1 class="text-3xl font-bold pt-3 pb-1">General Informations</h1>
 		<h1><strong>Author:</strong> {recipe.author}</h1>

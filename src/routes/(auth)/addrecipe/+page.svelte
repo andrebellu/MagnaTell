@@ -2,16 +2,16 @@
 	import { categories } from './../../stores/store.js';
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
-	import { db } from '$lib/firebase/firebase.client';
+	import { db, storage } from '$lib/firebase/firebase.client';
+	import { ref, uploadBytes} from 'firebase/storage';
 
 	import { writable } from 'svelte/store';
 
 	import { onMount } from 'svelte';
-	import { connectAuthEmulator } from 'firebase/auth';
 
 	let user = '';
 	let uid = '';
-	let cover = '';
+	let cover;
 	let title = '';
 	let author = '';
 	let link = '';
@@ -22,6 +22,8 @@
 	let ingredients = writable([]);
 	let steps = '';
 	let portions = '';
+	let storageRef;
+	let metadata;
 
 	let ingredient = '';
 	let quantity = '';
@@ -44,25 +46,8 @@
 		});
 	});
 
-	const toBase64 = (e) => {
-		const file = e.target.files[0];
-
-		if (file.length > 1048576) {
-			alert('Image is too big!');
-			return;
-		}
-
-		const reader = new FileReader();
-
-		reader.onload = (e) => {
-			cover = e.target.result;
-		};
-		reader.readAsDataURL(file);
-	};
-
 	const clear = () => {
 		uid = '';
-		cover = '';
 		title = '';
 		author = '';
 		link = '';
@@ -84,7 +69,6 @@
 		try {
 			const docRef = await addDoc(collection(db, 'recipes'), {
 				uid,
-				cover,
 				title,
 				author,
 				link,
@@ -96,8 +80,14 @@
 				steps,
 				portions
 			});
-			success = true;
+			cover = document.getElementById('cover').files[0];
+			storageRef = ref(storage, 'recipes-covers/' + docRef.id);
+			metadata = {
+				contentType: cover.type
+			};
+			await uploadBytes(storageRef, cover, metadata);
 
+			success = true;
 			document.getElementById('recipeAddedModal').checked = true;
 
 			clear();
@@ -178,7 +168,7 @@
 		type="file"
 		name="cover"
 		id="cover"
-		on:change={toBase64}
+		bind:value={cover}
 	/>
 
 	<label for="title">Title</label>
@@ -246,7 +236,9 @@
 		type="number"
 		name="time"
 		id="time"
-		step="1"
+		step=1
+		min=1
+		max=999
 		bind:value={time}
 	/>
 
@@ -257,7 +249,9 @@
 		type="number"
 		name="portions"
 		id="portions"
-		step="1"
+		step=1
+		min=1
+		max=99
 		bind:value={portions}
 	/>
 

@@ -14,7 +14,11 @@
 	import { sendEmailVerification } from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client';
 
+	import { storage } from '$lib/firebase/firebase.client';
+	import { ref, getDownloadURL } from 'firebase/storage';
+
 	let user;
+	let cover;
 
 	let confirmDelete;
 	let deleteButton;
@@ -34,16 +38,21 @@
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));
 
 		const querySnapshot = await getDocs(q);
-
-		querySnapshot.forEach((doc) => {
+		for (let i = 0; i < querySnapshot.docs.length; i++) {
+			try{
+				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then((url) => { cover = url});
+			}catch{
+				cover = "/no-image.svg"
+			}
 			myRecipes.update((myRecipes) => [
 				...myRecipes,
 				{
-					id: doc.id,
-					data: doc.data()
+					id: querySnapshot.docs[i].id,
+					data: querySnapshot.docs[i].data(),
+					cover
 				}
 			]);
-		});
+		}
 	});
 
 	const logout = async () => {
