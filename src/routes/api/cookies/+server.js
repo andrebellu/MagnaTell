@@ -11,7 +11,7 @@ export const POST = async (event) => {
         return new Response(JSON.stringify({ sessionCookie }), {
             status: 200,
             headers: {
-                "Set-Cookie": `idToken=${sessionCookie}; Max-Age=${expiresIn}; HttpOnly; Path=/; ${secure};`
+                "Set-Cookie": `idToken=${sessionCookie}; Max-Age=${expiresIn}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
             }
         })
     } catch (error) {
@@ -23,7 +23,7 @@ export const DELETE = async (_) => {
     return new Response(JSON.stringify(), {
         status: 200,
         headers: {
-            "Set-Cookie": `idToken=_; Max-Age=0; HttpOnly; Path=/; ${secure};`
+            "Set-Cookie": `idToken=_; Max-Age=0; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
         }
     })
 }

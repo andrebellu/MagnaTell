@@ -4,10 +4,7 @@
 
 <div class="carousel carousel-center px-4 py-2 space-x-4">
 	{#each $recipes as recipe}
-		<div
-			class="carousel-home"
-			style="background:url({recipe.cover});background-size:cover;background-position:center;"
-		>
+		<div class="carousel-home" style="background:url({recipe.cover})">
 			<a href="/recipes/{recipe.id}">
 				<div class="carousel-home bg-gradient-to-t from-secondary to-transparent">
 					<div class="px-4 pb-4 text-white flex flex-col-reverse w-full">
@@ -25,3 +22,10 @@
 		</div>
 	{/each}
 </div>
+
+<style>
+	.carousel-home {
+		background-size: cover !important;
+		background-position: center !important;
+	}
+</style>
