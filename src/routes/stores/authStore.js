@@ -4,7 +4,7 @@ import { goto } from '$app/navigation';
 import { request } from '$lib/firebase/fetch'
 
 import { db } from '$lib/firebase/firebase.client';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDocs, setDoc, query, collection, where, deleteDoc } from "firebase/firestore";
 
 export const defaultAvatar = 'https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=' + Math.random();
 
@@ -94,7 +94,7 @@ export const authHandlers = {
 	},
 
 	deleteAccount: async () => {
-		await auth.currentUser.delete()
+		await deleteDoc(doc(db, 'users', auth.currentUser.uid))
 			.then(() => {
 				alert('Account deleted');
 				goto('/login');
@@ -102,5 +102,12 @@ export const authHandlers = {
 			.catch((error) => {
 				console.log(error);
 			});
+	},
+
+	deleteUserRecipes: async () => {
+		const querySnapshot = await getDocs(query(collection(db, 'recipes'), where('uid', '==', auth.currentUser.uid)));
+		querySnapshot.forEach(async (doc) => {
+			await deleteDoc(doc.ref);
+		});
 	}
 };

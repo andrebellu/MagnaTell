@@ -60,6 +60,7 @@
 	}
 
 	async function deleteAccount() {
+		await authHandlers.deleteUserRecipes(user);
 		await authHandlers.deleteAccount();
 	}
 </script>
