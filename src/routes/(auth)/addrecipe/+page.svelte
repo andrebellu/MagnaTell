@@ -1,5 +1,5 @@
 <script>
-	import { categories } from './../../stores/store.js';
+	import { categories, title_store, difficulty_store } from './../../stores/store.js';
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 	import { db, storage } from '$lib/firebase/firebase.client';
@@ -10,6 +10,9 @@
 	import { onMount } from 'svelte';
 
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
+
+	$: $title_store = title;
+	$: $difficulty_store = difficulty;
 
 	let user = '';
 	let uid = '';
@@ -32,20 +35,6 @@
 	let singleCategory = '';
 
 	let success = false;
-
-	let recipe = {
-		uid,
-		title,
-		author,
-		link,
-		category: $category,
-		difficulty,
-		time,
-		description,
-		ingredients: $ingredients,
-		steps,
-		portions
-	};
 
 	onMount(async () => {
 		categories.set([]);
@@ -348,8 +337,16 @@
 		bind:value={steps}
 	/>
 
-	{#if cover}
-		<CardPreview {recipe} {cover} />
+	{#if !cover && !title && !link && !$category && !difficulty && !time && !portions && !description && !$ingredients && !steps}
+		<h1
+			class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
+		>
+			<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
+			tip: complete all fields to see a preview of your recipe
+		</h1>
+	{:else}
+		<h1 class="text-4xl text-center">Card Preview</h1>
+		<CardPreview {cover} />
 	{/if}
 
 	<button class="btn btn-accent w-full mt-4" on:click={addRecipe}>Add a recipe</button>

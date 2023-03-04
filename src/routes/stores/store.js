@@ -1,5 +1,8 @@
 import { writable } from 'svelte/store';
 
+export const title_store = writable();
+export const difficulty_store = writable();
+
 export const recipes = writable([]);
 
 export const recipesFound = writable([]);
