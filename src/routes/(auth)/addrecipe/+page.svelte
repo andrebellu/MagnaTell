@@ -3,11 +3,13 @@
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 	import { db, storage } from '$lib/firebase/firebase.client';
-	import { ref, uploadBytes} from 'firebase/storage';
+	import { ref, uploadBytes } from 'firebase/storage';
 
 	import { writable } from 'svelte/store';
 
 	import { onMount } from 'svelte';
+
+	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
 
 	let user = '';
 	let uid = '';
@@ -30,6 +32,20 @@
 	let singleCategory = '';
 
 	let success = false;
+
+	let recipe = {
+		uid,
+		title,
+		author,
+		link,
+		category: $category,
+		difficulty,
+		time,
+		description,
+		ingredients: $ingredients,
+		steps,
+		portions
+	};
 
 	onMount(async () => {
 		categories.set([]);
@@ -129,18 +145,28 @@
 		'badge-neutral'
 	];
 
-
 	const handle_category = (name) => {
-		let index = $category.indexOf(name)
+		let index = $category.indexOf(name);
 		category.update((data) => {
 			if (data.length === 1) {
-				return data = []
+				return (data = []);
 			} else {
-				data.splice(index, 1)
-				return data
+				data.splice(index, 1);
+				return data;
 			}
-		})
-	}
+		});
+	};
+
+	const handleFileSelect = (e) => {
+		cover = e.target.files[0];
+		if (cover) {
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				cover = e.target.result;
+			};
+			reader.readAsDataURL(cover);
+		}
+	};
 </script>
 
 <input type="checkbox" id="recipeAddedModal" class="modal-toggle" />
@@ -168,7 +194,9 @@
 		type="file"
 		name="cover"
 		id="cover"
+		accept="image/*"
 		bind:value={cover}
+		on:change={handleFileSelect}
 	/>
 
 	<label for="title">Title</label>
@@ -209,7 +237,13 @@
 
 		<div class="badges flex flex-col flex-wrap gap-2 mt-2">
 			{#each $category as category}
-				<div class="badge {colors[Math.floor(Math.random() * colors.length)]} truncate cursor-pointer group" on:keypress on:click={() => handle_category(category)}>
+				<div
+					class="badge {colors[
+						Math.floor(Math.random() * colors.length)
+					]} truncate cursor-pointer group"
+					on:keypress
+					on:click={() => handle_category(category)}
+				>
 					{category}
 					<p class="group-hover:text-secondary">&nbsp x</p>
 				</div>
@@ -236,9 +270,9 @@
 		type="number"
 		name="time"
 		id="time"
-		step=1
-		min=1
-		max=999
+		step="1"
+		min="1"
+		max="999"
 		bind:value={time}
 	/>
 
@@ -249,9 +283,9 @@
 		type="number"
 		name="portions"
 		id="portions"
-		step=1
-		min=1
-		max=99
+		step="1"
+		min="1"
+		max="99"
 		bind:value={portions}
 	/>
 
@@ -313,6 +347,10 @@
 		id="steps"
 		bind:value={steps}
 	/>
+
+	{#if cover}
+		<CardPreview {recipe} {cover} />
+	{/if}
 
 	<button class="btn btn-accent w-full mt-4" on:click={addRecipe}>Add a recipe</button>
 </div>

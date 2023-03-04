@@ -80,7 +80,7 @@
 
 {#if user}
 	<div class="w-screen flex justify-center flex-col items-center gap-y-2">
-		<h2 class="text-2xl text-center">
+		<h2 class="text-2xl text-center font-bold">
 			Welcome, {user.displayName || user.email}!
 		</h2>
 
