@@ -11,6 +11,9 @@
 
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
 
+	import { ref as refReal, set } from "firebase/database";
+	import { realDB } from '$lib/firebase/firebase.client';
+
 	let user = '';
 	let uid = '';
 	let cover;
@@ -103,13 +106,18 @@
 			};
 			await uploadBytes(storageRef, cover, metadata);
 
+			await set(refReal(realDB, 'recipes-grade/' + docRef.id), {
+				people: 0,
+				stars: 0
+			});
+
 			success = true;
 			document.getElementById('recipeAddedModal').checked = true;
 
 			clear();
 		} catch (e) {
 			document.getElementById('recipeAddedModal').checked = true;
-
+			console.log("Error adding document: ", e);
 			success = false;
 		}
 	}

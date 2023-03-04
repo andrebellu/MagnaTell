@@ -1,5 +1,19 @@
 <script>
+	import { realDB } from '$lib/firebase/firebase.client';
+	import { onValue, ref } from 'firebase/database';
 	export let recipe;
+	let grade = 0;
+
+	try {
+		onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
+			grade = (snapshot.val().stars/snapshot.val().people).toFixed(1);
+		});
+		if (grade == 'NaN' || grade == 'infinity') {
+			grade = 0;
+		}
+	}catch{
+		grade = 1;
+	}
 </script>
 
 <!-- change text font after implementation of the new font-->
@@ -37,7 +51,7 @@
 					{/if}
 				</p>
 				<div class="flex flex-row text-xs font-poppins font-normal">
-					4,8
+					{grade}
 					<div class="material-icons text-xs text-yellow-500">grade</div>
 				</div>
 			</div>

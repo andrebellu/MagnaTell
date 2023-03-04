@@ -1,6 +1,5 @@
 <script>
-	import RecipesFound from '../recipesFound/recipesFound.svelte';
-	import { recipes, pressed } from '../../../../routes/stores/store';
+	import { recipes } from '../../../../routes/stores/store';
 	import Card from '$lib/components/homepage/card/Card.svelte';
 </script>
 
@@ -8,7 +7,7 @@
 	<div class="pl-2 flex flex-col gap-4 md:flex-row">
 		{#each $recipes as recipe}
 			{#if $recipes.indexOf(recipe) % 2 == 0}
-				<Card {recipe} />
+				<Card {recipe}/>
 			{/if}
 		{/each}
 	</div>
@@ -23,7 +22,7 @@
 		</div>
 		{#each $recipes as recipe}
 			{#if $recipes.indexOf(recipe) % 2 != 0}
-				<Card {recipe} />
+				<Card {recipe}/>
 			{/if}
 		{/each}
 	</div>

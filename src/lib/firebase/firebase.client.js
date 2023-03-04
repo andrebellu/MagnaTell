@@ -2,6 +2,7 @@ import { getApp, getApps, initializeApp, deleteApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 
 export let customToken = ''
@@ -12,7 +13,8 @@ const firebaseConfig = {
     projectId: import.meta.env.VITE_PROJECT_ID,
     storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_APP_ID
+    appId: import.meta.env.VITE_APP_ID,
+    databaseURL: import.meta.env.VITE_DATABASE_URL
 };
 
 if (firebaseConfig.apiKey === undefined) {
@@ -39,5 +41,6 @@ if (!getApps().length) {
 export const db = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp)
 export const storage = getStorage(firebaseApp)
+export const realDB = getDatabase(firebaseApp);
 
 setPersistence(auth, browserLocalPersistence)

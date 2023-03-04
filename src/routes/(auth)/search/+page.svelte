@@ -31,7 +31,6 @@
 			} catch {
 				cover = '/no-image.jpg';
 			}
-			console.log('cover: ' + cover);
 			recipes.update((recipes) => [
 				...recipes,
 				{
