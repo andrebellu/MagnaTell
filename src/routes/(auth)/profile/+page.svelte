@@ -39,10 +39,14 @@
 
 		const querySnapshot = await getDocs(q);
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
-			try{
-				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then((url) => { cover = url});
-			}catch{
-				cover = "/no-image.svg"
+			try {
+				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+					(url) => {
+						cover = url;
+					}
+				);
+			} catch {
+				cover = '/no-image.jpg';
 			}
 			myRecipes.update((myRecipes) => [
 				...myRecipes,

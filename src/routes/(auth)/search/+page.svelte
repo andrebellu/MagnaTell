@@ -22,12 +22,16 @@
 
 		const querySnapshot = await getDocs(collection(db, 'recipes'));
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
-			try{
-				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then((url) => { cover = url});
-			}catch{
-				cover = "/no-image.svg"
+			try {
+				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+					(url) => {
+						cover = url;
+					}
+				);
+			} catch {
+				cover = '/no-image.jpg';
 			}
-			console.log("cover: " + cover)
+			console.log('cover: ' + cover);
 			recipes.update((recipes) => [
 				...recipes,
 				{
@@ -93,10 +97,6 @@
 
 <div class="filters">
 	{#if $categories.length == 0}
-		<div role="status" class="max-w-sm animate-pulse">
-			<div class="h-8 w-32 mt-5 mx-4 bg-gray-200 rounded-full dark:bg-accent" />
-			<span class="sr-only">Loading...</span>
-		</div>
 		<LoadingCategoriesCarousel />
 	{:else}
 		<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
@@ -104,14 +104,6 @@
 				<CategoriesCarousel {category} />
 			{/each}
 		</div>
-		{#if !$pressed}
-			<h1
-				class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
-			>
-				<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
-				tip: click on a category to filter recipes
-			</h1>
-		{/if}
 	{/if}
 </div>
 

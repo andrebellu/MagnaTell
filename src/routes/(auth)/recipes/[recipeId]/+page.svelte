@@ -17,15 +17,14 @@
 	let cover;
 
 	onMount(async () => {
-
 		const querySnapshot = await getDoc(doc(db, 'recipes', recipeId));
 		recipe = querySnapshot.data();
-		try{
+		try {
 			await getDownloadURL(ref(storage, 'recipes-covers/' + recipeId)).then((url) => {
 				cover = url;
 			});
-		}catch{
-			cover = "/no-image.svg"
+		} catch {
+			cover = '/no-image.jpg';
 		}
 		ingredients = recipe.ingredients;
 
