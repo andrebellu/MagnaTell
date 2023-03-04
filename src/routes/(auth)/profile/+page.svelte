@@ -90,7 +90,7 @@
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
 				{user.email}{user.emailVerified ? '✔' : '❌'}
 				{#if !user.emailVerified}
-					<button on:click={sendVerificationEmail} class="btn btn-primary"
+					<button on:click={sendVerificationEmail} class="btn btn-accent btn-xs mt-2"
 						>Send verification email</button
 					>
 				{/if}
@@ -120,7 +120,12 @@
 		<div class="modal modal-bottom sm:modal-middle">
 			<div class="modal-box">
 				<h1 class="font-bold text-xl">Are you sure you want to delete your account?</h1>
-				<p class="py-4 font-bold text-error">This action cannot be reversed</p>
+				<p class="pt-4 font-bold text-error">
+					If you delete your account all your recipes will be deleted as well.
+				</p>
+				<p class="pb-4 font-bold underline underline-offset-2 text-error">
+					The action cannot be reversed!
+				</p>
 
 				<p class="">To delete your account type CONFIRM</p>
 				<input

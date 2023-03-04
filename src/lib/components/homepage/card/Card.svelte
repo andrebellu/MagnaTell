@@ -29,7 +29,7 @@
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">
 					{#if recipe.data.difficulty == 'easy'}
-						<div class="text-green-600">•</div>
+						<div class="text-green-800">•</div>
 					{:else if recipe.data.difficulty == 'medium'}
 						<div class="text-amber-500">••</div>
 					{:else}
