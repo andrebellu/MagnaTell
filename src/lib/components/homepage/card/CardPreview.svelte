@@ -1,8 +1,6 @@
 <script>
-	export let recipe;
+	import { title_store, difficulty_store } from '../../../../routes/stores/store';
 	export let cover;
-
-	console.log(recipe);
 
 	let user = JSON.parse(
 		localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
@@ -22,7 +20,7 @@
 			<div class="title flex justify-between gap-x-1">
 				<div class="flex flex-col overflow-hidden text-ellipsis">
 					<h1 class="font-bold text-lg truncate">
-						{recipe.title}
+						{$title_store}
 					</h1>
 					<div class="flex flex-row gap-x-1">
 						<h1 class="font-semibold text-xs">Chef</h1>
@@ -33,10 +31,11 @@
 			</div>
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">
-					{#if recipe.difficulty == 'easy'}
+					{#if $difficulty_store == 'easy'}
 						<div class="text-green-800">•</div>
-					{:else if recipe.difficulty == 'medium'}
+					{:else if $difficulty_store == 'medium'}
 						<div class="text-amber-500">••</div>
+					{:else}
 						<div class="text-red-600">•••</div>
 					{/if}
 				</p>
