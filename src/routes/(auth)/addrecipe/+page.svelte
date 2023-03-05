@@ -95,11 +95,6 @@
 			};
 			await uploadBytes(storageRef, cover, metadata);
 
-			await set(refReal(realDB, 'recipes-grade/' + docRef.id), {
-				people: 0,
-				stars: 0
-			});
-
 			success = true;
 			document.getElementById('recipeAddedModal').checked = true;
 

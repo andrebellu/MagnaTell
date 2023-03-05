@@ -8,6 +8,8 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { getDownloadURL, ref } from 'firebase/storage';
 
+	import Stars from '../../../../lib/components/recipe/rating/Stars.svelte';
+
 	const recipeId = $page.params.recipeId;
 	let recipe = {};
 	let ingredients = [];
@@ -63,6 +65,8 @@
 		</div>
 
 		<img src={cover} alt={recipe.title} class="w-full h-40 object-cover rounded-xl mb-2" />
+
+		<div class="pt-2 flex justify-center"><Stars /></div>
 
 		<h1 class="text-3xl font-bold pt-3 pb-1">General Informations</h1>
 		<h1><strong>Author:</strong> {recipe.author}</h1>

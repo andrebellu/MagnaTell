@@ -6,6 +6,9 @@ import { request } from '$lib/firebase/fetch'
 import { db } from '$lib/firebase/firebase.client';
 import { doc, getDocs, setDoc, query, collection, where, deleteDoc } from "firebase/firestore";
 
+import { realDB } from '$lib/firebase/firebase.client';
+import { get, ref as refReal, remove } from "firebase/database";
+
 export const defaultAvatar = 'https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=' + Math.random();
 
 export const authHandlers = {
@@ -109,5 +112,21 @@ export const authHandlers = {
 		querySnapshot.forEach(async (doc) => {
 			await deleteDoc(doc.ref);
 		});
-	}
+	},
+
+	deleteUserRating: async () => {
+		let recKeys = [];
+
+		get(refReal(realDB, 'recipes-grade/')).then((snapshot) => {
+			if(snapshot.exists()){
+				recKeys = Object.keys(snapshot.val());
+			}
+			recKeys.forEach((key) => {
+				remove(refReal(realDB, 'recipes-grade/' + key + '/stars/' + auth.currentUser.uid));
+			})
+		});
+	},
+
+	// TODO: delete user image from storage
+	deleteUserImage: async () => {}
 };

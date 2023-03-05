@@ -6,10 +6,12 @@
 	let grade = 0;
 	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
 		if (snapshot.val()) {
-			grade = (snapshot.val().stars/snapshot.val().people).toFixed(1);
-			if (grade == 'NaN' || grade == 'Infinity') {
-				grade = 0;
-			}
+			grade = 0;
+			const stars = Object.values(snapshot.val().stars)
+			stars.forEach((star) => {
+				grade += star;
+			});
+			grade = (grade / stars.length).toFixed(1);
 		}
 	});
 </script>
