@@ -2,18 +2,16 @@
 	import { realDB } from '$lib/firebase/firebase.client';
 	import { onValue, ref } from 'firebase/database';
 	export let recipe;
-	let grade = 0;
 
-	try {
-		onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
+	let grade = 0;
+	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
+		if (snapshot.val()) {
 			grade = (snapshot.val().stars/snapshot.val().people).toFixed(1);
-		});
-		if (grade == 'NaN' || grade == 'infinity') {
-			grade = 0;
+			if (grade == 'NaN' || grade == 'Infinity') {
+				grade = 0;
+			}
 		}
-	}catch{
-		grade = 1;
-	}
+	});
 </script>
 
 <!-- change text font after implementation of the new font-->
