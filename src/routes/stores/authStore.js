@@ -6,8 +6,9 @@ import { request } from '$lib/firebase/fetch'
 import { db } from '$lib/firebase/firebase.client';
 import { doc, getDocs, setDoc, query, collection, where, deleteDoc } from "firebase/firestore";
 
-import { realDB } from '$lib/firebase/firebase.client';
+import { realDB, storage } from '$lib/firebase/firebase.client';
 import { get, ref as refReal, remove } from "firebase/database";
+import { deleteObject, ref as refStorage } from "firebase/storage";
 
 export const defaultAvatar = 'https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=' + Math.random();
 
@@ -127,6 +128,10 @@ export const authHandlers = {
 		});
 	},
 
-	// TODO: delete user image from storage
-	deleteUserImage: async () => {}
+	deleteUserImage: async () => {
+		const querySnapshot = await getDocs(query(collection(db, 'recipes'), where('uid', '==', auth.currentUser.uid)));
+		querySnapshot.forEach(async (doc) => {
+			deleteObject(refStorage(storage, 'recipes-covers/' + doc.id));
+		})
+	}
 };

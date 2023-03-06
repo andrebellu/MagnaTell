@@ -74,6 +74,7 @@
 
 	async function deleteAccount() {
 		await authHandlers.deleteUserRating();
+		await authHandlers.deleteUserImage();
 		await authHandlers.deleteUserRecipes(user);
 		await authHandlers.deleteAccount();
 	}
