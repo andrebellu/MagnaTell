@@ -55,12 +55,12 @@
 </div> -->
 
 <div
-	class="flex justify-center items-center carousel-item max-w-32 p-2 h-8 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-105"
+	class="flex justify-center items-center carousel-item w-32 p-2 h-8 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-105"
 	class:active={$active == category.name}
 	on:click={() => handleOnClick(category.name)}
 	on:keydown={handleOnClick}
 >
-	<div class="flex items-center justify-between">
+	<div class="flex items-center w-11/12">
 		<div class="icon mr-2">
 			{#if icon == 'Leaf'}
 				<Leaf class="bg-white rounded-box p-1" size={38} />
@@ -83,7 +83,7 @@
 
 		<div class="title">
 			<h1
-				class="whitespace-nowrap overflow-hidden text-ellipsis text-left [&.active]:text-white text-black [&.active]:font-bold transition-all duration-300"
+				class="whitespace-nowrap overflow-hidden text-ellipsis truncate text-left [&.active]:text-white text-black [&.active]:font-bold transition-all duration-300 w-20"
 				class:active={$active == category.name}
 			>
 				{category.name}
