@@ -60,7 +60,7 @@
 	on:click={() => handleOnClick(category.name)}
 	on:keydown={handleOnClick}
 >
-	<div class="flex items-center w-11/12">
+	<div class="flex items-center w-32">
 		<div class="icon mr-2">
 			{#if icon == 'Leaf'}
 				<Leaf class="bg-white rounded-box p-1" size={38} />
