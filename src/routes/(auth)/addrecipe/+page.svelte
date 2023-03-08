@@ -11,7 +11,7 @@
 
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
 	import Plus from 'phosphor-svelte/lib/Plus';
-	import { Lightbulb } from 'phosphor-svelte/lib/Lightbulb';
+	import Lightbulb from 'phosphor-svelte/lib/Lightbulb';
 
 	$: $title_store = title;
 	$: $difficulty_store = difficulty;
