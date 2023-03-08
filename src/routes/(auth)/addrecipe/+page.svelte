@@ -9,6 +9,8 @@
 
 	import { onMount } from 'svelte';
 
+	import { authHandlers } from '../../stores/authStore.js';
+
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
 	import Plus from 'phosphor-svelte/lib/Plus';
 	import Lightbulb from 'phosphor-svelte/lib/Lightbulb';
@@ -71,6 +73,12 @@
 		user = JSON.parse(
 			localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
 		);
+
+		if (!user.emailVerified) {
+			document.getElementById('notVerified').checked = true;
+			return;
+		}
+
 		author = user.displayName;
 		uid = user.uid;
 		try {
@@ -100,7 +108,7 @@
 			clear();
 		} catch (e) {
 			document.getElementById('recipeAddedModal').checked = true;
-			console.log("Error adding document: ", e);
+			console.log('Error adding document: ', e);
 			success = false;
 		}
 	}
@@ -159,6 +167,24 @@
 		}
 	};
 </script>
+
+<input type="checkbox" id="notVerified" class="modal-toggle" />
+<div class="modal">
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">
+			Your account is <span class="underline underline-offset-4 font-bold">not verified!</span>
+		</h3>
+		<p class="py-4">
+			To add a recipe you need to verify your email. <br /> Please check your inbox and click on the
+			link we sent you.
+		</p>
+		<div class="modal-action">
+			<label for="notVerified" class="btn" on:click={authHandlers.sendVerificationEmail} on:keypress
+				>Ok!</label
+			>
+		</div>
+	</div>
+</div>
 
 <input type="checkbox" id="recipeAddedModal" class="modal-toggle" />
 <label for="recipeAddedModal" class="modal cursor-pointer">
@@ -318,7 +344,8 @@
 
 			<btn
 				class="btn btn-secondary btn-sm w-1/12 p-0 text-white"
-				on:click={checkIngredients} on:keyup><Plus size={16} weight="bold" /></btn
+				on:click={checkIngredients}
+				on:keyup><Plus size={16} weight="bold" /></btn
 			>
 		</div>
 
@@ -343,7 +370,7 @@
 		<h1
 			class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
 		>
-			<p class="text-gray-500 align-middle opacity-50"><Lightbulb weight="bold"/></p>
+			<p class="text-gray-500 align-middle opacity-50"><Lightbulb weight="bold" /></p>
 			tip: complete all fields to see a preview of your recipe
 		</h1>
 	{:else}
