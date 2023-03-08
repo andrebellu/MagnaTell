@@ -15,11 +15,7 @@ html {
 }
 
 .footer-icon {
-	@apply text-base-100 text-3xl p-0 font-normal btn btn-ghost rounded-2xl px-2;
-}
-
-.active-footer-icon {
-	@apply bg-secondary hover:bg-secondary;
+	@apply text-base-100 text-3xl p-0 btn btn-ghost rounded-2xl px-2;
 }
 
 .carousel-home {

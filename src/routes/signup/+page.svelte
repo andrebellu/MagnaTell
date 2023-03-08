@@ -1,6 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { authHandlers } from '../stores/authStore.js';
+	import Eye from 'phosphor-svelte/lib/Eye';
+	import EyeSlash from 'phosphor-svelte/lib/EyeSlash';
 
 	let username, email, password;
 	let error = '';
@@ -77,13 +79,13 @@
 							on:input={(e) => (password = e.target.value)}
 						/>
 						<button
-							class="material-symbols-outlined -ml-10 translate-x-2 z-20"
+							class="text-2xl -ml-10 translate-x-2 z-20"
 							on:click={() => (hidePassword = !hidePassword)}
 						>
 							{#if hidePassword}
-								visibility_off
+								<EyeSlash />
 							{:else}
-								visibility
+								<Eye />
 							{/if}
 						</button>
 					</div>

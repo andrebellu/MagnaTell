@@ -1,6 +1,8 @@
 <script>
 	import { title_store, difficulty_store } from '../../../../routes/stores/store';
 	export let cover;
+	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
+	import Star from 'phosphor-svelte/lib/Star';
 
 	let user = JSON.parse(
 		localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
@@ -27,7 +29,7 @@
 						<h1 class="font-medium text-xs truncate">{user.displayName}</h1>
 					</div>
 				</div>
-				<div class="material-symbols-outlined text-lg">bookmark</div>
+				<div class="text-lg"><BookmarkSimple /></div>
 			</div>
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">
@@ -39,9 +41,9 @@
 						<div class="text-red-600">•••</div>
 					{/if}
 				</p>
-				<div class="flex flex-row text-xs font-poppins font-normal">
+				<div class="flex flex-row text-xs font-poppins font-normal items-center">
 					4,8
-					<div class="material-icons text-xs text-yellow-500">grade</div>
+					<div class=" text-xs text-yellow-500"><Star weight="fill" /></div>
 				</div>
 			</div>
 		</div>

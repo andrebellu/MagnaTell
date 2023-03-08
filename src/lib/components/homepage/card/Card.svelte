@@ -2,6 +2,8 @@
 	import { realDB } from '$lib/firebase/firebase.client';
 	import { onValue, ref } from 'firebase/database';
 	export let recipe;
+	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
+	import Star from 'phosphor-svelte/lib/Star';
 
 	let grade = 0;
 	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
@@ -38,7 +40,7 @@
 						</h1>
 					</div>
 				</div>
-				<div class="material-symbols-outlined text-lg">bookmark</div>
+				<div class="text-lg"><BookmarkSimple /></div>
 			</div>
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">
@@ -50,9 +52,9 @@
 						<div class="text-red-600">•••</div>
 					{/if}
 				</p>
-				<div class="flex flex-row text-xs font-poppins font-normal">
+				<div class="flex flex-row text-xs font-poppins font-normal items-center">
 					{grade}
-					<div class="material-icons text-xs text-yellow-500">grade</div>
+					<div class="text-xs text-yellow-500"><Star weight="fill" /></div>
 				</div>
 			</div>
 		</div>

@@ -10,9 +10,8 @@
 	import { onMount } from 'svelte';
 
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
-
-	import { ref as refReal, set } from "firebase/database";
-	import { realDB } from '$lib/firebase/firebase.client';
+	import Plus from 'phosphor-svelte/lib/Plus';
+	import { Lightbulb } from 'phosphor-svelte/lib/Lightbulb';
 
 	$: $title_store = title;
 	$: $difficulty_store = difficulty;
@@ -317,9 +316,9 @@
 				on:keyup={(e) => e.key == 'Enter' && checkIngredients()}
 			/>
 
-			<button
-				class="btn btn-secondary btn-sm material-symbols-outlined w-1/12"
-				on:click={checkIngredients}>add</button
+			<btn
+				class="btn btn-secondary btn-sm w-1/12 p-0 text-white"
+				on:click={checkIngredients} on:keyup><Plus size={16} weight="bold" /></btn
 			>
 		</div>
 
@@ -344,7 +343,7 @@
 		<h1
 			class="text-sm font-poppins text-center font-bold mb-0 text-gray-400 align-bottom opacity-50"
 		>
-			<p class="material-symbols-outlined text-gray-500 align-middle opacity-50">light</p>
+			<p class="text-gray-500 align-middle opacity-50"><Lightbulb weight="bold"/></p>
 			tip: complete all fields to see a preview of your recipe
 		</h1>
 	{:else}
