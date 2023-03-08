@@ -47,7 +47,8 @@
 				...categories,
 				{
 					id: doc.id,
-					name: doc.data().name
+					name: doc.data().name,
+					icon: doc.data().icon
 				}
 			]);
 		});
