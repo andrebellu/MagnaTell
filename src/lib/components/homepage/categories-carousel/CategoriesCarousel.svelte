@@ -16,8 +16,6 @@
 	let icon = category.icon;
 
 	const handleOnClick = (e) => {
-		console.log(category);
-
 		recipesFound.set(0);
 
 		pressed.update((pressed) => {
@@ -57,7 +55,7 @@
 </div> -->
 
 <div
-	class="flex justify-center items-center carousel-item max-w-32 p-2 h-8 mx-2 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-110"
+	class="flex justify-center items-center carousel-item max-w-32 p-2 h-8 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-105"
 	class:active={$active == category.name}
 	on:click={() => handleOnClick(category.name)}
 	on:keydown={handleOnClick}
@@ -85,7 +83,7 @@
 
 		<div class="title">
 			<h1
-				class="whitespace-nowrap overflow-hidden text-ellipsis text-left [&.active]:text-white"
+				class="whitespace-nowrap overflow-hidden text-ellipsis text-left [&.active]:text-white text-black [&.active]:font-bold transition-all duration-300"
 				class:active={$active == category.name}
 			>
 				{category.name}

@@ -17,6 +17,7 @@
 	let cover;
 
 	onMount(async () => {
+		console.log($categories);
 		recipes.set([]);
 		categories.set([]);
 
@@ -99,7 +100,7 @@
 	{#if $categories.length == 0}
 		<LoadingCategoriesCarousel />
 	{:else}
-		<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
+		<div class="carousel carousel-center space-x-2 py-4 px-4 bg-trasparent">
 			{#each $categories as category}
 				<CategoriesCarousel {category} />
 			{/each}
