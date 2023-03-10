@@ -1,12 +1,9 @@
 <script>
 	import { title_store, difficulty_store } from '../../../../routes/stores/store';
 	export let cover;
+	export let user;
 	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
 	import Star from 'phosphor-svelte/lib/Star';
-
-	let user = JSON.parse(
-		localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
-	);
 </script>
 
 <!-- change text font after implementation of the new font-->

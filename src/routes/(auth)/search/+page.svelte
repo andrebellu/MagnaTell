@@ -17,7 +17,6 @@
 	let cover;
 
 	onMount(async () => {
-		console.log($categories);
 		recipes.set([]);
 		categories.set([]);
 

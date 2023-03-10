@@ -26,7 +26,7 @@
 	let link = '';
 	let category = writable([]);
 	let difficulty = '';
-	let time;
+	let time = '';
 	let description = '';
 	let ingredients = writable([]);
 	let steps = '';
@@ -53,6 +53,10 @@
 				}
 			]);
 		});
+
+		user = JSON.parse(
+			localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+		);
 	});
 
 	const clear = () => {
@@ -70,10 +74,6 @@
 	};
 
 	async function addRecipe() {
-		user = JSON.parse(
-			localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
-		);
-
 		if (!user.emailVerified) {
 			document.getElementById('notVerified').checked = true;
 			return;
@@ -375,7 +375,7 @@
 		</h1>
 	{:else}
 		<h1 class="text-4xl text-center">Card Preview</h1>
-		<CardPreview {cover} />
+		<CardPreview {cover} {user}/>
 	{/if}
 
 	<button class="btn btn-accent w-full mt-4" on:click={addRecipe}>Add a recipe</button>
