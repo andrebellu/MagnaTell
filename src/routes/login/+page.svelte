@@ -77,13 +77,14 @@
 						on:keyup={(e) => e.key === 'Enter' && login()}
 					/>
 					<button
+						aria-label="toggle password visibility"
 						class="-ml-10 translate-x-2 z-20 text-2xl"
 						on:click={() => (hidePassword = !hidePassword)}
 					>
 						{#if hidePassword}
-							<EyeSlash/>
+							<EyeSlash />
 						{:else}
-							<Eye/>
+							<Eye />
 						{/if}
 					</button>
 				</div>
