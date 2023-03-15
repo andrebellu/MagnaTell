@@ -2,13 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { authHandlers } from '../stores/authStore.js';
 	import { fade, slide } from 'svelte/transition';
+	import Eye from 'phosphor-svelte/lib/Eye';
+	import EyeSlash from 'phosphor-svelte/lib/EyeSlash';
 
 	let email = '';
 	let password = '';
 	let error = '';
 
 	let hidePassword = 'password';
-	let e_class = false;
 
 	$: type = hidePassword ? 'password' : 'text';
 
@@ -54,7 +55,7 @@
 						class="relative block w-full appearance-none rounded-none 
 						rounded-t-md border border-neutral px-3 py-2
 						placeholder-accent focus:z-10 focus:border-secondary focus:outline-none 
-						focus:ring-secondary sm:text-sm {e_class ? 'border-red-500' : ''}"
+						focus:ring-secondary sm:text-sm"
 						placeholder="Email address"
 						bind:value={email}
 					/>
@@ -70,19 +71,20 @@
 						class="relative block w-full appearance-none rounded-none 
 						rounded-b-md border border-neutral px-3 py-2
 						placeholder-accent focus:z-10 focus:border-secondary focus:outline-none 
-						focus:ring-secondary sm:text-sm {e_class ? 'border-red-500' : ''}"
+						focus:ring-secondary sm:text-sm"
 						placeholder="Password"
 						on:input={(e) => (password = e.target.value)}
 						on:keyup={(e) => e.key === 'Enter' && login()}
 					/>
 					<button
-						class="material-symbols-outlined -ml-10 translate-x-2 z-20"
+						aria-label="toggle password visibility"
+						class="-ml-10 translate-x-2 z-20 text-2xl"
 						on:click={() => (hidePassword = !hidePassword)}
 					>
 						{#if hidePassword}
-							visibility_off
+							<EyeSlash />
 						{:else}
-							visibility
+							<Eye />
 						{/if}
 					</button>
 				</div>

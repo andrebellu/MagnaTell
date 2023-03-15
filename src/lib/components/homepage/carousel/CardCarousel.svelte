@@ -2,6 +2,7 @@
     import { realDB } from '$lib/firebase/firebase.client';
 	import { onValue, ref } from 'firebase/database';
 	export let recipe;
+	import Star from 'phosphor-svelte/lib/Star';
 
 	let grade = 0;
 	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
@@ -22,9 +23,9 @@
             <div class="px-4 pb-4 text-white flex flex-col-reverse w-full">
                 <div class="flex justify-between items-center">
                     <div class="text-sm font-poppins">{recipe.data.category.join(', ')}</div>
-                    <div class="flex flex-row text-sm text-white font-poppins">
+                    <div class="flex flex-row text-sm text-white font-poppins items-center">
                         {grade}
-                        <div class="material-icons text-sm text-yellow-500">grade</div>
+                        <div class="text-sm text-yellow-500"><Star weight="fill" /></div>
                     </div>
                 </div>
                 <div class="text-2xl font-bold font-cormorant leading-6">{recipe.data.title}</div>

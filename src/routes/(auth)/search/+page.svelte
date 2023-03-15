@@ -47,7 +47,8 @@
 				...categories,
 				{
 					id: doc.id,
-					name: doc.data().name
+					name: doc.data().name,
+					icon: doc.data().icon
 				}
 			]);
 		});
@@ -98,7 +99,7 @@
 	{#if $categories.length == 0}
 		<LoadingCategoriesCarousel />
 	{:else}
-		<div class="carousel carousel-center space-x-2 py-4 px-2 bg-trasparent">
+		<div class="carousel carousel-center space-x-2 py-4 px-4 bg-trasparent">
 			{#each $categories as category}
 				<CategoriesCarousel {category} />
 			{/each}
