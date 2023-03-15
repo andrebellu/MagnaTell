@@ -19,7 +19,7 @@
 
 	let user = '';
 	let uid = '';
-	let cover;
+	let cover = '/no-image.jpg';
 	let title = '';
 	let author = '';
 	let link = '';
@@ -66,6 +66,7 @@
 		ingredients = writable([]);
 		steps = '';
 		portions = '';
+		cover = '/no-image.jpg';
 	};
 
 	async function addRecipe() {
@@ -88,12 +89,22 @@
 				steps,
 				portions
 			});
-			cover = document.getElementById('cover').files[0];
-			storageRef = ref(storage, 'recipes-covers/' + docRef.id);
-			metadata = {
-				contentType: cover.type
-			};
-			await uploadBytes(storageRef, cover, metadata);
+
+			if (document.getElementById('cover').files.length == 0) {
+				cover = '/no-image.jpg';
+				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
+				metadata = {
+					contentType: 'image/jpeg'
+				};
+				await uploadBytes(storageRef, cover, metadata);
+			} else {
+				cover = document.getElementById('cover').files[0];
+				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
+				metadata = {
+					contentType: cover.type
+				};
+				await uploadBytes(storageRef, cover, metadata);
+			}
 
 			success = true;
 			document.getElementById('recipeAddedModal').checked = true;
