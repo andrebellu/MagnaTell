@@ -98,7 +98,7 @@ export const authHandlers = {
 	},
 
 	deleteAccount: async () => {
-		await deleteDoc(doc(db, 'users', auth.currentUser.uid))
+		await deleteDoc(doc(db, 'users', auth.currentUser.uid))	
 			.catch((error) => {
 				console.log(error);
 			});

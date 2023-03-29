@@ -23,7 +23,11 @@
 		});
 
 		active.update((active) => {
-			return category.name;
+			if (active == e) {
+				return '';
+			} else {
+				return e;
+			}
 		});
 
 		for (const recipe of $recipes) {
