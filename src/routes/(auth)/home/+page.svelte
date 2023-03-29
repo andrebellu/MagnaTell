@@ -12,6 +12,7 @@
 
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
+	import LoadingFilters from '../../../lib/components/loading/filters/LoadingFilters.svelte';
 
 	let cover;
 
@@ -64,7 +65,6 @@
 
 	<div class="cards pb-4 px-4">
 		<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
-
 		<Cards />
 	</div>
 </div>
