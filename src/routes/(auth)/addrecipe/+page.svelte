@@ -160,6 +160,18 @@
 		});
 	};
 
+	const handle_ingredients = (name) => {
+		let index = $ingredients.indexOf(name);
+		ingredients.update((data) => {
+			if (data.length === 1) {
+				return (data = []);
+			} else {
+				data.splice(index, 1);
+				return data;
+			}
+		});
+	};
+
 	const handleFileSelect = (e) => {
 		cover = e.target.files[0];
 		if (cover) {
@@ -355,7 +367,7 @@
 
 		<div class="badges flex flex-wrap gap-2 mt-2">
 			{#each $ingredients as ingredient}
-				<div class="badge badge-secondary truncate">{ingredient.ingredient}</div>
+				<div class="badge badge-secondary truncate" on:keyup on:click={handle_ingredients(ingredient)}>{ingredient.ingredient}</div>
 			{/each}
 		</div>
 	</div>
