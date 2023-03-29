@@ -97,14 +97,7 @@
 				portions
 			});
 
-			if (document.getElementById('cover').files.length == 0) {
-				cover = '/no-image.jpg';
-				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
-				metadata = {
-					contentType: 'image/jpeg'
-				};
-				await uploadBytes(storageRef, cover, metadata);
-			} else {
+			if (document.getElementById('cover').files.length != 0) {
 				cover = document.getElementById('cover').files[0];
 				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
 				metadata = {
@@ -386,7 +379,7 @@
 		</h1>
 	{:else}
 		<h1 class="text-4xl text-center">Card Preview</h1>
-		<CardPreview {cover} {user}/>
+		<CardPreview {cover} {user} />
 	{/if}
 
 	<button class="btn btn-accent w-full mt-4" on:click={addRecipe}>Add a recipe</button>
