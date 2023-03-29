@@ -1,12 +1,14 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { doc, getDoc } from 'firebase/firestore';
+	import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 	import LoadingRecipe from '../../../../lib/components/loading/recipe/LoadingRecipe.svelte';
 
-	import { storage } from '$lib/firebase/firebase.client';
+	import { storage, auth} from '$lib/firebase/firebase.client';
 	import { getDownloadURL, ref } from 'firebase/storage';
+
 
 	import Stars from '../../../../lib/components/recipe/rating/Stars.svelte';
 
@@ -50,6 +52,12 @@
 			link = 'https://' + link;
 		}
 	});
+
+	const recipesDelete = () => {
+		const ref = doc(db, "recipes", recipeId);
+		deleteDoc(ref)
+		goto('/home')
+	};
 </script>
 
 {#if recipe.title === undefined}
@@ -120,6 +128,10 @@
 			/>
 		{:else}
 			<a href={link} class="btn">Link</a>
+		{/if}
+
+		{#if recipe.uid == auth.currentUser.uid}
+			<button on:click={recipesDelete} class="btn btn-danger">Delete</button>
 		{/if}
 	</div>
 {/if}
