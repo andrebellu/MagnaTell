@@ -19,7 +19,11 @@
 		recipesFound.set(0);
 
 		pressed.update((pressed) => {
-			return e;
+			if (pressed == e) {
+				return '';
+			} else {
+				return e;
+			}
 		});
 
 		active.update((active) => {

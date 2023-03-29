@@ -59,6 +59,10 @@
 			searched.set($recipes.filter((recipe) => recipe.data.category.includes($pressed)));
 		} else if ($pressed && search) {
 			handleSearch();
+		}	else if (!$pressed && search) {
+			handleSearch();
+		} else if (!$pressed && (search == undefined || search == '')) {
+			searched.set({})
 		}
 	});
 
