@@ -1,9 +1,10 @@
 <script>
     import { realDB } from '$lib/firebase/firebase.client';
-    import { ref as refReal, onValue, set, remove } from "firebase/database";
+    import { ref as refReal, onValue, set, remove, ref, get, child } from "firebase/database";
     import { page } from '$app/stores';
     let gradeWrite = 0;
     let gradeRead = 0;
+    let grade = 0;
     let recipeId = ''
     const uid = JSON.parse(localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')).uid;
 
@@ -14,6 +15,18 @@
     onValue(refReal(realDB, 'recipes-grade/' + recipeId + '/stars/' + uid), (snapshot) => {
         if (snapshot.val()) {
             gradeRead = snapshot.val();
+        }
+    })
+
+    onValue(refReal(realDB, 'recipes-grade/' + recipeId + '/stars'), (snapshot) => {
+        if (snapshot.val()) {
+            grade = 0;
+            const stars = Object.values(snapshot.val())
+            stars.forEach((star) => {
+                grade += star;
+            });
+            grade = Number((grade / stars.length).toFixed(1));
+            set(refReal(realDB, 'recipes-grade/' + recipeId + '/average'), grade);
         }
     })
 
