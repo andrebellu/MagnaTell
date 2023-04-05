@@ -9,7 +9,6 @@
 	import Egg from 'phosphor-svelte/lib/Egg';
 	import CookingPot from 'phosphor-svelte/lib/CookingPot';
 	import Pizza from 'phosphor-svelte/lib/Pizza';
-	// import Pepper from 'phosphor-svelte/lib/Pepper';
 	import Pepper from '$lib/components/icons/Pepper/Pepper.svelte';
 	import Question from 'phosphor-svelte/lib/Question';
 
@@ -18,6 +17,7 @@
 
 	const handleOnClick = (e) => {
 		recipesFound.set(0);
+		console.log(icon);
 
 		pressed.update((pressed) => {
 			if (pressed == e) {

@@ -5,7 +5,7 @@
 	import { collection, getDocs } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 
-	import { recipes, searched, pressed, categories } from '../../stores/store';
+	import { recipes, searched, pressed, categories, active } from '../../stores/store';
 	import CategoriesCarousel from '$lib/components/homepage/categories-carousel/CategoriesCarousel.svelte';
 
 	import LoadingCategoriesCarousel from '$lib/components/loading/categories-carousel/LoadingCategoriesCarousel.svelte';
@@ -19,6 +19,8 @@
 	onMount(async () => {
 		recipes.set([]);
 		categories.set([]);
+		pressed.set('');
+		active.set('');
 
 		const querySnapshot = await getDocs(collection(db, 'recipes'));
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
@@ -87,7 +89,7 @@
 	{#if $recipes.length == 0}
 		<div class="flex flex-col w-full items-center justify-center">
 			<div class="flex h-9 w-32 my-4 rounded-full bg-accent animate-pulse" />
-			<div class="flex bg-accent w-full h-10 rounded-lg animate-pulse"/>
+			<div class="flex bg-accent w-full h-10 rounded-lg animate-pulse" />
 		</div>
 	{:else}
 		<h1 class="text-center text-4xl py-4 font-cormorant font-bold">Search</h1>
