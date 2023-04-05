@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import Footer from '$lib/components//layout/footer/Footer.svelte';
+	import Footer from '$lib/components/layout/footer/Footer.svelte';
 	import Navbar from '$lib/components/layout/navbar/Navbar.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';

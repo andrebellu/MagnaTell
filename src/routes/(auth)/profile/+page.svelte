@@ -86,7 +86,11 @@
 			Welcome, {user.displayName || user.email}!
 		</h2>
 
-		<img src={user.photoURL || defaultAvatar} alt="Profile pic" class="w-32 h-32 rounded-full" />
+		{#if user.photoURL}
+			<img src={user.photoURL} alt="Profile pic" class="w-32 h-32 rounded-full" />
+		{:else}
+			<img src={defaultAvatar} alt="Profile pic" class="w-32 h-32 rounded-full" />
+		{/if}
 
 		<div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
