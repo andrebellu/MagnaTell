@@ -59,10 +59,10 @@
 			searched.set($recipes.filter((recipe) => recipe.data.category.includes($pressed)));
 		} else if ($pressed && search) {
 			handleSearch();
-		}	else if (!$pressed && search) {
+		} else if (!$pressed && search) {
 			handleSearch();
 		} else if (!$pressed && (search == undefined || search == '')) {
-			searched.set({})
+			searched.set({});
 		}
 	});
 
@@ -84,19 +84,26 @@
 </script>
 
 <div class="search px-4">
-	<h1 class="text-center text-4xl py-4 font-cormorant font-bold">Search</h1>
-	<input
-		type="text"
-		bind:value={search}
-		on:input={handleSearch}
-		placeholder="Search for a recipe"
-		class="input input-bordered outline-none focus:outline-none input-sm border-2 border-accent bg-white w-full h-10 px-3 text-base placeholder-gray-600 rounded-lg focus:shadow-outline"
-		on:keydown={(e) => {
-			if (e.key === 'Enter') {
-				handleSearch();
-			}
-		}}
-	/>
+	{#if $recipes.length == 0}
+		<div class="flex flex-col w-full items-center justify-center">
+			<div class="flex h-9 w-32 my-4 rounded-full bg-accent animate-pulse" />
+			<div class="flex bg-accent w-full h-10 rounded-lg animate-pulse"/>
+		</div>
+	{:else}
+		<h1 class="text-center text-4xl py-4 font-cormorant font-bold">Search</h1>
+		<input
+			type="text"
+			bind:value={search}
+			on:input={handleSearch}
+			placeholder="Search for a recipe"
+			class="input input-bordered outline-none focus:outline-none input-sm border-2 border-accent bg-white w-full h-10 px-3 text-base placeholder-gray-600 rounded-lg focus:shadow-outline"
+			on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					handleSearch();
+				}
+			}}
+		/>
+	{/if}
 </div>
 
 <div class="filters">
