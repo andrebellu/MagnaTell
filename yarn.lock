@@ -958,6 +958,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@phosphor-icons/web@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@phosphor-icons/web@npm:2.0.3"
+  checksum: 8cd93cbcc24e7856f896100c05725138db2d9c8849f993c5146b612ecac8ab18a139ea0a6b18d2a3a10d98cac51f0aa4895babd80ba34f9fc9d2f02bd8b574c0
+  languageName: node
+  linkType: hard
+
 "@polka/url@npm:^1.0.0-next.20":
   version: 1.0.0-next.21
   resolution: "@polka/url@npm:1.0.0-next.21"
@@ -3335,6 +3342,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "magnatell@workspace:."
   dependencies:
+    "@phosphor-icons/web": ^2.0.3
     "@sveltejs/adapter-auto": ^2.0.0
     "@sveltejs/adapter-vercel": ^2.0.2
     "@sveltejs/kit": ^1.5.0

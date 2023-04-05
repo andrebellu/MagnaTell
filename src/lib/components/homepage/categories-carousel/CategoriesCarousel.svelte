@@ -10,6 +10,7 @@
 	import CookingPot from 'phosphor-svelte/lib/CookingPot';
 	import Pizza from 'phosphor-svelte/lib/Pizza';
 	// import Pepper from 'phosphor-svelte/lib/Pepper';
+	import Pepper from '$lib/components/icons/Pepper/Pepper.svelte';
 	import Question from 'phosphor-svelte/lib/Question';
 
 	export let category;
@@ -84,6 +85,8 @@
 				<CookingPot class="bg-white rounded-box p-1" size={38} />
 			{:else if icon == 'Pizza'}
 				<Pizza class="bg-white rounded-box p-1" size={38} />
+			{:else if (icon = 'Pepper')}
+				<Pepper />
 			{:else}
 				<Question class="bg-white rounded-box p-1" size={38} />
 			{/if}
