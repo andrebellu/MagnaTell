@@ -6,14 +6,14 @@
 
 <div class="filters flex gap-x-1 py-2">
 	<span
-		class="badge rounded-r-lg p-4 text-xl animate-pulse bg-gray-200 dark:bg-accent text-gray-200"
+		class="badge rounded-r-lg p-4 text-xl animate-pulse bg-accent text-base-100"
 		><Fire />
 	</span>
-	<span class="badge rounded-lg p-4 text-xl animate-pulse bg-gray-200 dark:bg-accent text-gray-200"
+	<span class="badge rounded-lg p-4 text-xl animate-pulse bg-accent text-base-100"
 		><Eye />
 	</span>
 	<span
-		class="badge rounded-l-lg p-4 text-xl animate-pulse bg-gray-200 dark:bg-accent text-gray-200"
+		class="badge rounded-l-lg p-4 text-xl animate-pulse bg-accent text-base-100"
 	>
 		<TrendUp />
 	</span>
