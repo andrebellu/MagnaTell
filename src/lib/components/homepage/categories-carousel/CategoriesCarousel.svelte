@@ -10,6 +10,7 @@
 	import CookingPot from 'phosphor-svelte/lib/CookingPot';
 	import Pizza from 'phosphor-svelte/lib/Pizza';
 	// import Pepper from 'phosphor-svelte/lib/Pepper';
+	import Pepper from '$lib/components/icons/Pepper/Pepper.svelte';
 	import Question from 'phosphor-svelte/lib/Question';
 
 	export let category;
@@ -19,11 +20,19 @@
 		recipesFound.set(0);
 
 		pressed.update((pressed) => {
-			return e;
+			if (pressed == e) {
+				return '';
+			} else {
+				return e;
+			}
 		});
 
 		active.update((active) => {
-			return category.name;
+			if (active == e) {
+				return '';
+			} else {
+				return e;
+			}
 		});
 
 		for (const recipe of $recipes) {
@@ -76,6 +85,8 @@
 				<CookingPot class="bg-white rounded-box p-1" size={38} />
 			{:else if icon == 'Pizza'}
 				<Pizza class="bg-white rounded-box p-1" size={38} />
+			{:else if (icon = 'Pepper')}
+				<Pepper />
 			{:else}
 				<Question class="bg-white rounded-box p-1" size={38} />
 			{/if}

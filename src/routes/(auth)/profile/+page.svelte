@@ -1,4 +1,5 @@
 <script>
+	import { active } from './../../stores/store.js';
 	import { authHandlers, defaultAvatar } from '../../stores/authStore';
 
 	import { goto } from '$app/navigation';
@@ -16,6 +17,8 @@
 
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
+
+	import {ForkKnife} from 'phosphor-svelte';
 
 	let user;
 	let cover;
@@ -81,13 +84,29 @@
 </script>
 
 {#if user}
-	<div class="w-screen flex justify-center flex-col items-center gap-y-2">
-		<h2 class="text-2xl text-center font-bold">
-			Welcome, {user.displayName || user.email}!
-		</h2>
+		<div class="flex justify-items-stretch pl-[30px] pt-[20px] pb-[40px]">
+			{#if user.photoURL}
+				<img src={user.photoURL} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+			{:else}
+				<img src={defaultAvatar} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+			{/if}
+			<div class="self-center justify-self-start pl-[20px]">
+				<p class="italic font-inter">Chef</p>
+				<h2 class="text-xl font-bold font-inter">
+					{user.displayName || user.email}
+				</h2>
+			</div>
+		</div>
 
-		<img src={user.photoURL || defaultAvatar} alt="Profile pic" class="w-32 h-32 rounded-full" />
+		<div class="bg-accent rounded-[30px] w-screnn h-screen">
+			<div class="buttons flex justify-center justify-items-center pt-10">
+				<button class="profile-b hover:bg-secondary active:bg-secondary"><ForkKnife size={32}/></button>
+				<button class="profile-b hover:bg-secondary active:bg-secondary">RP</button>
+				<button class="profile-b hover:bg-secondary active:bg-secondary">RP</button>
+			</div>
+		</div>
 
+		<!--- Email verificatio section
 		<div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
 				{user.email}{user.emailVerified ? '✔' : '❌'}
@@ -98,7 +117,9 @@
 				{/if}
 			</p>
 		</div>
-
+		-->
+		<!---
+		!!Change Password section!!
 		{#if user === 'password'}
 			<div class="password">
 				<p
@@ -110,14 +131,14 @@
 				</p>
 			</div>
 		{/if}
-
+		!!Delete account section!!
 		<button on:click={logout} class="btn btn-primary rounded-xl">Logout</button>
 
 		<label for="deleteAccountModal" class="btn btn-outline mt-4 btn-error btn-xs rounded-full"
 			>Delete account</label
 		>
 
-		<!-- Confirm delete modal -->
+		!!Confirm delete modal!!
 		<input type="checkbox" id="deleteAccountModal" class="modal-toggle" />
 		<div class="modal modal-bottom sm:modal-middle">
 			<div class="modal-box">
@@ -148,7 +169,9 @@
 				</div>
 			</div>
 		</div>
-
+		-->
+		<!---
+		!!Recipes display section!!
 		{#if $myRecipes.length === 0}
 			<p class="text-2xl font-bold text-center mb-4 mt-8 font-cormorant">You have no recipes</p>
 		{:else}
@@ -161,5 +184,14 @@
 				</div>
 			</div>
 		{/if}
-	</div>
+		-->
 {/if}
+
+<style>
+.profile-b {
+	height: 52px;
+	width: 110px;
+	
+}
+
+</style>

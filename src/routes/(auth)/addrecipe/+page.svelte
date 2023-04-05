@@ -97,14 +97,7 @@
 				portions
 			});
 
-			if (document.getElementById('cover').files.length == 0) {
-				cover = '/no-image.jpg';
-				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
-				metadata = {
-					contentType: 'image/jpeg'
-				};
-				await uploadBytes(storageRef, cover, metadata);
-			} else {
+			if (document.getElementById('cover').files.length != 0) {
 				cover = document.getElementById('cover').files[0];
 				storageRef = ref(storage, 'recipes-covers/' + docRef.id);
 				metadata = {
@@ -158,6 +151,18 @@
 	const handle_category = (name) => {
 		let index = $category.indexOf(name);
 		category.update((data) => {
+			if (data.length === 1) {
+				return (data = []);
+			} else {
+				data.splice(index, 1);
+				return data;
+			}
+		});
+	};
+
+	const handle_ingredients = (name) => {
+		let index = $ingredients.indexOf(name);
+		ingredients.update((data) => {
 			if (data.length === 1) {
 				return (data = []);
 			} else {
@@ -362,7 +367,7 @@
 
 		<div class="badges flex flex-wrap gap-2 mt-2">
 			{#each $ingredients as ingredient}
-				<div class="badge badge-secondary truncate">{ingredient.ingredient}</div>
+				<div class="badge badge-secondary truncate" on:keyup on:click={handle_ingredients(ingredient)}>{ingredient.ingredient}</div>
 			{/each}
 		</div>
 	</div>
@@ -386,7 +391,7 @@
 		</h1>
 	{:else}
 		<h1 class="text-4xl text-center">Card Preview</h1>
-		<CardPreview {cover} {user}/>
+		<CardPreview {cover} {user} />
 	{/if}
 
 	<button class="btn btn-accent w-full mt-4" on:click={addRecipe}>Add a recipe</button>

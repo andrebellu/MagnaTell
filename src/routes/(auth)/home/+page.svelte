@@ -12,6 +12,7 @@
 
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
+	import LoadingFilters from '../../../lib/components/loading/filters/LoadingFilters.svelte';
 
 	let cover;
 
@@ -63,8 +64,11 @@
 	</div>
 
 	<div class="cards pb-4 px-4">
-		<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
-
+		{#if $recipes.length == 0}
+			<div class="flex bg-accent animate-pulse h-8 w-44 my-4 rounded-3xl" />
+		{:else}
+			<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
+		{/if}
 		<Cards />
 	</div>
 </div>

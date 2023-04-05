@@ -1,5 +1,5 @@
 import { auth } from '$lib/firebase/firebase.client';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, sendEmailVerification, getIdToken } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile, sendEmailVerification, getIdToken, deleteUser } from 'firebase/auth';
 import { goto } from '$app/navigation';
 import { request } from '$lib/firebase/fetch'
 
@@ -98,7 +98,12 @@ export const authHandlers = {
 	},
 
 	deleteAccount: async () => {
-		await deleteDoc(doc(db, 'users', auth.currentUser.uid))
+		await deleteDoc(doc(db, 'users', auth.currentUser.uid))	
+			.catch((error) => {
+				console.log(error);
+			});
+
+			await deleteUser(auth.currentUser)
 			.then(() => {
 				alert('Account deleted');
 				goto('/login');

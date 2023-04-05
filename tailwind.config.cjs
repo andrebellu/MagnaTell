@@ -27,6 +27,7 @@ module.exports = {
         "loftygoals": ['loftygoals', 'cursive'],
         "cormorant": ['cormorant', 'serif'],
         "poppins": ['poppins', 'sans-serif'],
+        "inter": ['Inter', 'sans-serif'],
       }
     }
   },

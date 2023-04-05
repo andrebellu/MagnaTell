@@ -1,6 +1,4 @@
-<div class="flex">
-  <div role="status" class="max-w-sm animate-pulse">
-    <div class="h-40 w-40 bg-gray-200 rounded-3xl dark:bg-accent"></div>
-    <span class="sr-only">Loading...</span>
-  </div>
+<div class="rounded-3xl flex flex-col items-center -mb-16 animate-pulse">
+	<div class="rounded-3xl h-32 w-32 z-10 bg-accent" />
+	<div class="card bg-accent z-0 w-40 h-40 flex justify-end -translate-y-16"></div>
 </div>
