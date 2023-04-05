@@ -4,6 +4,23 @@
 	import Filters from '$lib/components/homepage/filters/Filters.svelte';
 	import LoadingFilters from '$lib/components/loading/filters/LoadingFilters.svelte';
 	import LoadingCards from '$lib/components/loading/cards/LoadingCards.svelte';
+	import { realDB } from '$lib/firebase/firebase.client';
+	import { onValue, ref } from 'firebase/database';
+
+	let totalAverage = 0;
+
+	onValue(ref(realDB, 'recipes-grade/'), (snapshot) => {
+		if (snapshot.val()) {
+			totalAverage = 0;
+			const recipes = Object.values(snapshot.val())
+			recipes.forEach((r) => {
+				if(r.average!=undefined){
+					totalAverage += r.average;
+				}
+			});
+			totalAverage /= recipes.length
+		}
+	});
 </script>
 
 <div class="flex flex-row gap-4 justify-center md:w-screen md:flex-wrap">
@@ -13,7 +30,7 @@
 		<div class="pl-2 flex flex-col gap-4 md:flex-row">
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 == 0}
-					<Card {recipe} />
+					<Card {recipe} {totalAverage} />
 				{/if}
 			{/each}
 		</div>
@@ -22,7 +39,7 @@
 			<Filters />
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 != 0}
-					<Card {recipe} />
+					<Card {recipe} {totalAverage} />
 				{/if}
 			{/each}
 		</div>
