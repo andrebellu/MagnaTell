@@ -6,9 +6,8 @@
 	import { db } from '$lib/firebase/firebase.client';
 	import LoadingRecipe from '../../../../lib/components/loading/recipe/LoadingRecipe.svelte';
 
-	import { storage, auth} from '$lib/firebase/firebase.client';
+	import { storage, auth } from '$lib/firebase/firebase.client';
 	import { getDownloadURL, ref } from 'firebase/storage';
-
 
 	import Stars from '../../../../lib/components/recipe/rating/Stars.svelte';
 
@@ -54,9 +53,9 @@
 	});
 
 	const recipesDelete = () => {
-		const ref = doc(db, "recipes", recipeId);
-		deleteDoc(ref)
-		goto('/home')
+		const ref = doc(db, 'recipes', recipeId);
+		deleteDoc(ref);
+		goto('/home');
 	};
 </script>
 
@@ -134,4 +133,11 @@
 			<button on:click={recipesDelete} class="btn btn-danger">Delete</button>
 		{/if}
 	</div>
+
+	<ul class="steps">
+		<li class="step step-primary">General</li>
+		<li class="step step-primary">Ingredients</li>
+		<li class="step">Steps</li>
+		<li class="step">Links</li>
+	</ul>
 {/if}
