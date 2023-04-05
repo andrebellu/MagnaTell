@@ -24,7 +24,7 @@
 </script>
 
 <div class="grid grid-rows-[5rem_auto_4rem] grid-cols-1">
-	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup'}
+	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup' && $page.url.pathname !== '/profile'}
 		<div class="nav"><Navbar /></div>
 	{/if}
 

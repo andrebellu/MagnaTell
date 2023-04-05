@@ -81,16 +81,19 @@
 </script>
 
 {#if user}
-	<div class="w-screen flex justify-center flex-col items-center gap-y-2">
-		<h2 class="text-2xl text-center font-bold">
-			Welcome, {user.displayName || user.email}!
-		</h2>
-
-		{#if user.photoURL}
-			<img src={user.photoURL} alt="Profile pic" class="w-32 h-32 rounded-full" />
-		{:else}
-			<img src={defaultAvatar} alt="Profile pic" class="w-32 h-32 rounded-full" />
-		{/if}
+		<div class="flex justify-around justify-items-stretch">
+			{#if user.photoURL}
+				<img src={user.photoURL} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+			{:else}
+				<img src={defaultAvatar} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+			{/if}
+			<div class="self-center justify-self-start">
+				<p class="italic">Chef</p>
+				<h2 class="text-xl font-bold">
+					{user.displayName || user.email}
+				</h2>
+			</div>
+		</div>
 
 		<div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
@@ -165,5 +168,4 @@
 				</div>
 			</div>
 		{/if}
-	</div>
 {/if}
