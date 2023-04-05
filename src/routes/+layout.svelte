@@ -11,13 +11,13 @@
 
 	onMount(() => {
 		auth.onAuthStateChanged((user) => {
+			photoURL = user.photoURL;
+			console.log(photoURL);
 			u = JSON.parse(
 				localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
 			);
 			if (u == null) {
 				localStorage.clear();
-			} else {
-				photoURL = u.photoURL;
 			}
 		});
 	});

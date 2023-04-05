@@ -17,20 +17,32 @@
 
 <div class="flex w-screen h-16 px-6 justify-between items-center bg-primary rounded-t-3xl">
 	<a href="/home" class="footer-icon [&.active]:bg-secondary" class:active={active == '/home'}
-		><House weight="bold"/></a
+		><House weight="bold" /></a
 	>
 	<a href="/search" class="footer-icon [&.active]:bg-secondary" class:active={active == '/search'}
-		><MagnifyingGlass weight="bold"/></a
+		><MagnifyingGlass weight="bold" /></a
 	>
-	<a href="/addrecipe" class="footer-icon [&.active]:bg-secondary" class:active={active == '/addrecipe'}
-		><PlusCircle weight="bold"/></a
+	<a
+		href="/addrecipe"
+		class="footer-icon [&.active]:bg-secondary"
+		class:active={active == '/addrecipe'}><PlusCircle weight="bold" /></a
 	>
-	<a href="/notifications" class="footer-icon [&.active]:bg-secondary" class:active={active == '/notifications'}
-		><Bell weight="bold" /></a
+	<a
+		href="/notifications"
+		class="footer-icon [&.active]:bg-secondary"
+		class:active={active == '/notifications'}><Bell weight="bold" /></a
 	>
-	<a href="/profile" class="avatar placeholder footer-icon [&.active]:bg-secondary" class:active={active == '/profile'}>
+	<a
+		href="/profile"
+		class="avatar placeholder footer-icon [&.active]:bg-secondary"
+		class:active={active == '/profile'}
+	>
 		<div class="rounded-full w-9 h-9">
-			<img src={photoURL || defaultAvatar} alt="Avatar" class="rounded-full w-9 h-9" />
+			{#if photoURL}
+				<img src={photoURL} alt="Avatar" class="rounded-full w-9 h-9" />
+			{:else}
+				<img src={defaultAvatar} alt="Avatar" class="rounded-full w-9 h-9" />
+			{/if}
 		</div>
 	</a>
 </div>
