@@ -15,6 +15,7 @@
 	import LoadingFilters from '../../../lib/components/loading/filters/LoadingFilters.svelte';
 
 	let cover;
+	let bg_color = "accent";
 
 	onMount(async () => {
 		if ($recipes.length == 0) {
@@ -79,6 +80,6 @@
 		{:else}
 			<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
 		{/if}
-		<Cards />
+		<Cards {bg_color}/>
 	</div>
 </div>

@@ -9,6 +9,8 @@
 
 	let totalAverage = 0;
 
+	export let bg_color;
+
 	onValue(ref(realDB, 'recipes-grade/'), (snapshot) => {
 		if (snapshot.val()) {
 			totalAverage = 0;
@@ -30,7 +32,7 @@
 		<div class="pl-2 flex flex-col gap-4 md:flex-row">
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 == 0}
-					<Card {recipe} {totalAverage} />
+					<Card {recipe} {totalAverage} {bg_color}/>
 				{/if}
 			{/each}
 		</div>
@@ -39,7 +41,7 @@
 			<Filters />
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 != 0}
-					<Card {recipe} {totalAverage} />
+					<Card {recipe} {totalAverage} {bg_color}/>
 				{/if}
 			{/each}
 		</div>
