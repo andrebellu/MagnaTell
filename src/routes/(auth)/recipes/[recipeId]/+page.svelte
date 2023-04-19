@@ -23,8 +23,8 @@
 		const querySnapshot = await getDoc(doc(db, 'recipes', recipeId));
 		recipe = querySnapshot.data();
 		try {
-			if (querySnapshot.docs[i].data().hasCover) {
-				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+			if (recipe.hasCover) {
+				await getDownloadURL(ref(storage, 'recipes-covers/' + recipeId)).then(
 					(url) => {
 						cover = url;
 					}
