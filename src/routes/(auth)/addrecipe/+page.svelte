@@ -1,9 +1,9 @@
 <script>
-	import { categories, title_store, difficulty_store } from './../../stores/store.js';
+	import { categories, title_store, difficulty_store, recipes } from './../../stores/store.js';
 	import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 	import { db, storage } from '$lib/firebase/firebase.client';
-	import { ref, uploadBytes } from 'firebase/storage';
+	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 	import { writable } from 'svelte/store';
 
@@ -34,6 +34,7 @@
 	let hasCover = false;
 	let storageRef;
 	let metadata;
+	let coverUrl = '';
 
 	let ingredient = '';
 	let quantity = '';
@@ -106,10 +107,33 @@
 					contentType: cover.type
 				};
 				await uploadBytes(storageRef, cover, metadata);
+				coverUrl = await getDownloadURL(storageRef);
 			}
 
 			success = true;
 			document.getElementById('recipeAddedModal').checked = true;
+
+			recipes.update((recipes) => [
+				...recipes,
+				{
+					id: docRef.id,
+					data: {
+						uid,
+						title,
+						author,
+						link,
+						category: $category,
+						difficulty,
+						time,
+						description,
+						ingredients: $ingredients,
+						steps,
+						portions,
+						hasCover
+					},
+					cover: coverUrl
+				}
+			]);
 
 			clear();
 		} catch (e) {
