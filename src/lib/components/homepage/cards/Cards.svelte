@@ -8,6 +8,7 @@
 	import { onValue, ref } from 'firebase/database';
 
 	let totalAverage = 0;
+	let own_recipes = 0; 
 
 	export let bg_color;
 

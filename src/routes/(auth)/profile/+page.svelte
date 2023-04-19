@@ -111,7 +111,7 @@
 				<button on:click={() => page="favorites"} class:active={page == "favorites"} id="favourites" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-xl group"><BookmarkSimple weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
 				<button on:click={() => page="settings"} class:active={page == "settings"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
 			</div>
-			<div class="py-10">
+			<div class="pt-10 pb-20">
 				<Cards {bg_color} />
 			</div>
 		</div>
