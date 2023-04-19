@@ -40,7 +40,11 @@
 					}
 				]);
 			}
-		} else if ($categories.length == 0) {
+		} else {
+			return;
+		}
+
+		if ($categories.length == 0) {
 			categories.set([]);
 
 			const categoriesQuery = await getDocs(collection(db, 'categories'));
@@ -49,7 +53,8 @@
 					...categories,
 					{
 						id: doc.id,
-						name: doc.data().name
+						name: doc.data().name,
+						icon: doc.data().icon
 					}
 				]);
 			});

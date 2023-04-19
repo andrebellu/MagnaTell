@@ -17,43 +17,52 @@
 	let cover;
 
 	onMount(async () => {
-		recipes.set([]);
-		categories.set([]);
 		pressed.set('');
 		active.set('');
+		if ($recipes.length == 0) {
+			recipes.set([]);
 
-		const querySnapshot = await getDocs(collection(db, 'recipes'));
-		for (let i = 0; i < querySnapshot.docs.length; i++) {
-			try {
-				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
-					(url) => {
-						cover = url;
-					}
-				);
-			} catch {
-				cover = '/no-image.jpg';
-			}
-			recipes.update((recipes) => [
-				...recipes,
-				{
-					id: querySnapshot.docs[i].id,
-					data: querySnapshot.docs[i].data(),
-					cover
+			const querySnapshot = await getDocs(collection(db, 'recipes'));
+			for (let i = 0; i < querySnapshot.docs.length; i++) {
+				try {
+					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+						(url) => {
+							cover = url;
+						}
+					);
+				} catch {
+					cover = '/no-image.jpg';
 				}
-			]);
+				recipes.update((recipes) => [
+					...recipes,
+					{
+						id: querySnapshot.docs[i].id,
+						data: querySnapshot.docs[i].data(),
+						cover
+					}
+				]);
+			}
+		} else {
+			return;
 		}
 
-		const categoriesQuery = await getDocs(collection(db, 'categories'));
-		categoriesQuery.forEach((doc) => {
-			categories.update((categories) => [
-				...categories,
-				{
-					id: doc.id,
-					name: doc.data().name,
-					icon: doc.data().icon
-				}
-			]);
-		});
+		if ($categories.length == 0) {
+			categories.set([]);
+
+			const categoriesQuery = await getDocs(collection(db, 'categories'));
+			categoriesQuery.forEach((doc) => {
+				categories.update((categories) => [
+					...categories,
+					{
+						id: doc.id,
+						name: doc.data().name,
+						icon: doc.data().icon
+					}
+				]);
+			});
+		} else {
+			return;
+		}
 	});
 
 	pressed.subscribe((value) => {
