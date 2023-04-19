@@ -7,7 +7,7 @@
 
 	import { myRecipes } from '../../stores/store';
 
-	import Card from '$lib/components/homepage/card/Card.svelte';
+	import Cards from '../../../lib/components/homepage/cards/Cards.svelte';
 
 	import { collection, query, where, getDocs } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
@@ -22,9 +22,12 @@
 
 	let user;
 	let cover;
+	let page="recipes";
 
 	let confirmDelete;
 	let deleteButton;
+
+	let bg_color = "primary";
 
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
@@ -102,40 +105,17 @@
 		</div>
 	</div>
 
-	<div class="bg-accent rounded-[2.50rem] w-screnn h-screen">
-		<div class="buttons flex justify-center pt-10">
-			<button
-				id="recipes"
-				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-l-full rounded-r-[281.25rem] group"
-				><ForkKnife
-					weight="fill"
-					size={30}
-					class="text-secondary group-hover:text-primary group-active:text-primary"
-				/></button
-			>
-			<button
-				id="favourites"
-				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-xl group"
-				><BookmarkSimple
-					weight="fill"
-					size={30}
-					class="text-secondary group-hover:text-primary group-active:text-primary"
-				/></button
-			>
-			<button
-				id="recipes"
-				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-r-full rounded-l-[281.25rem] group"
-				><GearSix
-					weight="fill"
-					size={30}
-					class="text-secondary group-hover:text-primary group-active:text-primary"
-				/></button
-			>
+		<div class="bg-accent rounded-[2.50rem] w-screnn h-max">
+			<div class="buttons flex justify-center pt-10">
+				<button on:click={() => page="recipes"} class:active={page == "recipes"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-l-full rounded-r-[281.25rem] group"><ForkKnife weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
+				<button on:click={() => page="favorites"} class:active={page == "favorites"} id="favourites" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-xl group"><BookmarkSimple weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
+				<button on:click={() => page="settings"} class:active={page == "settings"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
+			</div>
+			<div class="py-10">
+				<Cards {bg_color} />
+			</div>
 		</div>
-	</div>
-
-	<!--- Email verificatio section
-		<div class="email flex justify-center flex-col">
+		<!-- <div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
 				{user.email}{user.emailVerified ? '✔' : '❌'}
 				{#if !user.emailVerified}
@@ -144,9 +124,8 @@
 					>
 				{/if}
 			</p>
-		</div>
-		-->
-	<!---
+		</div> -->
+		<!---
 		!!Change Password section!!
 		{#if user === 'password'}
 			<div class="password">
