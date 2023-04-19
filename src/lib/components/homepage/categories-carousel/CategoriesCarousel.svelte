@@ -64,7 +64,7 @@
 </div> -->
 
 <div
-	class="flex justify-center items-center carousel-item w-32 p-2 h-8 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-105"
+	class="flex justify-center items-center carousel-item w-32 p-2 h-8 bg-accent rounded-box transition-all duration-300 [&.active]:bg-secondary [&.active]:scale-105 cursor-pointer"
 	class:active={$active == category.name}
 	on:click={() => handleOnClick(category.name)}
 	on:keydown={handleOnClick}

@@ -18,7 +18,7 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
-	import {ForkKnife} from 'phosphor-svelte';
+	import {ForkKnife, BookmarkSimple, GearSix} from 'phosphor-svelte';
 
 	let user;
 	let cover;
@@ -84,13 +84,13 @@
 </script>
 
 {#if user}
-		<div class="flex justify-items-stretch pl-[30px] pt-[20px] pb-[40px]">
+		<div class="flex justify-items-stretch pl-8 pt-5 pb-10">
 			{#if user.photoURL}
-				<img src={user.photoURL} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+				<img src={user.photoURL} alt="Profile pic" class="w-24 h-24 rounded-full" />
 			{:else}
-				<img src={defaultAvatar} alt="Profile pic" class="w-[100px] h-[100px] rounded-full" />
+				<img src={defaultAvatar} alt="Profile pic" class="w-24 h-24 rounded-full" />
 			{/if}
-			<div class="self-center justify-self-start pl-[20px]">
+			<div class="self-center justify-self-start pl-5">
 				<p class="italic font-inter">Chef</p>
 				<h2 class="text-xl font-bold font-inter">
 					{user.displayName || user.email}
@@ -98,11 +98,11 @@
 			</div>
 		</div>
 
-		<div class="bg-accent rounded-[30px] w-screnn h-screen">
-			<div class="buttons flex justify-center justify-items-center pt-10">
-				<button class="profile-b hover:bg-secondary active:bg-secondary"><ForkKnife size={32}/></button>
-				<button class="profile-b hover:bg-secondary active:bg-secondary">RP</button>
-				<button class="profile-b hover:bg-secondary active:bg-secondary">RP</button>
+		<div class="bg-accent rounded-[2.50rem] w-screnn h-screen">
+			<div class="buttons flex justify-center pt-10">
+				<button id="recipes" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-l-full rounded-r-[281.25rem] group"><ForkKnife weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
+				<button id="favourites" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-xl group"><BookmarkSimple weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
+				<button id="recipes" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
 			</div>
 		</div>
 
@@ -189,8 +189,13 @@
 
 <style>
 .profile-b {
-	height: 52px;
-	width: 110px;
+	height: 3.25rem;
+	width: 6.875rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 0.1rem;
+	margin-right: 0.1rem;
 	
 }
 
