@@ -23,11 +23,15 @@
 			const querySnapshot = await getDocs(collection(db, 'recipes'));
 			for (let i = 0; i < querySnapshot.docs.length; i++) {
 				try {
-					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
-						(url) => {
-							cover = url;
-						}
-					);
+					if (querySnapshot.docs[i].data().hasCover) {
+						await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+							(url) => {
+								cover = url;
+							}
+						);
+					} else {
+						cover = '/no-image.jpg';
+					};
 				} catch {
 					cover = '/no-image.jpg';
 				}
@@ -61,6 +65,7 @@
 		} else {
 			return;
 		}
+		console.log($recipes);
 	});
 </script>
 

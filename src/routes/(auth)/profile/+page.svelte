@@ -18,7 +18,7 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
-	import {ForkKnife, BookmarkSimple, GearSix} from 'phosphor-svelte';
+	import { ForkKnife, BookmarkSimple, GearSix } from 'phosphor-svelte';
 
 	let user;
 	let cover;
@@ -43,11 +43,15 @@
 		const querySnapshot = await getDocs(q);
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
 			try {
-				await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
-					(url) => {
-						cover = url;
-					}
-				);
+				if (querySnapshot.docs[i].data().hasCover) {
+					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+						(url) => {
+							cover = url;
+						}
+					);
+				} else {
+					cover = '/no-image.jpg';
+				}
 			} catch {
 				cover = '/no-image.jpg';
 			}
@@ -84,29 +88,53 @@
 </script>
 
 {#if user}
-		<div class="flex justify-items-stretch pl-8 pt-5 pb-10">
-			{#if user.photoURL}
-				<img src={user.photoURL} alt="Profile pic" class="w-24 h-24 rounded-full" />
-			{:else}
-				<img src={defaultAvatar} alt="Profile pic" class="w-24 h-24 rounded-full" />
-			{/if}
-			<div class="self-center justify-self-start pl-5">
-				<p class="italic font-inter">Chef</p>
-				<h2 class="text-xl font-bold font-inter">
-					{user.displayName || user.email}
-				</h2>
-			</div>
+	<div class="flex justify-items-stretch pl-8 pt-5 pb-10">
+		{#if user.photoURL}
+			<img src={user.photoURL} alt="Profile pic" class="w-24 h-24 rounded-full" />
+		{:else}
+			<img src={defaultAvatar} alt="Profile pic" class="w-24 h-24 rounded-full" />
+		{/if}
+		<div class="self-center justify-self-start pl-5">
+			<p class="italic font-inter">Chef</p>
+			<h2 class="text-xl font-bold font-inter">
+				{user.displayName || user.email}
+			</h2>
 		</div>
+	</div>
 
-		<div class="bg-accent rounded-[2.50rem] w-screnn h-screen">
-			<div class="buttons flex justify-center pt-10">
-				<button id="recipes" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-l-full rounded-r-[281.25rem] group"><ForkKnife weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
-				<button id="favourites" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-xl group"><BookmarkSimple weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
-				<button id="recipes" class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary group-hover:text-primary group-active:text-primary"/></button>
-			</div>
+	<div class="bg-accent rounded-[2.50rem] w-screnn h-screen">
+		<div class="buttons flex justify-center pt-10">
+			<button
+				id="recipes"
+				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-l-full rounded-r-[281.25rem] group"
+				><ForkKnife
+					weight="fill"
+					size={30}
+					class="text-secondary group-hover:text-primary group-active:text-primary"
+				/></button
+			>
+			<button
+				id="favourites"
+				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-xl group"
+				><BookmarkSimple
+					weight="fill"
+					size={30}
+					class="text-secondary group-hover:text-primary group-active:text-primary"
+				/></button
+			>
+			<button
+				id="recipes"
+				class="profile-b hover:bg-secondary bg-primary active:bg-secondary rounded-r-full rounded-l-[281.25rem] group"
+				><GearSix
+					weight="fill"
+					size={30}
+					class="text-secondary group-hover:text-primary group-active:text-primary"
+				/></button
+			>
 		</div>
+	</div>
 
-		<!--- Email verificatio section
+	<!--- Email verificatio section
 		<div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
 				{user.email}{user.emailVerified ? '✔' : '❌'}
@@ -118,7 +146,7 @@
 			</p>
 		</div>
 		-->
-		<!---
+	<!---
 		!!Change Password section!!
 		{#if user === 'password'}
 			<div class="password">
@@ -170,7 +198,7 @@
 			</div>
 		</div>
 		-->
-		<!---
+	<!---
 		!!Recipes display section!!
 		{#if $myRecipes.length === 0}
 			<p class="text-2xl font-bold text-center mb-4 mt-8 font-cormorant">You have no recipes</p>
@@ -188,15 +216,13 @@
 {/if}
 
 <style>
-.profile-b {
-	height: 3.25rem;
-	width: 6.875rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-left: 0.1rem;
-	margin-right: 0.1rem;
-	
-}
-
+	.profile-b {
+		height: 3.25rem;
+		width: 6.875rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 0.1rem;
+		margin-right: 0.1rem;
+	}
 </style>

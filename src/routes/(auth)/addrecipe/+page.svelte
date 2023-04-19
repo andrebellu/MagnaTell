@@ -31,6 +31,7 @@
 	let ingredients = writable([]);
 	let steps = '';
 	let portions = '';
+	let hasCover = false;
 	let storageRef;
 	let metadata;
 
@@ -71,7 +72,7 @@
 		ingredients = writable([]);
 		steps = '';
 		portions = '';
-		cover = '/no-image.jpg';
+		hasCover = false;
 	};
 
 	async function addRecipe() {
@@ -94,7 +95,8 @@
 				description,
 				ingredients: $ingredients,
 				steps,
-				portions
+				portions,
+				hasCover
 			});
 
 			if (document.getElementById('cover').files.length != 0) {
@@ -180,6 +182,7 @@
 				cover = e.target.result;
 			};
 			reader.readAsDataURL(cover);
+			hasCover = true;
 		}
 	};
 </script>
