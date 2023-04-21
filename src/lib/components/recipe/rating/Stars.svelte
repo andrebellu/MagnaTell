@@ -6,7 +6,7 @@
     let gradeRead = 0;
     let grade = 0;
     let recipeId = ''
-    const uid = JSON.parse(localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')).uid;
+    const uid = JSON.parse(sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')).uid;
 
     page.subscribe(() => {
         recipeId = $page.url.pathname.replace('/recipes/', '');

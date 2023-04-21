@@ -35,11 +35,18 @@
 		deleteButton = 'btn-disabled btn-outline text-error';
 	}
 
-	onMount(async () => {
+	async function getUID() {
 		user = JSON.parse(
-			localStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
 		);
+		return user;
+	}
+
+	onMount(async () => {
 		myRecipes.set([]);
+
+		await getUID();
+		console.log(user)
 
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));
 
@@ -68,7 +75,7 @@
 			]);
 		}
 	});
-
+	
 	const logout = async () => {
 		await authHandlers.logout();
 		goto('/login');
@@ -112,7 +119,13 @@
 				<button on:click={() => page="settings"} class:active={page == "settings"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
 			</div>
 			<div class="pt-10 pb-20">
-				<Cards {bg_color} />
+				{#if page == "recipes"}
+					<Cards {bg_color} />
+				{:else if page == "favorites"}
+					favorites
+				{:else if page == "settings"}
+					settings
+				{/if}
 			</div>
 		</div>
 		<!-- <div class="email flex justify-center flex-col">
