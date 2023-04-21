@@ -35,18 +35,12 @@
 		deleteButton = 'btn-disabled btn-outline text-error';
 	}
 
-	async function getUID() {
-		user = JSON.parse(
-			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
-		);
-		return user;
-	}
-
 	onMount(async () => {
 		myRecipes.set([]);
 
-		await getUID();
-		console.log(user)
+		user = JSON.parse(
+			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+		);
 
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));
 

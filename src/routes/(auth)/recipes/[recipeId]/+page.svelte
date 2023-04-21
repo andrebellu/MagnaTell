@@ -52,19 +52,16 @@
 
 		link = recipe.link;
 
-		console.log(link);
 		if (link.includes('youtube')) {
 			link = link.replace('watch?v=', 'embed/');
 
 			if (link.includes('&')) {
 				link = link.split('&')[0];
-				console.log(link);
 			}
 		} else if (!link.includes('https://') && !link.includes('http://')) {
 			link = 'https://' + link;
 		}
 
-		console.log(link);
 	});
 
 	const recipesDelete = () => {

@@ -66,7 +66,6 @@
 		} else {
 			return;
 		}
-		console.log($recipes);
 	});
 </script>
 

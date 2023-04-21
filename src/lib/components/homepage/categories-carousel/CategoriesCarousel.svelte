@@ -17,7 +17,6 @@
 
 	const handleOnClick = (e) => {
 		recipesFound.set(0);
-		console.log(icon);
 
 		pressed.update((pressed) => {
 			if (pressed == e) {
