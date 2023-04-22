@@ -19,10 +19,12 @@
 	import { ref, getDownloadURL } from 'firebase/storage';
 
 	import { ForkKnife, BookmarkSimple, GearSix } from 'phosphor-svelte';
+	import Card from '../../../lib/components/homepage/card/Card.svelte';
 
 	let user;
 	let cover;
 	let page="recipes";
+	let totalAverage = 0;
 
 	let confirmDelete;
 	let deleteButton;
@@ -44,7 +46,7 @@
 
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));
 
-		const querySnapshot = await getDocs(q);
+		let querySnapshot = await getDocs(q);
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
 			try {
 				if (querySnapshot.docs[i].data().hasCover) {
@@ -114,7 +116,9 @@
 			</div>
 			<div class="pt-10 pb-20">
 				{#if page == "recipes"}
-					<Cards {bg_color} />
+					{#each $myRecipes as recipe}
+						<Card {recipe} {bg_color} {totalAverage}/>
+					{/each}
 				{:else if page == "favorites"}
 					favorites
 				{:else if page == "settings"}
