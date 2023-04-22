@@ -23,13 +23,13 @@
 
 	let user;
 	let cover;
-	let page="recipes";
+	let page = 'recipes';
 	let totalAverage = 0;
 
 	let confirmDelete;
 	let deleteButton;
 
-	let bg_color = "primary";
+	let bg_color = 'primary';
 
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
@@ -71,7 +71,7 @@
 			]);
 		}
 	});
-	
+
 	const logout = async () => {
 		await authHandlers.logout();
 		goto('/login');
@@ -108,25 +108,59 @@
 		</div>
 	</div>
 
-		<div class="bg-accent rounded-[2.50rem] w-screnn h-max">
-			<div class="buttons flex justify-center pt-10">
-				<button on:click={() => page="recipes"} class:active={page == "recipes"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-l-full rounded-r-[281.25rem] group"><ForkKnife weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
-				<button on:click={() => page="favorites"} class:active={page == "favorites"} id="favourites" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-xl group"><BookmarkSimple weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
-				<button on:click={() => page="settings"} class:active={page == "settings"} id="recipes" class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-r-full rounded-l-[281.25rem] group"><GearSix weight="fill" size={30} class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"/></button>
-			</div>
-			<div class="pt-10 pb-20">
-				{#if page == "recipes"}
-					{#each $myRecipes as recipe}
-						<Card {recipe} {bg_color} {totalAverage}/>
-					{/each}
-				{:else if page == "favorites"}
-					favorites
-				{:else if page == "settings"}
-					settings
-				{/if}
-			</div>
+	<div class="bg-accent rounded-[2.50rem] w-screnn h-max">
+		<div class="buttons flex justify-center pt-10">
+			<button
+				on:click={() => (page = 'recipes')}
+				class:active={page == 'recipes'}
+				id="recipes"
+				class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-l-full rounded-r-[281.25rem] group"
+				><ForkKnife
+					weight="fill"
+					size={30}
+					class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"
+				/></button
+			>
+			<button
+				on:click={() => (page = 'favorites')}
+				class:active={page == 'favorites'}
+				id="favourites"
+				class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-xl group"
+				><BookmarkSimple
+					weight="fill"
+					size={30}
+					class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"
+				/></button
+			>
+			<button
+				on:click={() => (page = 'settings')}
+				class:active={page == 'settings'}
+				id="recipes"
+				class="profile-b md:hover:bg-secondary bg-primary [&.active]:bg-secondary rounded-r-full rounded-l-[281.25rem] group"
+				><GearSix
+					weight="fill"
+					size={30}
+					class="text-secondary md:group-hover:text-primary group-[&.active]:text-primary"
+				/></button
+			>
 		</div>
-		<!-- <div class="email flex justify-center flex-col">
+		<div class="pt-10 pb-20">
+			{#if page == 'recipes'}
+				<div class="flex flex-wrap flex-row justify-center">
+					{#each $myRecipes as recipe}
+						<div class="card p-2">
+							<Card {recipe} {bg_color} {totalAverage} />
+						</div>
+					{/each}
+				</div>
+			{:else if page == 'favorites'}
+				favorites
+			{:else if page == 'settings'}
+				settings
+			{/if}
+		</div>
+	</div>
+	<!-- <div class="email flex justify-center flex-col">
 			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
 				{user.email}{user.emailVerified ? '✔' : '❌'}
 				{#if !user.emailVerified}
@@ -136,7 +170,7 @@
 				{/if}
 			</p>
 		</div> -->
-		<!---
+	<!---
 		!!Change Password section!!
 		{#if user === 'password'}
 			<div class="password">
