@@ -12,59 +12,36 @@
 
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
-	import LoadingFilters from '../../../lib/components/loading/filters/LoadingFilters.svelte';
 
 	let cover;
-	let bg_color = "accent";
+	let bg_color = 'accent';
 
 	onMount(async () => {
-		if ($recipes.length == 0) {
-			recipes.set([]);
+		recipes.set([]);
 
-			const querySnapshot = await getDocs(collection(db, 'recipes'));
-			for (let i = 0; i < querySnapshot.docs.length; i++) {
-				try {
-					if (querySnapshot.docs[i].data().hasCover) {
-						await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
-							(url) => {
-								cover = url;
-							}
-						);
-					} else {
-						cover = '/no-image.jpg';
-					};
-				} catch {
+		const querySnapshot = await getDocs(collection(db, 'recipes'));
+		for (let i = 0; i < querySnapshot.docs.length; i++) {
+			try {
+				if (querySnapshot.docs[i].data().hasCover) {
+					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+						(url) => {
+							cover = url;
+						}
+					);
+				} else {
 					cover = '/no-image.jpg';
 				}
-				recipes.update((recipes) => [
-					...recipes,
-					{
-						id: querySnapshot.docs[i].id,
-						data: querySnapshot.docs[i].data(),
-						cover
-					}
-				]);
+			} catch {
+				cover = '/no-image.jpg';
 			}
-		} else {
-			return;
-		}
-
-		if ($categories.length == 0) {
-			categories.set([]);
-
-			const categoriesQuery = await getDocs(collection(db, 'categories'));
-			categoriesQuery.forEach((doc) => {
-				categories.update((categories) => [
-					...categories,
-					{
-						id: doc.id,
-						name: doc.data().name,
-						icon: doc.data().icon
-					}
-				]);
-			});
-		} else {
-			return;
+			recipes.update((recipes) => [
+				...recipes,
+				{
+					id: querySnapshot.docs[i].id,
+					data: querySnapshot.docs[i].data(),
+					cover
+				}
+			]);
 		}
 	});
 </script>
@@ -84,6 +61,6 @@
 		{:else}
 			<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
 		{/if}
-		<Cards {bg_color}/>
+		<Cards {bg_color} />
 	</div>
 </div>

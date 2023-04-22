@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp, deleteApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAuth, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
+import { getAuth, setPersistence, browserLocalPersistence, browserSessionPersistence, inMemoryPersistence } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 
