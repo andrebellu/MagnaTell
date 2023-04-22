@@ -18,7 +18,16 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
-	import { ForkKnife, BookmarkSimple, GearSix } from 'phosphor-svelte';
+	import {
+		ForkKnife,
+		BookmarkSimple,
+		GearSix,
+		CheckCircle,
+		XCircle,
+		Pencil,
+		Warning,
+		SmileySad
+	} from 'phosphor-svelte';
 	import Card from '../../../lib/components/homepage/card/Card.svelte';
 
 	let user;
@@ -93,6 +102,37 @@
 	}
 </script>
 
+<input type="checkbox" id="deleteAccountModal" class="modal-toggle" />
+<div class="modal modal-bottom sm:modal-middle">
+	<div class="modal-box">
+		<h1 class="font-bold text-xl">Are you sure you want to delete your account?</h1>
+		<p class="pt-4 font-bold text-error">
+			If you delete your account all your recipes will be deleted as well.
+		</p>
+		<p class="pb-4 font-bold underline underline-offset-2 text-error">
+			The action cannot be reversed!
+		</p>
+
+		<p class="">To delete your account type CONFIRM</p>
+		<input
+			type="text"
+			class="confirmDelete input input-bordered w-full"
+			placeholder="CONFIRM"
+			bind:value={confirmDelete}
+		/>
+
+		<div class="modal-action">
+			<label
+				for="deleteAccountModal"
+				class="deleteButton btn btn-error {deleteButton}"
+				on:click={deleteAccount}
+				on:keydown={deleteAccount}>Delete</label
+			>
+			<label for="deleteAccountModal" class="btn">Cancel</label>
+		</div>
+	</div>
+</div>
+
 {#if user}
 	<div class="flex justify-items-stretch pl-8 pt-5 pb-10">
 		{#if user.photoURL}
@@ -144,7 +184,7 @@
 				/></button
 			>
 		</div>
-		<div class="pt-10 pb-20">
+		<div class="pt-5 pb-20">
 			{#if page == 'recipes'}
 				<div class="flex flex-wrap flex-row justify-center">
 					{#each $myRecipes as recipe}
@@ -156,7 +196,54 @@
 			{:else if page == 'favorites'}
 				favorites
 			{:else if page == 'settings'}
-				settings
+				<div class="settings px-6">
+					<h1 class="text-3xl font-cormorant font-bold">Settings</h1>
+
+					<div class="email flex items-center gap-x-1 mt-2">
+						<p>E-mail</p>
+						{#if user.emailVerified}
+							<CheckCircle weight="fill" size={25} class="text-green-500" />
+						{:else}
+							<button
+								on:click={sendVerificationEmail}
+								class="btn btn-secondary btn-xs text-white normal-case rounded-xl">Verify</button
+							>
+							<XCircle weight="fill" size={25} class="text-red-500" />
+						{/if}
+					</div>
+					<div class="flex justify-center flex-col">
+						<p id="email" class="font-extrabold">
+							{user.email}
+						</p>
+					</div>
+
+					<div class="password flex items-center gap-x-1 mt-2">
+						<p>Password</p>
+						<button
+							on:click={changePassword}
+							class="bg-primary p-2 text-white normal-case rounded-full"
+							><Pencil size={10} class="text-white" /></button
+						>
+					</div>
+					<div class="flex justify-center flex-col">
+						<p id="email" class="font-extrabold">**********</p>
+					</div>
+
+					<div class="warning-zone flex flex-col justify-center items-center gap-2">
+						<Warning weight="fill" size={30} class="" />
+
+						<h1 class="text-3xl font-cormorant font-bold">Warning zone</h1>
+						<p>Delete profile</p>
+						<div
+							class="button bg-secondary p-2 text-white normal-case rounded-full w-16 text-center flex justify-center items-center"
+						>
+							<label for="deleteAccountModal" class="absolute bg-red text-transparent text-2xl py-2"
+								>Delete</label
+							>
+							<SmileySad weight={'fill'} size={30} class="text-primary text-center" />
+						</div>
+					</div>
+				</div>
 			{/if}
 		</div>
 	</div>
