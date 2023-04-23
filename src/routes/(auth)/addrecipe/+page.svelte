@@ -12,8 +12,7 @@
 	import { authHandlers } from '../../stores/authStore.js';
 
 	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
-	import Plus from 'phosphor-svelte/lib/Plus';
-	import Lightbulb from 'phosphor-svelte/lib/Lightbulb';
+	import { Lightbulb, ChartBar, ChartPieSlice, Alarm, Plus } from 'phosphor-svelte/lib';
 
 	$: $title_store = title;
 	$: $difficulty_store = difficulty;
@@ -271,7 +270,7 @@
 		<!--RIGHT CONTAINER-->
 		<div class="briefing-box w-1/2">
 			<input
-				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-9"
 				placeholder="Title"
 				type="text"
 				name="title"
@@ -282,7 +281,7 @@
 			<div class="flex flex-col">
 				<div class="flex justify-between">
 					<select
-						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none h-9"
 						name="category"
 						id="category"
 						bind:value={singleCategory}
@@ -295,7 +294,7 @@
 					</select>
 				</div>
 
-				<div class="badges flex flex-row gap-2 mt-2">
+				<div class="badges flex flex-row gap-x-2 my-1">
 					{#each $category as category}
 						<div
 							class="badge {colors[
@@ -311,13 +310,25 @@
 				</div>
 
 				<input
-					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-9"
 					placeholder="Link"
 					type="url"
 					name="link"
 					id="link"
 					bind:value={link}
 				/>
+
+				<div class="various flex gap-x-1">
+					<div class="time bg-primary p-2 rounded-l-3xl rounded-r-xl">
+						<Alarm class="w-6 h-6" />
+					</div>
+					<div class="difficulty bg-primary p-2 rounded-xl">
+						<ChartBar class="w-6 h-6" />
+					</div>
+					<div class="portions bg-primary p-2 rounded-r-3xl rounded-l-xl">
+						<ChartPieSlice class="w-6 h-6" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
