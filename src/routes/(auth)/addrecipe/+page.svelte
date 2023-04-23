@@ -247,7 +247,81 @@
 </label>
 
 <div class="add w-full px-10 gap-y-2 grid grid-rows-1 grid-cols-1 items-center py-4">
-	<h1 class="text-3xl font-bold text-center">Add a recipe</h1>
+	<h1 class="text-3xl font-bold font-cormorant">Add a recipe</h1>
+
+	<div class="first-stage flex flex-row">
+		<!--LEFT CONTAINER-->
+		<div class="cover-box w-1/2">
+			{#if cover}
+				<img class="w-32 h-32 rounded-xl" src={cover} alt="" />
+			{:else}
+				<img class="w-32 h-32 rounded-xl" src="/assets/recipe-placeholder.png" alt="" />
+			{/if}
+			<input
+				class="file-input"
+				type="file"
+				name="cover"
+				id="cover"
+				accept="image/*"
+				bind:value={cover}
+				on:change={handleFileSelect}
+			/>
+		</div>
+
+		<!--RIGHT CONTAINER-->
+		<div class="briefing-box w-1/2">
+			<input
+				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+				placeholder="Title"
+				type="text"
+				name="title"
+				id="title"
+				bind:value={title}
+			/>
+
+			<div class="flex flex-col">
+				<div class="flex justify-between">
+					<select
+						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+						name="category"
+						id="category"
+						bind:value={singleCategory}
+						on:change={checkCategories}
+					>
+						<option value="" selected>Category</option>
+						{#each $categories as category}
+							<option value={category.name}>{category.name}</option>
+						{/each}
+					</select>
+				</div>
+
+				<div class="badges flex flex-row gap-2 mt-2">
+					{#each $category as category}
+						<div
+							class="badge {colors[
+								Math.floor(Math.random() * colors.length)
+							]} truncate cursor-pointer group"
+							on:keypress
+							on:click={() => handle_category(category)}
+						>
+							{category}
+							<p class="group-hover:text-secondary">&nbsp x</p>
+						</div>
+					{/each}
+				</div>
+
+				<input
+					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1"
+					placeholder="Link"
+					type="url"
+					name="link"
+					id="link"
+					bind:value={link}
+				/>
+			</div>
+		</div>
+	</div>
+
 	<label for="cover">Cover</label>
 	<input
 		class="file:font-semibold file:border-0 file:mr-4 file:bg-secondary file:rounded-l-none file:rounded-full file:cursor-pointer file:text-white file:btn"
@@ -394,7 +468,13 @@
 
 		<div class="badges flex flex-wrap gap-2 mt-2">
 			{#each $ingredients as ingredient}
-				<div class="badge badge-secondary truncate" on:keyup on:click={handle_ingredients(ingredient)}>{ingredient.ingredient}</div>
+				<div
+					class="badge badge-secondary truncate"
+					on:keyup
+					on:click={handle_ingredients(ingredient)}
+				>
+					{ingredient.ingredient}
+				</div>
 			{/each}
 		</div>
 	</div>
