@@ -12,6 +12,10 @@ export async function handle({ event, resolve }) {
         const idToken = cookies.get('idToken');
         const decodedToken = await admin.auth().verifySessionCookie(idToken, true);
         event.locals.user = decodedToken;
+
+        const uid = cookies.get('uid');
+        await admin.auth().getUser(uid);
+        
     } catch (error) {
         return Response.redirect(`${event.url.origin}/login`, 302);
     }

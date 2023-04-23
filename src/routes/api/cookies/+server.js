@@ -8,10 +8,11 @@ export const POST = async (event) => {
     const { idToken } = await event.request.json();
     try {
         const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
+        const uid = await admin.auth().verifyIdToken(idToken).then((decodedToken) => { return decodedToken.uid });
         return new Response(JSON.stringify({ sessionCookie }), {
             status: 200,
             headers: {
-                "Set-Cookie": `idToken=${sessionCookie}; Max-Age=${expiresIn}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
+                "Set-Cookie": `uid=${uid}; Max-Age=${expiresIn}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , idToken=${sessionCookie}; Max-Age=${expiresIn}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
             }
         })
     } catch (error) {
@@ -23,7 +24,7 @@ export const DELETE = async (_) => {
     return new Response(JSON.stringify(), {
         status: 200,
         headers: {
-            "Set-Cookie": `idToken=_; Max-Age=0; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
+            "Set-Cookie": `idToken=_; Max-Age=0; HttpOnly; Path=/; ${secure}; SameSite=Strict; , uid=_; Max-Age=0; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
         }
     })
 }
