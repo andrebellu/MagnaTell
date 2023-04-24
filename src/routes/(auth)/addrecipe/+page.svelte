@@ -252,12 +252,12 @@
 		<!--LEFT CONTAINER-->
 		<div class="cover-box w-1/2">
 			{#if cover}
-				<img class="w-32 h-32 rounded-xl" src={cover} alt="" />
+				<img class="w-32 h-32 rounded-xl mb-1" src={cover} alt="" />
 			{:else}
-				<img class="w-32 h-32 rounded-xl" src="/assets/recipe-placeholder.png" alt="" />
+				<img class="w-32 h-32 rounded-xl mb-1" src="/assets/recipe-placeholder.png" alt="" />
 			{/if}
 			<input
-				class="file-input"
+				class="file-input hidden"
 				type="file"
 				name="cover"
 				id="cover"
@@ -265,12 +265,18 @@
 				bind:value={cover}
 				on:change={handleFileSelect}
 			/>
+			<input
+				class="btn w-32 h-8"
+				type="button"
+				value="Browse..."
+				onclick="document.getElementById('cover').click();"
+			/>
 		</div>
 
 		<!--RIGHT CONTAINER-->
 		<div class="briefing-box w-1/2">
 			<input
-				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-9"
+				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-10"
 				placeholder="Title"
 				type="text"
 				name="title"
@@ -281,7 +287,7 @@
 			<div class="flex flex-col">
 				<div class="flex justify-between">
 					<select
-						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none h-9"
+						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none h-10 mb-1"
 						name="category"
 						id="category"
 						bind:value={singleCategory}
@@ -294,7 +300,7 @@
 					</select>
 				</div>
 
-				<div class="badges flex flex-row gap-x-2 my-1">
+				<div class="badges flex flex-row gap-x-2">
 					{#each $category as category}
 						<div
 							class="badge {colors[
@@ -310,7 +316,7 @@
 				</div>
 
 				<input
-					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-9"
+					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-10"
 					placeholder="Link"
 					type="url"
 					name="link"
@@ -318,15 +324,15 @@
 					bind:value={link}
 				/>
 
-				<div class="various flex gap-x-1">
+				<div class="various flex justify-between border-red-500 border-2">
 					<div class="time bg-primary p-2 rounded-l-3xl rounded-r-xl">
-						<Alarm class="w-6 h-6" />
+						<Alarm class="w-8 h-7" />
 					</div>
 					<div class="difficulty bg-primary p-2 rounded-xl">
-						<ChartBar class="w-6 h-6" />
+						<ChartBar class="w-8 h-7" />
 					</div>
 					<div class="portions bg-primary p-2 rounded-r-3xl rounded-l-xl">
-						<ChartPieSlice class="w-6 h-6" />
+						<ChartPieSlice class="w-8 h-7" />
 					</div>
 				</div>
 			</div>
