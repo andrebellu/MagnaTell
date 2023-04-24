@@ -248,7 +248,7 @@
 <!-- Time -->
 <input type="checkbox" id="time" class="modal-toggle" />
 <div class="modal">
-	<div class="modal-box relative">
+	<div class="modal-box relative flex justify-center flex-col items-center">
 		<label for="time" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h1 class="font-bold text-2xl font-cormorant">Preparation time</h1>
 		<h1 class="text-gray-400">Minutes</h1>
@@ -270,7 +270,7 @@
 <!-- Difficulty -->
 <input type="checkbox" id="difficulty" class="modal-toggle" />
 <div class="modal">
-	<div class="modal-box relative">
+	<div class="modal-box relative flex justify-center flex-col items-center">
 		<label for="difficulty" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h1 class="font-bold text-2xl font-cormorant">Difficulty</h1>
 		<select
@@ -289,7 +289,7 @@
 <!--Portions -->
 <input type="checkbox" id="portions" class="modal-toggle" />
 <div class="modal">
-	<div class="modal-box relative">
+	<div class="modal-box relative flex justify-center flex-col items-center">
 		<label for="portions" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h1 class="font-bold text-2xl font-cormorant">Portions</h1>
 
