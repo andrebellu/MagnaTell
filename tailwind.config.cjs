@@ -25,7 +25,7 @@ module.exports = {
     extend: {
       fontFamily: {
         "loftygoals": ['loftygoals', 'cursive'],
-        "cormorant": ['cormorant', 'serif'],
+        "cormorant": ['GFS Didot', 'serif'],
         "poppins": ['poppins', 'sans-serif'],
         "inter": ['Inter', 'sans-serif'],
       }
