@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { auth } from '$lib/firebase/firebase.client';
+	import { browserSessionPersistence, setPersistence } from 'firebase/auth';
 
 	let photoURL = '';
 	let u;
@@ -12,12 +13,6 @@
 	onMount(() => {
 		auth.onAuthStateChanged((user) => {
 			photoURL = user.photoURL;
-			u = JSON.parse(
-				sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
-			);
-			if (u == null) {
-				sessionStorage.clear();
-			}
 		});
 	});
 </script>
