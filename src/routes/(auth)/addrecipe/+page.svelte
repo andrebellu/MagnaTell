@@ -276,7 +276,7 @@
 		<!--RIGHT CONTAINER-->
 		<div class="briefing-box w-1/2">
 			<input
-				class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-10"
+				class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
 				placeholder="Title"
 				type="text"
 				name="title"
@@ -287,7 +287,7 @@
 			<div class="flex flex-col">
 				<div class="flex justify-between">
 					<select
-						class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none h-10 mb-1"
+						class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none h-10 mb-1"
 						name="category"
 						id="category"
 						bind:value={singleCategory}
@@ -316,7 +316,7 @@
 				</div>
 
 				<input
-					class="input-addrecipe rounded-2xl w-full outline-none focus:outline-none mb-1 h-10"
+					class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
 					placeholder="Link"
 					type="url"
 					name="link"
@@ -324,7 +324,7 @@
 					bind:value={link}
 				/>
 
-				<div class="various flex justify-between border-red-500 border-2">
+				<div class="various flex justify-between">
 					<div class="time bg-primary p-2 rounded-l-3xl rounded-r-xl">
 						<Alarm class="w-8 h-7" />
 					</div>
@@ -336,6 +336,61 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<label for="description" class="text-2xl font-bold font-cormorant">Description</label>
+	<textarea
+		class="input-addrecipe pt-1 h-32 roundend-3xl"
+		placeholder="Short recipe description"
+		name="description"
+		bind:value={description}
+	/>
+
+	<div class="flex justify-between">
+		<label for="ingredients" class="text-2xl font-bold font-cormorant w-2/3">Ingredients</label>
+	</div>
+	<div class="ingredients flex justify-between flex-col">
+		<div class="inputs flex">
+			<input
+				class="input-addrecipe w-2/3 rounded-l-3xl rounded-r-xl"
+				type="text"
+				name="ingredients"
+				id="ingredients"
+				required
+				placeholder="Salt"
+				bind:value={ingredient}
+				on:keyup={(e) => e.key == 'Enter' && checkIngredients()}
+			/>
+
+			<input
+				class="input-addrecipe w-1/4 mx-2 rounded-xl"
+				type="text"
+				name="quantity"
+				id="quantity"
+				placeholder="1g"
+				required
+				bind:value={quantity}
+				on:keyup={(e) => e.key == 'Enter' && checkIngredients()}
+			/>
+
+			<btn
+				class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-r-3xl rounded-l-xl"
+				on:click={checkIngredients}
+				on:keyup><Plus size={16} weight="bold" /></btn
+			>
+		</div>
+
+		<div class="badges flex flex-wrap gap-2 mt-2">
+			{#each $ingredients as ingredient}
+				<div
+					class="badge badge-secondary truncate"
+					on:keyup
+					on:click={handle_ingredients(ingredient)}
+				>
+					{ingredient.ingredient}
+				</div>
+			{/each}
 		</div>
 	</div>
 
