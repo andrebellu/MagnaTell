@@ -13,7 +13,7 @@ import { deleteObject, ref as refStorage } from "firebase/storage";
 export const defaultAvatar = 'https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=' + Math.random();
 
 export const authHandlers = {
-	login: async (email, password) => {
+	login: async (email, password, remember) => {
 		const userCredential = await signInWithEmailAndPassword(auth, email, password)
 			.catch((error) => {
 				if (error.code === 'auth/account-exists-with-different-credential') {
@@ -24,7 +24,7 @@ export const authHandlers = {
 			});
 
 		const idToken = userCredential._tokenResponse.idToken;
-		await request('/api/cookies', "POST", { idToken });
+		await request('/api/cookies', "POST", { idToken, remember });
 	},
 
 	signup: async (email, password, username) => {
@@ -68,7 +68,8 @@ export const authHandlers = {
 			});
 
 		const idToken = userGoogle._tokenResponse.idToken;
-		await request('/api/cookies', "POST", { idToken });
+		const remember = true;
+		await request('/api/cookies', "POST", { idToken, remember });
 
 		await setDoc(doc(db, 'users', auth.currentUser.uid), {
 			username: auth.currentUser.displayName,

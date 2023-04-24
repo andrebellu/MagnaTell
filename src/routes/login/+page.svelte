@@ -8,6 +8,7 @@
 	let email = '';
 	let password = '';
 	let error = '';
+	let remember = false;
 
 	let hidePassword = 'password';
 
@@ -16,7 +17,7 @@
 	const login = async () => {
 		if (!email.includes('@') || !email.includes('.')) return (error = 'invalid email');
 		if (password.length < 6) return (error = 'password must be at least 6 characters long');
-		await authHandlers.login(email, password);
+		await authHandlers.login(email, password, remember);
 		goto('/home');
 	};
 
@@ -93,7 +94,7 @@
 
 				<div class="flex items-center justify-between">
 					<div class="flex items-center">
-						<input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded" />
+						<input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded" bind:checked={remember}/>
 						<label for="remember-me" class="ml-2 block text-sm">Remember me</label>
 					</div>
 

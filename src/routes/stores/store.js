@@ -15,9 +15,6 @@ export const categories = writable([]);
 
 export const myRecipes = writable([]);
 
-export const myRecipesNotifications = writable([]);
-export const usersNotifications = writable([]);
-
 export const active = writable();
 
 export const myRecipesHandlers = {
