@@ -49,6 +49,12 @@
 	});
 </script>
 
+{#if notifications.length == 0}
+	<div class="flex justify-center items-center h-full mt-20">
+		<h1 class="text-2xl">No notifications</h1>
+	</div>
+{/if}
+
 {#each notifications as notification}
 	<div class="card bg-accent m-4">
 		<div class="card-body p-3">
