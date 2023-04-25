@@ -27,7 +27,11 @@
 	});
 
 	const removeRecipe = () => {
+		console.log('remove');
+		console.log(recipe.id);
 		deleteDoc(doc(db, 'recipes', recipe.id));
+
+		window.location.reload();
 	};
 	/*
 		weighted-rating = (v / (v + m)) * R + (m / (v + m)) * C
