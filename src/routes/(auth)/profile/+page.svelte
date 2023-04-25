@@ -40,6 +40,8 @@
 
 	let bg_color = 'primary';
 
+	let profile = true;
+
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
 	} else {
@@ -189,7 +191,7 @@
 				<div class="flex flex-wrap flex-row justify-center">
 					{#each $myRecipes as recipe}
 						<div class="card p-2">
-							<Card {recipe} {bg_color} {totalAverage} />
+							<Card {recipe} {bg_color} {totalAverage} {profile} />
 						</div>
 					{/each}
 				</div>
