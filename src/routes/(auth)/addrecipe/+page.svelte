@@ -223,17 +223,26 @@
 
 	const addStep = () => {
 		nsteps++;
-		console.log(steps);
 		stepsarray.push(steps);
 		steps = '';
 	};
 
 	function handleDifficulty(e) {
 		difficulty = e;
-
-		console.log(difficulty);
 	}
 </script>
+
+<!-- steps -->
+<input type="checkbox" id="steps" class="modal-toggle" />
+<div class="modal">
+	<div class="modal-box relative">
+		<label for="steps" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+		<h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
+		{#each stepsarray as step}
+			<p class="text-gray-400">{step}</p>
+		{/each}
+	</div>
+</div>
 
 <!-- Category modal -->
 <input type="checkbox" id="categories" class="modal-toggle" />
@@ -521,7 +530,9 @@
 
 	<label for="steps" class="text-2xl font-bold font-cormorant w-2/3">Steps</label>
 	<div class="inputs flex justify-between">
-		<btn class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-full h-10">{nsteps}</btn>
+		<label class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-full h-10" for="steps"
+			>{nsteps}</label
+		>
 
 		<textarea
 			class="input-addrecipe w-2/3 rounded-l-3xl rounded-r-xl h-10"
