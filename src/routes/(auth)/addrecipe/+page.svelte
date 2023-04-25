@@ -36,7 +36,11 @@
 	let time = '';
 	let description = '';
 	let ingredients = writable([]);
+
 	let steps = '';
+	let nsteps = 1;
+	let stepsarray = [];
+
 	let portions = '';
 	let hasCover = false;
 	let storageRef;
@@ -102,7 +106,7 @@
 				time,
 				description,
 				ingredients: $ingredients,
-				steps,
+				steps: stepsarray,
 				portions,
 				hasCover
 			});
@@ -134,7 +138,7 @@
 						time,
 						description,
 						ingredients: $ingredients,
-						steps,
+						steps: stepsarray,
 						portions,
 						hasCover
 					},
@@ -215,6 +219,13 @@
 			reader.readAsDataURL(cover);
 			hasCover = true;
 		}
+	};
+
+	const addStep = () => {
+		nsteps++;
+		console.log(steps);
+		stepsarray.push(steps);
+		steps = '';
 	};
 </script>
 
@@ -483,14 +494,25 @@
 	</div>
 
 	<label for="steps" class="text-2xl font-bold font-cormorant w-2/3">Steps</label>
-	<textarea
-		class="input-addrecipe pt-1 h-32"
-		placeholder="1. First step
-2. Second step, etc."
-		name="steps"
-		id="steps"
-		bind:value={steps}
-	/>
+	<div class="inputs flex justify-between">
+		<btn class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-full h-10">{nsteps}</btn>
+
+		<textarea
+			class="input-addrecipe w-2/3 rounded-l-3xl rounded-r-xl h-10"
+			type="text"
+			name="ingredients"
+			id="ingredients"
+			required
+			placeholder="First step"
+			bind:value={steps}
+		/>
+
+		<btn
+			class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-r-3xl rounded-l-xl h-10"
+			on:click={addStep(steps)}
+			on:keyup><Plus size={16} weight="bold" /></btn
+		>
+	</div>
 
 	<h1 class="text-3xl font-bold font-cormorant text-center mt-4">Create</h1>
 	<h1 class="text-xs font-poppins text-center my-1">You're gonna make the world a better place!</h1>

@@ -24,11 +24,9 @@
 		recipe = querySnapshot.data();
 		try {
 			if (recipe.hasCover) {
-				await getDownloadURL(ref(storage, 'recipes-covers/' + recipeId)).then(
-					(url) => {
-						cover = url;
-					}
-				);
+				await getDownloadURL(ref(storage, 'recipes-covers/' + recipeId)).then((url) => {
+					cover = url;
+				});
 			} else {
 				cover = '/no-image.jpg';
 			}
@@ -39,18 +37,9 @@
 
 		categories = recipe.category;
 
-		steps = recipe.steps.split(/(\d\.\s)/g);
-		steps.shift();
-		steps = steps.map((step, index) => {
-			if (index % 2 == 0) {
-				return {
-					number: step,
-					text: steps[index + 1]
-				};
-			}
-		});
-
 		link = recipe.link;
+
+		steps = recipe.steps;
 
 		if (link.includes('youtube')) {
 			link = link.replace('watch?v=', 'embed/');
@@ -61,7 +50,6 @@
 		} else if (!link.includes('https://') && !link.includes('http://')) {
 			link = 'https://' + link;
 		}
-
 	});
 
 	const recipesDelete = () => {
@@ -124,15 +112,14 @@
 			<div class="carousel-item flex flex-col w-full" id="steps">
 				<h1 class="text-3xl font-bold pb-1">Steps:</h1>
 
-				{#if steps.length > 0}
-					{#each steps as step}
-						{#if step}
-							<h1><strong>{step.number}</strong> {step.text}</h1>
-						{/if}
-					{/each}
-				{:else}
-					<h1>{recipe.steps}</h1>
-				{/if}
+				{#each steps as step, i}
+					<div class="flex flex-row items-center my-1">
+						<div class="bg-secondary rounded-full h-8 w-8 text-white text-center p-1 mr-1">
+							{i + 1}.
+						</div>
+						<div>{step}</div>
+					</div>
+				{/each}
 			</div>
 
 			<div class="carousel-item flex flex-col w-full" id="links">
