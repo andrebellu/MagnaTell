@@ -6,6 +6,7 @@
 
 	let notifications = [{ author: '', recipeTitle: '', rating: 0, date: 0, timestamp: 0 }];
 	let author, recipeTitle, rating, date;
+	import { Sparkle } from 'phosphor-svelte/lib';
 
 	onValue(refReal(realDB, 'recipes-grade'), (snapshot) => {
 		if (snapshot.val()) {
@@ -44,16 +45,27 @@
 				}
 			}
 		}
-		notifications.sort((a,b) => b.timestamp - a.timestamp);
+		notifications.sort((a, b) => b.timestamp - a.timestamp);
 	});
 </script>
 
 {#each notifications as notification}
 	<div class="card bg-accent m-4">
-		<div class="card-body">
-			<p class="card-text font-semibold">
-				{notification.author} has put {notification.rating} stars to {notification.recipeTitle} at {notification.date}
-			</p>
+		<div class="card-body p-3">
+			<div class="title flex justify-between items-center">
+				<h1 class="text-2xl">{notification.recipeTitle}</h1>
+				<h2 class="text-[.6rem]">{notification.date}</h2>
+			</div>
+
+			<div class="content flex flex-row items-center">
+				<div class="icon mr-2">
+					<Sparkle class="" size={32} weight="fill" />
+				</div>
+				<div class="message">
+					{notification.author} has put {notification.rating} stars on it
+				</div>
+				<div class="time text-xs" />
+			</div>
 		</div>
 	</div>
 {/each}
