@@ -73,7 +73,7 @@ export const authHandlers = {
 
 		const q = query(collection(db, 'users'), where(documentId(), '==', auth.currentUser.uid));
 		let querySnapshot = await getDocs(q);
-		if (querySnapshot.length == 0) {
+		if (querySnapshot.length != 1) {
 			await setDoc(doc(db, 'users', auth.currentUser.uid), {
 				username: auth.currentUser.displayName,
 				email: auth.currentUser.email,
