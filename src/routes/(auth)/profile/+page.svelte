@@ -233,11 +233,13 @@
 				</div>
 			{:else if page == 'favorites'}
 				{#if $mySavedRecipes.length > 0}
-					{#each $mySavedRecipes as recipe}
-						<div class="card p-2">
-							<Card {recipe} {bg_color} {totalAverage} />
-						</div>
-					{/each}
+					<div class="flex flex-wrap flex-row justify-center">
+						{#each $mySavedRecipes as recipe}
+							<div class="card p-2">
+								<Card {recipe} {bg_color} {totalAverage}/>
+							</div>
+						{/each}
+					</div>
 				{:else}
 					<div class="flex flex-col items-center justify-center">
 						<p class="text-2xl font-bold">You have no saved recipes</p>
@@ -266,7 +268,7 @@
 						</p>
 					</div>
 
-					{#if user.providerData[0].providerId != "google.com"}
+					{#if user.providerData[0].providerId != 'google.com'}
 						<div class="password flex items-center gap-x-1 mt-2">
 							<p>Password</p>
 							<button

@@ -7,11 +7,12 @@
 	import LoadingRecipe from '../../../../lib/components/loading/recipe/LoadingRecipe.svelte';
 	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
 
-
 	import { storage, auth } from '$lib/firebase/firebase.client';
 	import { getDownloadURL, ref } from 'firebase/storage';
 
 	import Stars from '../../../../lib/components/recipe/rating/Stars.svelte';
+
+	import { getDocs, query, collection, where, documentId, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 
 	const recipeId = $page.params.recipeId;
 	let recipe = {};
@@ -20,8 +21,16 @@
 	let steps = [];
 	let link = '';
 	let cover;
+	let user;
+
+	let marked = false;
+	let savedRecipesId = [];
 
 	onMount(async () => {
+		savedRecipesId = [];
+
+		user = JSON.parse(sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT'));
+
 		const querySnapshot = await getDoc(doc(db, 'recipes', recipeId));
 		recipe = querySnapshot.data();
 		try {
@@ -52,7 +61,28 @@
 		} else if (!link.includes('https://') && !link.includes('http://')) {
 			link = 'https://' + link;
 		}
+
+		const q2 = query(collection(db, 'users'), where(documentId(), '==', user.uid));
+		let querySnapshot2 = await getDocs(q2);
+		savedRecipesId = querySnapshot2.docs[0].data().savedRecipes;
+		if (savedRecipesId.includes(recipeId)) {
+			marked = true;
+		}
 	});
+
+	async function saveRecipe () {
+		await updateDoc(doc(db, 'users', user.uid), {
+			savedRecipes: arrayUnion(recipeId)
+		});
+		marked = true;
+	}
+
+	async function unsaveRecipe () {
+		await updateDoc(doc(db, 'users', user.uid), {
+			savedRecipes: arrayRemove(recipeId)
+		});
+		marked = false;
+	}
 
 	const recipesDelete = () => {
 		const ref = doc(db, 'recipes', recipeId);
@@ -70,7 +100,11 @@
 			<div class="flex flex-col ml-4">
 				<div class="flex flex-row items-center">
 					<h1 class="text-3xl font-bold text-ellipsis truncate w-48">{recipe.title}</h1>
-					<div class="text-3xl"><BookmarkSimple /></div>
+					{#if marked == false }
+						<button class="text-3xl" on:click={saveRecipe}><BookmarkSimple /></button>
+					{:else}
+						<button class="text-3xl" on:click={unsaveRecipe}><BookmarkSimple weight="fill" /></button>
+					{/if}
 				</div>
 
 				<h1>{recipe.author}</h1>

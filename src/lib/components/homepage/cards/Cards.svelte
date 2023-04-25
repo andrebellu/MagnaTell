@@ -9,6 +9,7 @@
 
 	let totalAverage = 0;
 	let own_recipes = 0;
+	let profile = ''
 
 	export let bg_color;
 
@@ -33,7 +34,7 @@
 		<div class="pl-2 flex flex-col gap-4 md:flex-row">
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 == 0}
-					<Card {recipe} {totalAverage} {bg_color}/>
+					<Card {recipe} {totalAverage} {bg_color} {profile}/>
 				{/if}
 			{/each}
 		</div>
@@ -42,7 +43,7 @@
 			<Filters />
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 != 0}
-					<Card {recipe} {totalAverage} {bg_color}/>
+					<Card {recipe} {totalAverage} {bg_color} {profile}/>
 				{/if}
 			{/each}
 		</div>
