@@ -1,10 +1,13 @@
 <script>
 	import { realDB } from '$lib/firebase/firebase.client';
 	import { onValue, ref } from 'firebase/database';
+	import { db } from '$lib/firebase/firebase.client';
+	import { Trash, Star } from 'phosphor-svelte';
+	import { doc, deleteDoc } from 'firebase/firestore';
+
 	export let recipe;
 	export let totalAverage;
-	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
-	import Star from 'phosphor-svelte/lib/Star';
+	export let profile;
 
 	let grade = 0;
 	let wheightedRating = 0;
@@ -16,9 +19,20 @@
 			wheightedRating = 0;
 			grade = snapshot.val().average;
 			const numberVotes = Object.values(snapshot.val().stars).length;
-			wheightedRating = ((numberVotes / (numberVotes + minVotes)) * grade + (1 / (numberVotes + minVotes)) * totalAverage).toFixed(1);
+			wheightedRating = (
+				(numberVotes / (numberVotes + minVotes)) * grade +
+				(1 / (numberVotes + minVotes)) * totalAverage
+			).toFixed(1);
 		}
 	});
+
+	const removeRecipe = () => {
+		console.log('remove');
+		console.log(recipe.id);
+		deleteDoc(doc(db, 'recipes', recipe.id));
+
+		window.location.reload();
+	};
 	/*
 		weighted-rating = (v / (v + m)) * R + (m / (v + m)) * C
 		dove:
@@ -29,9 +43,35 @@
 	*/
 </script>
 
+<!-- The button to open modal -->
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="remove" class="modal-toggle" />
+<div class="modal">
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">Are you sure?</h3>
+		<p class="py-4">
+			You are going to <strong>permanently</strong> remove your recipe!
+		</p>
+		<div class="modal-action">
+			<label for="" on:click={removeRecipe} on:keyup class="btn">Yes</label>
+			<label for="remove" class="btn">No</label>
+		</div>
+	</div>
+</div>
+
 <!-- change text font after implementation of the new font-->
 
-<a class="rounded-3xl flex flex-col items-center -mb-16" href="/recipes/{recipe.id}">
+{#if profile == true}
+	<label
+		for="remove"
+		class="trash p-1 text-red-700 flex items-center justify-center absolute z-50 left-28 right-1 top-36"
+	>
+		<Trash size={24} />
+	</label>
+{/if}
+
+<a class="rounded-3xl flex flex-col items-center -mb-16 z-10" href="/recipes/{recipe.id}">
 	<img
 		src={recipe.cover}
 		alt="img"
@@ -51,7 +91,6 @@
 						</h1>
 					</div>
 				</div>
-				<div class="text-lg"><BookmarkSimple /></div>
 			</div>
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">

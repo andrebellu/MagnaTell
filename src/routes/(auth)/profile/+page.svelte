@@ -12,7 +12,7 @@
 	import { collection, query, where, getDocs, documentId } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 
-	import { sendEmailVerification } from 'firebase/auth';
+	import { ProviderId, sendEmailVerification } from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client';
 
 	import { storage } from '$lib/firebase/firebase.client';
@@ -41,6 +41,8 @@
 	let bg_color = 'primary';
 
 	let savedRecipesId = [];
+
+	let profile = true;
 
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
@@ -225,7 +227,7 @@
 				<div class="flex flex-wrap flex-row justify-center">
 					{#each $myRecipes as recipe}
 						<div class="card p-2">
-							<Card {recipe} {bg_color} {totalAverage} />
+							<Card {recipe} {bg_color} {totalAverage} {profile} />
 						</div>
 					{/each}
 				</div>
@@ -264,19 +266,20 @@
 						</p>
 					</div>
 
-					<div class="password flex items-center gap-x-1 mt-2">
-						<p>Password</p>
-						<button
-							on:click={changePassword}
-							class="bg-primary p-2 text-white normal-case rounded-full"
-							><Pencil size={10} class="text-white" /></button
-						>
-					</div>
-					<div class="flex justify-center flex-col">
-						<p id="email" class="font-extrabold">**********</p>
-					</div>
-
-					<div class="warning-zone flex flex-col justify-center items-center gap-2">
+					{#if user.providerData[0].providerId != "google.com"}
+						<div class="password flex items-center gap-x-1 mt-2">
+							<p>Password</p>
+							<button
+								on:click={changePassword}
+								class="bg-primary p-2 text-white normal-case rounded-full"
+								><Pencil size={10} class="text-white" /></button
+							>
+						</div>
+						<div class="flex justify-center flex-col">
+							<p id="email" class="font-extrabold">**********</p>
+						</div>
+					{/if}
+					<div class="warning-zone flex flex-col justify-center items-center gap-2 mt-5">
 						<Warning weight="fill" size={30} class="" />
 
 						<h1 class="text-3xl font-cormorant font-bold">Warning zone</h1>

@@ -226,7 +226,23 @@
 		stepsarray.push(steps);
 		steps = '';
 	};
+
+	function handleDifficulty(e) {
+		difficulty = e;
+	}
 </script>
+
+<!-- steps -->
+<input type="checkbox" id="steps" class="modal-toggle" />
+<div class="modal">
+	<div class="modal-box relative">
+		<label for="steps" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+		<h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
+		{#each stepsarray as step}
+			<p class="text-gray-400">{step}</p>
+		{/each}
+	</div>
+</div>
 
 <!-- Category modal -->
 <input type="checkbox" id="categories" class="modal-toggle" />
@@ -283,16 +299,30 @@
 	<div class="modal-box relative flex justify-center flex-col items-center">
 		<label for="difficulty" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h1 class="font-bold text-2xl font-cormorant">Difficulty</h1>
-		<select
-			class="select select-sm border-accent border-2 bg-white outline-none focus:outline-none"
-			name="difficulty"
-			id="difficulty"
-			bind:value={difficulty}
-		>
-			<option value="easy">Easy</option>
-			<option value="medium">Medium</option>
-			<option value="hard">Hard</option>
-		</select>
+
+		<div class="btns flex gap-x-2 my-2">
+			<div
+				class="easy btn text-green-600 font-bold"
+				on:click={() => handleDifficulty('easy')}
+				on:keyup
+			>
+				Easy
+			</div>
+			<div
+				class="medium btn text-yellow-600 font-bold"
+				on:click={() => handleDifficulty('medium')}
+				on:keyup
+			>
+				Medium
+			</div>
+			<div
+				class="hard btn text-red-600 font-bold"
+				on:click={() => handleDifficulty('hard')}
+				on:keyup
+			>
+				Hard
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -359,9 +389,9 @@
 		<!--LEFT CONTAINER-->
 		<div class="cover-box w-1/2">
 			{#if cover}
-				<img class="w-32 h-32 rounded-xl mb-1 object-cover" src={cover} alt="" />
+				<img class="w-40 h-40 rounded-xl mb-2 object-cover" src={cover} alt="" />
 			{:else}
-				<img class="w-32 h-32 rounded-xl mb-1" src="/assets/recipe-placeholder.png" alt="" />
+				<img class="w-40 h-40 rounded-xl mb-2" src="/assets/recipe-placeholder.png" alt="" />
 			{/if}
 			<input
 				class="file-input hidden"
@@ -373,7 +403,7 @@
 				on:change={handleFileSelect}
 			/>
 			<input
-				class="btn w-32 h-8"
+				class="btn btn-sm text-xs w-40 h-10"
 				type="button"
 				value="Browse..."
 				onclick="document.getElementById('cover').click();"
@@ -383,7 +413,7 @@
 		<!--RIGHT CONTAINER-->
 		<div class="briefing-box w-1/2">
 			<input
-				class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
+				class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-2 h-12"
 				placeholder="Title"
 				type="text"
 				name="title"
@@ -392,9 +422,9 @@
 			/>
 
 			<div class="flex flex-col">
-				<div class="flex justify-between items-center mb-1">
+				<div class="flex justify-between items-center mb-2">
 					<select
-						class="input-addrecipe rounded-l-3xl rounded-r-xl w-full outline-none focus:outline-none h-10 mr-1 p-2"
+						class="input-addrecipe rounded-l-3xl rounded-r-xl w-full outline-none focus:outline-none h-12 mr-1 p-2"
 						name="category"
 						id="category"
 						bind:value={singleCategory}
@@ -414,7 +444,7 @@
 				</div>
 
 				<input
-					class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
+					class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-2 h-12"
 					placeholder="Link"
 					type="url"
 					name="link"
@@ -423,13 +453,19 @@
 				/>
 
 				<div class="various flex justify-between">
-					<label for="time" class="time bg-primary p-2 rounded-l-3xl rounded-r-xl">
+					<label
+						for="time"
+						class="time bg-primary p-2 rounded-l-3xl rounded-r-xl h-10 flex items-center"
+					>
 						<Alarm class="w-8 h-7" />
 					</label>
-					<label for="difficulty" class="time bg-primary p-2 rounded-xl">
+					<label for="difficulty" class="time bg-primary p-2 rounded-xl h-10 flex items-center">
 						<ChartBar class="w-8 h-7" />
 					</label>
-					<label for="portions" class="time bg-primary p-2 rounded-r-3xl rounded-l-xl">
+					<label
+						for="portions"
+						class="time bg-primary p-2 rounded-r-3xl rounded-l-xl h-10 flex items-center"
+					>
 						<ChartPieSlice class="w-8 h-7" />
 					</label>
 				</div>
@@ -494,7 +530,9 @@
 
 	<label for="steps" class="text-2xl font-bold font-cormorant w-2/3">Steps</label>
 	<div class="inputs flex justify-between">
-		<btn class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-full h-10">{nsteps}</btn>
+		<label class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-full h-10" for="steps"
+			>{nsteps}</label
+		>
 
 		<textarea
 			class="input-addrecipe w-2/3 rounded-l-3xl rounded-r-xl h-10"
