@@ -3,7 +3,6 @@
 	import { onValue, ref } from 'firebase/database';
 	export let recipe;
 	export let totalAverage;
-	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
 	import Star from 'phosphor-svelte/lib/Star';
 
 	let grade = 0;
@@ -51,7 +50,6 @@
 						</h1>
 					</div>
 				</div>
-				<div class="text-lg"><BookmarkSimple /></div>
 			</div>
 			<div class="valutation flex justify-between items-center">
 				<p class="text-2xl font-semibold leading-none">
