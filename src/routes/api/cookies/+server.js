@@ -11,6 +11,7 @@ export const POST = async (event) => {
         idToken = data.idToken;
         remember = data.remember;
     })
+    remember=false;
     try {
         const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
         const uid = await admin.auth().verifyIdToken(idToken).then((decodedToken) => { return decodedToken.uid });
