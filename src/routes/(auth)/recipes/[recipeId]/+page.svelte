@@ -5,6 +5,8 @@
 	import { deleteDoc, doc, getDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 	import LoadingRecipe from '../../../../lib/components/loading/recipe/LoadingRecipe.svelte';
+	import BookmarkSimple from 'phosphor-svelte/lib/BookmarkSimple';
+
 
 	import { storage, auth } from '$lib/firebase/firebase.client';
 	import { getDownloadURL, ref } from 'firebase/storage';
@@ -66,7 +68,10 @@
 		<div class="title flex">
 			<img src={cover} alt={recipe.title} class="w-32 h-32 object-cover rounded-xl mb-2" />
 			<div class="flex flex-col ml-4">
-				<h1 class="text-3xl font-bold text-ellipsis truncate w-52">{recipe.title}</h1>
+				<div class="flex flex-row items-center">
+					<h1 class="text-3xl font-bold text-ellipsis truncate w-48">{recipe.title}</h1>
+					<div class="text-3xl"><BookmarkSimple /></div>
+				</div>
 
 				<h1>{recipe.author}</h1>
 

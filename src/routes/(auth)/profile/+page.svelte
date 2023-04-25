@@ -12,7 +12,7 @@
 	import { collection, query, where, getDocs } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 
-	import { sendEmailVerification } from 'firebase/auth';
+	import { ProviderId, sendEmailVerification } from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client';
 
 	import { storage } from '$lib/firebase/firebase.client';
@@ -219,19 +219,20 @@
 						</p>
 					</div>
 
-					<div class="password flex items-center gap-x-1 mt-2">
-						<p>Password</p>
-						<button
-							on:click={changePassword}
-							class="bg-primary p-2 text-white normal-case rounded-full"
-							><Pencil size={10} class="text-white" /></button
-						>
-					</div>
-					<div class="flex justify-center flex-col">
-						<p id="email" class="font-extrabold">**********</p>
-					</div>
-
-					<div class="warning-zone flex flex-col justify-center items-center gap-2">
+					{#if user.providerData[0].providerId != "google.com"}
+						<div class="password flex items-center gap-x-1 mt-2">
+							<p>Password</p>
+							<button
+								on:click={changePassword}
+								class="bg-primary p-2 text-white normal-case rounded-full"
+								><Pencil size={10} class="text-white" /></button
+							>
+						</div>
+						<div class="flex justify-center flex-col">
+							<p id="email" class="font-extrabold">**********</p>
+						</div>
+					{/if}
+					<div class="warning-zone flex flex-col justify-center items-center gap-2 mt-5">
 						<Warning weight="fill" size={30} class="" />
 
 						<h1 class="text-3xl font-cormorant font-bold">Warning zone</h1>

@@ -360,9 +360,9 @@
 		<!--LEFT CONTAINER-->
 		<div class="cover-box w-1/2">
 			{#if cover}
-				<img class="w-32 h-32 rounded-xl mb-1 object-cover" src={cover} alt="" />
+				<img class="w-40 h-40 rounded-xl mb-2 object-cover" src={cover} alt="" />
 			{:else}
-				<img class="w-32 h-32 rounded-xl mb-1" src="/assets/recipe-placeholder.png" alt="" />
+				<img class="w-40 h-40 rounded-xl mb-2" src="/assets/recipe-placeholder.png" alt="" />
 			{/if}
 			<input
 				class="file-input hidden"
@@ -373,18 +373,18 @@
 				bind:value={cover}
 				on:change={handleFileSelect}
 			/>
-			<input
-				class="btn w-32 h-8"
-				type="button"
-				value="Browse..."
-				onclick="document.getElementById('cover').click();"
-			/>
+				<input
+					class="btn btn-sm text-xs w-40 h-10"
+					type="button"
+					value="Browse..."
+					onclick="document.getElementById('cover').click();"
+				/>
 		</div>
 
 		<!--RIGHT CONTAINER-->
 		<div class="briefing-box w-1/2">
 			<input
-				class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
+				class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-2 h-12"
 				placeholder="Title"
 				type="text"
 				name="title"
@@ -393,9 +393,9 @@
 			/>
 
 			<div class="flex flex-col">
-				<div class="flex justify-between items-center mb-1">
+				<div class="flex justify-between items-center mb-2">
 					<select
-						class="input-addrecipe rounded-l-3xl rounded-r-xl w-full outline-none focus:outline-none h-10 mr-1 p-2"
+						class="input-addrecipe rounded-l-3xl rounded-r-xl w-full outline-none focus:outline-none h-12 mr-1 p-2"
 						name="category"
 						id="category"
 						bind:value={singleCategory}
@@ -415,7 +415,7 @@
 				</div>
 
 				<input
-					class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-1 h-10"
+					class="input-addrecipe rounded-3xl w-full outline-none focus:outline-none mb-2 h-12"
 					placeholder="Link"
 					type="url"
 					name="link"
@@ -424,13 +424,13 @@
 				/>
 
 				<div class="various flex justify-between">
-					<label for="time" class="time bg-primary p-2 rounded-l-3xl rounded-r-xl">
+					<label for="time" class="time bg-primary p-2 rounded-l-3xl rounded-r-xl h-10 flex items-center">
 						<Alarm class="w-8 h-7" />
 					</label>
-					<label for="difficulty" class="time bg-primary p-2 rounded-xl">
+					<label for="difficulty" class="time bg-primary p-2 rounded-xl h-10 flex items-center">
 						<ChartBar class="w-8 h-7" />
 					</label>
-					<label for="portions" class="time bg-primary p-2 rounded-r-3xl rounded-l-xl">
+					<label for="portions" class="time bg-primary p-2 rounded-r-3xl rounded-l-xl h-10 flex items-center">
 						<ChartPieSlice class="w-8 h-7" />
 					</label>
 				</div>
