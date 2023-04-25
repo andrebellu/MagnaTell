@@ -15,6 +15,8 @@
 
 	let search;
 	let cover;
+	let bg_color = 'accent';
+	let totalAverage = 0;
 
 	onMount(async () => {
 		pressed.set('');
@@ -137,7 +139,7 @@
 	<div class="search flex flex-row flex-wrap justify-center gap-y-4 gap-x-4 pt-4 pb-4">
 		{#if $searched.length > 0}
 			{#each $searched as recipe}
-				<Card {recipe} />
+				<Card {recipe} {bg_color} {totalAverage}/>
 			{/each}
 		{:else if $searched.length < 1}
 			<h1 class="opacity-0 hidden">No recipes found</h1>
