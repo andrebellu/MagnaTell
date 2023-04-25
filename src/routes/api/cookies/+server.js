@@ -9,9 +9,8 @@ let idToken, remember;
 export const POST = async (event) => {
     await event.request.json().then((data) => {
         idToken = data.idToken;
-        remember = data.remember;
+        remember = false
     })
-    remember=false;
     try {
         const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
         const uid = await admin.auth().verifyIdToken(idToken).then((decodedToken) => { return decodedToken.uid });
