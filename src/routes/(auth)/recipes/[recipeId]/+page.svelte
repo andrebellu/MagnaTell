@@ -113,11 +113,13 @@
 				<h1 class="text-3xl font-bold pb-1">Steps:</h1>
 
 				{#each steps as step, i}
-					<div class="flex flex-row items-center my-1">
-						<div class="bg-secondary rounded-full h-8 w-8 text-white text-center p-1 mr-1">
+					<div class="flex flex-row items-start my-1">
+						<div
+							class="bg-secondary rounded-full h-8 aspect-square text-white text-center p-1 mr-2"
+						>
 							{i + 1}.
 						</div>
-						<div>{step}</div>
+						<div class="mb-2">{step}</div>
 					</div>
 				{/each}
 			</div>
