@@ -15,7 +15,6 @@ export const POST = async (event) => {
         const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
         const uid = await admin.auth().verifyIdToken(idToken).then((decodedToken) => { return decodedToken.uid });
         if (remember == true) {
-
             return new Response(JSON.stringify({ sessionCookie }), {
                 status: 200,
                 headers: {

@@ -223,7 +223,6 @@
 
 	const addStep = () => {
 		nsteps++;
-		console.log(steps);
 		stepsarray.push(steps);
 		steps = '';
 	};

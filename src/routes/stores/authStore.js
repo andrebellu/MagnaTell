@@ -4,7 +4,7 @@ import { goto } from '$app/navigation';
 import { request } from '$lib/firebase/fetch'
 
 import { db } from '$lib/firebase/firebase.client';
-import { doc, getDocs, setDoc, query, collection, where, deleteDoc } from "firebase/firestore";
+import { doc, getDocs, setDoc, query, collection, where, deleteDoc, documentId } from "firebase/firestore";
 
 import { realDB, storage } from '$lib/firebase/firebase.client';
 import { get, ref as refReal, remove } from "firebase/database";
@@ -71,11 +71,15 @@ export const authHandlers = {
 		const remember = true;
 		await request('/api/cookies', "POST", { idToken, remember });
 
-		await setDoc(doc(db, 'users', auth.currentUser.uid), {
-			username: auth.currentUser.displayName,
-			email: auth.currentUser.email,
-			createdAt: new Date().toISOString(),
-		});
+		const q = query(collection(db, 'users'), where(documentId(), '==', auth.currentUser.uid));
+		let querySnapshot = await getDocs(q);
+		if (querySnapshot.length == 0) {
+			await setDoc(doc(db, 'users', auth.currentUser.uid), {
+				username: auth.currentUser.displayName,
+				email: auth.currentUser.email,
+				createdAt: new Date().toISOString(),
+			});
+		}
 	},
 
 	resetPassword: async () => {

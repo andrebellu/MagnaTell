@@ -15,6 +15,8 @@ export const categories = writable([]);
 
 export const myRecipes = writable([]);
 
+export const mySavedRecipes = writable([]);
+
 export const active = writable();
 
 export const myRecipesHandlers = {

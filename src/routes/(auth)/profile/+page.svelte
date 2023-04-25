@@ -1,5 +1,5 @@
 <script>
-	import { active } from './../../stores/store.js';
+	import { active, mySavedRecipes } from './../../stores/store.js';
 	import { authHandlers, defaultAvatar } from '../../stores/authStore';
 
 	import { goto } from '$app/navigation';
@@ -9,7 +9,7 @@
 
 	import Cards from '../../../lib/components/homepage/cards/Cards.svelte';
 
-	import { collection, query, where, getDocs } from 'firebase/firestore';
+	import { collection, query, where, getDocs, documentId } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.client';
 
 	import { sendEmailVerification } from 'firebase/auth';
@@ -40,6 +40,8 @@
 
 	let bg_color = 'primary';
 
+	let savedRecipesId = [];
+
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
 	} else {
@@ -48,13 +50,14 @@
 
 	onMount(async () => {
 		myRecipes.set([]);
+		mySavedRecipes.set([]);
+		savedRecipesId = [];
 
 		user = JSON.parse(
 			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
 		);
 
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));
-
 		let querySnapshot = await getDocs(q);
 		for (let i = 0; i < querySnapshot.docs.length; i++) {
 			try {
@@ -75,6 +78,38 @@
 				{
 					id: querySnapshot.docs[i].id,
 					data: querySnapshot.docs[i].data(),
+					cover
+				}
+			]);
+		}
+
+		// Get saved recipes' id
+		const q2 = query(collection(db, 'users'), where(documentId(), '==', user.uid));
+		let querySnapshot2 = await getDocs(q2);
+		savedRecipesId = querySnapshot2.docs[0].data().savedRecipes;
+
+		// get saved recipes' data
+		for (let i = 0; i < savedRecipesId.length; i++) {
+			const q3 = query(collection(db, 'recipes'), where(documentId(), '==', savedRecipesId[i]));
+			let querySnapshot3 = await getDocs(q3);
+			try {
+				if (querySnapshot3.docs[0].data().hasCover) {
+					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot3.docs[0].id)).then(
+						(url) => {
+							cover = url;
+						}
+					);
+				} else {
+					cover = '/no-image.jpg';
+				}
+			} catch {
+				cover = '/no-image.jpg';
+			}
+			mySavedRecipes.update((mySavedRecipes) => [
+				...mySavedRecipes,
+				{
+					id: querySnapshot3.docs[0].id,
+					data: querySnapshot3.docs[0].data(),
 					cover
 				}
 			]);
@@ -148,7 +183,7 @@
 		</div>
 	</div>
 
-	<div class="bg-accent rounded-[2.50rem] w-screen h-screen ">
+	<div class="bg-accent rounded-[2.50rem] w-screen h-screen">
 		<div class="buttons flex justify-center pt-10">
 			<button
 				on:click={() => (page = 'recipes')}
@@ -184,6 +219,7 @@
 				/></button
 			>
 		</div>
+
 		<div class="pt-5 pb-20">
 			{#if page == 'recipes'}
 				<div class="flex flex-wrap flex-row justify-center">
@@ -194,7 +230,18 @@
 					{/each}
 				</div>
 			{:else if page == 'favorites'}
-				favorites
+				{#if $mySavedRecipes.length > 0}
+					{#each $mySavedRecipes as recipe}
+						<div class="card p-2">
+							<Card {recipe} {bg_color} {totalAverage} />
+						</div>
+					{/each}
+				{:else}
+					<div class="flex flex-col items-center justify-center">
+						<p class="text-2xl font-bold">You have no saved recipes</p>
+						<p class="text-xl">Go to the recipes page and save some!</p>
+					</div>
+				{/if}
 			{:else if page == 'settings'}
 				<div class="settings px-6">
 					<h1 class="text-3xl font-cormorant font-bold">Settings</h1>
