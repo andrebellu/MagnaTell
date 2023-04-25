@@ -148,7 +148,7 @@
 		</div>
 	</div>
 
-	<div class="bg-accent rounded-[2.50rem] w-screnn h-max">
+	<div class="bg-accent rounded-[2.50rem] w-screen h-screen ">
 		<div class="buttons flex justify-center pt-10">
 			<button
 				on:click={() => (page = 'recipes')}
