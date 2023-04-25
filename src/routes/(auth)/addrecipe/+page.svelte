@@ -227,6 +227,12 @@
 		stepsarray.push(steps);
 		steps = '';
 	};
+
+	function handleDifficulty(e) {
+		difficulty = e;
+
+		console.log(difficulty);
+	}
 </script>
 
 <!-- Category modal -->
@@ -284,16 +290,30 @@
 	<div class="modal-box relative flex justify-center flex-col items-center">
 		<label for="difficulty" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<h1 class="font-bold text-2xl font-cormorant">Difficulty</h1>
-		<select
-			class="select select-sm border-accent border-2 bg-white outline-none focus:outline-none"
-			name="difficulty"
-			id="difficulty"
-			bind:value={difficulty}
-		>
-			<option value="easy">Easy</option>
-			<option value="medium">Medium</option>
-			<option value="hard">Hard</option>
-		</select>
+
+		<div class="btns flex gap-x-2 my-2">
+			<div
+				class="easy btn text-green-600 font-bold"
+				on:click={() => handleDifficulty('easy')}
+				on:keyup
+			>
+				Easy
+			</div>
+			<div
+				class="medium btn text-yellow-600 font-bold"
+				on:click={() => handleDifficulty('medium')}
+				on:keyup
+			>
+				Medium
+			</div>
+			<div
+				class="hard btn text-red-600 font-bold"
+				on:click={() => handleDifficulty('hard')}
+				on:keyup
+			>
+				Hard
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -373,12 +393,12 @@
 				bind:value={cover}
 				on:change={handleFileSelect}
 			/>
-				<input
-					class="btn btn-sm text-xs w-40 h-10"
-					type="button"
-					value="Browse..."
-					onclick="document.getElementById('cover').click();"
-				/>
+			<input
+				class="btn btn-sm text-xs w-40 h-10"
+				type="button"
+				value="Browse..."
+				onclick="document.getElementById('cover').click();"
+			/>
 		</div>
 
 		<!--RIGHT CONTAINER-->
@@ -424,13 +444,19 @@
 				/>
 
 				<div class="various flex justify-between">
-					<label for="time" class="time bg-primary p-2 rounded-l-3xl rounded-r-xl h-10 flex items-center">
+					<label
+						for="time"
+						class="time bg-primary p-2 rounded-l-3xl rounded-r-xl h-10 flex items-center"
+					>
 						<Alarm class="w-8 h-7" />
 					</label>
 					<label for="difficulty" class="time bg-primary p-2 rounded-xl h-10 flex items-center">
 						<ChartBar class="w-8 h-7" />
 					</label>
-					<label for="portions" class="time bg-primary p-2 rounded-r-3xl rounded-l-xl h-10 flex items-center">
+					<label
+						for="portions"
+						class="time bg-primary p-2 rounded-r-3xl rounded-l-xl h-10 flex items-center"
+					>
 						<ChartPieSlice class="w-8 h-7" />
 					</label>
 				</div>
