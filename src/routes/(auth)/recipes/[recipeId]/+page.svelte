@@ -66,11 +66,11 @@
 		<div class="title flex">
 			<img src={cover} alt={recipe.title} class="w-32 h-32 object-cover rounded-xl mb-2" />
 			<div class="flex flex-col ml-4">
-				<h1 class="text-3xl font-bold">{recipe.title}</h1>
+				<h1 class="text-3xl font-bold text-ellipsis truncate w-52">{recipe.title}</h1>
 
 				<h1>{recipe.author}</h1>
 
-				<div class="flex flex-row justify-center">
+				<div class="flex flex-row">
 					{#each categories as category}
 						<span class="badge badge-primary font-bold my-2 mr-2">{category}</span>
 					{/each}
