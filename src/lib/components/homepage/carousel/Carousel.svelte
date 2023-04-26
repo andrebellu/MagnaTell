@@ -59,8 +59,8 @@
 
 <div class="carousel carousel-center px-4 py-2 space-x-4">
 	{#each $featuredRecipes as recipe}
-		{#if recipe.rating > 3}
+		
 			<CardCarousel {recipe} {totalAverage} />
-		{/if}
+		
 	{/each}
 </div>
