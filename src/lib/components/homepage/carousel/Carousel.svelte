@@ -58,9 +58,8 @@
 </script>
 
 <div class="carousel carousel-center px-4 py-2 space-x-4">
-	{#each $featuredRecipes as recipe}
+	{#each $recipes as recipe}
 		
 			<CardCarousel {recipe} {totalAverage} />
-		
 	{/each}
 </div>
