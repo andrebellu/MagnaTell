@@ -54,18 +54,23 @@
 	let success = false;
 
 	onMount(async () => {
-		categories.set([]);
+		if ($categories.length == 0) {
+			categories.set([]);
 
-		const categoriesQuery = await getDocs(collection(db, 'categories'));
-		categoriesQuery.forEach((doc) => {
-			categories.update((categories) => [
-				...categories,
-				{
-					id: doc.id,
-					name: doc.data().name
-				}
-			]);
-		});
+			const categoriesQuery = await getDocs(collection(db, 'categories'));
+			categoriesQuery.forEach((doc) => {
+				categories.update((categories) => [
+					...categories,
+					{
+						id: doc.id,
+						name: doc.data().name,
+						icon: doc.data().icon
+					}
+				]);
+			});
+		} else {
+			return;
+		}
 
 		user = JSON.parse(
 			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')

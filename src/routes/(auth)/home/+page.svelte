@@ -19,31 +19,53 @@
 	let profile = ''
 
 	onMount(async () => {
-		recipes.set([]);
+		if ($recipes.length == 0) {
+			recipes.set([]);
 
-		const querySnapshot = await getDocs(collection(db, 'recipes'));
-		for (let i = 0; i < querySnapshot.docs.length; i++) {
-			try {
-				if (querySnapshot.docs[i].data().hasCover) {
-					await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
-						(url) => {
-							cover = url;
-						}
-					);
-				} else {
+			const querySnapshot = await getDocs(collection(db, 'recipes'));
+			for (let i = 0; i < querySnapshot.docs.length; i++) {
+				try {
+					if (querySnapshot.docs[i].data().hasCover) {
+						await getDownloadURL(ref(storage, 'recipes-covers/' + querySnapshot.docs[i].id)).then(
+							(url) => {
+								cover = url;
+							}
+						);
+					} else {
+						cover = '/no-image.jpg';
+					};
+				} catch {
 					cover = '/no-image.jpg';
 				}
-			} catch {
-				cover = '/no-image.jpg';
+				recipes.update((recipes) => [
+					...recipes,
+					{
+						id: querySnapshot.docs[i].id,
+						data: querySnapshot.docs[i].data(),
+						cover
+					}
+				]);
 			}
-			recipes.update((recipes) => [
-				...recipes,
-				{
-					id: querySnapshot.docs[i].id,
-					data: querySnapshot.docs[i].data(),
-					cover
-				}
-			]);
+		} else {
+			return;
+		}
+
+		if ($categories.length == 0) {
+			categories.set([]);
+
+			const categoriesQuery = await getDocs(collection(db, 'categories'));
+			categoriesQuery.forEach((doc) => {
+				categories.update((categories) => [
+					...categories,
+					{
+						id: doc.id,
+						name: doc.data().name,
+						icon: doc.data().icon
+					}
+				]);
+			});
+		} else {
+			return;
 		}
 	});
 </script>
