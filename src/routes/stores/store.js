@@ -19,6 +19,8 @@ export const mySavedRecipes = writable([]);
 
 export const active = writable();
 
+export const featuredRecipes = writable([]);
+
 export const myRecipesHandlers = {
     addRecipe: async (recipe) => {
         recipes.update((recipes) => {
