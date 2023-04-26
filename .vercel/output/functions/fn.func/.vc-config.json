@@ -1,0 +1,6 @@
+{
+	"runtime": "nodejs16.x",
+	"handler": "..\\..\\..\\..\\..\\..\\..\\..\\Users\\fabio\\OneDrive\\Desktop\\Monnezza2\\Svelte\\MagnaTell\\.svelte-kit\\vercel-tmp\\index.js",
+	"launcherType": "Nodejs",
+	"experimentalResponseStreaming": true
+}
