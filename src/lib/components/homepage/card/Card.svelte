@@ -65,7 +65,7 @@
 {#if profile == true}
 	<label
 		for="remove"
-		class="trash p-1 text-red-700 flex items-center justify-center absolute z-50 left-28 right-1 top-36"
+		class="trash ml-5 p-1 text-red-700 flex items-center justify-center absolute z-50 left-28 right-1 top-36"
 	>
 		<Trash size={24} />
 	</label>
