@@ -39,6 +39,7 @@
 	let deleteButton;
 
 	let bg_color = 'primary';
+	let starColor = 'secondary';
 
 	let savedRecipesId = [];
 
@@ -228,7 +229,7 @@
 				<div class="flex flex-wrap flex-row justify-center">
 					{#each $myRecipes as recipe}
 						<div class="card p-2">
-							<Card {recipe} {bg_color} {totalAverage} {profile} />
+							<Card {recipe} {bg_color} {starColor} {totalAverage} {profile} />
 						</div>
 					{/each}
 				</div>
@@ -243,7 +244,7 @@
 					<div class="flex flex-wrap flex-row justify-center">
 						{#each $mySavedRecipes as recipe}
 							<div class="card p-2">
-								<Card {recipe} {bg_color} {totalAverage}/>
+								<Card {recipe} {bg_color} {starColor} {totalAverage}/>
 							</div>
 						{/each}
 					</div>

@@ -13,6 +13,7 @@
 	let wheightedRating = 0;
 	let minVotes = 3;
 	export let bg_color;
+	export let starColor;
 	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
 		if (snapshot.val()) {
 			grade = 0;
@@ -104,7 +105,7 @@
 				</p>
 				<div class="flex flex-row text-xs font-poppins font-normal items-center">
 					{wheightedRating}
-					<div class="text-xs text-yellow-500"><Star weight="fill" /></div>
+					<div class="text-xs text-{starColor}"><Star weight="fill" /></div>
 				</div>
 			</div>
 		</div>

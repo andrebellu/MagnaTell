@@ -12,6 +12,7 @@
 	let profile = ''
 
 	export let bg_color;
+	export let starColor;
 
 	onValue(ref(realDB, 'recipes-grade/'), (snapshot) => {
 		if (snapshot.val()) {
@@ -34,7 +35,7 @@
 		<div class="pl-2 flex flex-col gap-4 md:flex-row">
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 == 0}
-					<Card {recipe} {totalAverage} {bg_color} {profile}/>
+					<Card {recipe} {totalAverage} {bg_color} {starColor} {profile}/>
 				{/if}
 			{/each}
 		</div>
@@ -43,7 +44,7 @@
 			<Filters />
 			{#each $recipes as recipe}
 				{#if $recipes.indexOf(recipe) % 2 != 0}
-					<Card {recipe} {totalAverage} {bg_color} {profile}/>
+					<Card {recipe} {totalAverage} {bg_color} {starColor} {profile}/>
 				{/if}
 			{/each}
 		</div>

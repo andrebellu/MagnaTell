@@ -15,6 +15,7 @@
 
 	let cover;
 	let bg_color = 'accent';
+	let starColor = 'yellow-500';
 	let profile = ''
 
 	onMount(async () => {
@@ -62,6 +63,6 @@
 		{:else}
 			<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
 		{/if}
-		<Cards {bg_color}/>
+		<Cards {bg_color} {starColor}/>
 	</div>
 </div>
