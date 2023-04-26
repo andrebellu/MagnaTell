@@ -7,7 +7,7 @@
 
 	let grade = 0;
 	let wheightedRating = 0;
-	let minVotes = 1;
+	let minVotes = 3;
 
 	onValue(ref(realDB, 'recipes-grade/' + recipe.id), (snapshot) => {
 		if (snapshot.val()) {
