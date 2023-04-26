@@ -178,8 +178,6 @@
 		'badge-primary',
 		'badge-secondary',
 		'badge-accent',
-		'badge-success',
-		'badge-info',
 		'badge-warning',
 		'badge-error',
 		'badge-neutral'
@@ -272,7 +270,7 @@
 	<div class="modal-box relative">
 		<label for="categories" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<!-- categories to display -->
-		<h1 class="font-bold text-2xl font-cormorant">Categories</h1>
+		<h1 class="font-bold text-2xl font-cormorant mb-2">Categories</h1>
 		<div class="badges flex flex-row flex-wrap gap-x-2 gap-y-1">
 			{#if $category.length === 0}
 				<p class="text-gray-400">No categories selected</p>
