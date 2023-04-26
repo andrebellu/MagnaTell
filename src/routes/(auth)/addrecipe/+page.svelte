@@ -302,23 +302,28 @@
 
 		<div class="btns flex gap-x-2 my-2">
 			<div
-				class="easy btn text-green-600 font-bold"
-				on:click={() => handleDifficulty('easy')}
+				class="easy btn text-green-600 font-bold [&.active]:border-secondary"
+				on:click={() => {
+					handleDifficulty('easy')
+					}}
 				on:keyup
+				class:active={difficulty == 'easy'}
 			>
 				Easy
 			</div>
 			<div
-				class="medium btn text-yellow-600 font-bold"
+				class="medium btn text-yellow-600 font-bold [&.active]:border-secondary"
 				on:click={() => handleDifficulty('medium')}
 				on:keyup
+				class:active={difficulty == 'medium'}
 			>
 				Medium
 			</div>
 			<div
-				class="hard btn text-red-600 font-bold"
+				class="hard btn text-red-600 font-bold [&.active]:border-secondary"
 				on:click={() => handleDifficulty('hard')}
 				on:keyup
+				class:active={difficulty == 'hard'}
 			>
 				Hard
 			</div>
