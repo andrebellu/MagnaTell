@@ -1,1 +1,0 @@
-<h1>Old home page</h1>
