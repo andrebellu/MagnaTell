@@ -224,6 +224,7 @@
 
 		<div class="pt-5 pb-20">
 			{#if page == 'recipes'}
+			{#if $myRecipes.length > 0}
 				<div class="flex flex-wrap flex-row justify-center">
 					{#each $myRecipes as recipe}
 						<div class="card p-2">
@@ -231,6 +232,12 @@
 						</div>
 					{/each}
 				</div>
+			{:else}
+				<div class="flex flex-col items-center justify-center">
+					<p class="text-2xl font-bold">You have no recipes</p>
+					<p class="text-xl">Go to the recipes page and add some!</p>
+				</div>
+			{/if}
 			{:else if page == 'favorites'}
 				{#if $mySavedRecipes.length > 0}
 					<div class="flex flex-wrap flex-row justify-center">

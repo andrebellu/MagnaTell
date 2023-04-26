@@ -39,7 +39,7 @@
 
 	let steps = '';
 	let nsteps = 1;
-	let stepsarray = [];
+	$: stepsarray = [];
 
 	let portions = '';
 	let hasCover = false;
@@ -178,8 +178,6 @@
 		'badge-primary',
 		'badge-secondary',
 		'badge-accent',
-		'badge-success',
-		'badge-info',
 		'badge-warning',
 		'badge-error',
 		'badge-neutral'
@@ -223,8 +221,9 @@
 
 	const addStep = () => {
 		nsteps++;
-		stepsarray.push(steps);
+		stepsarray = [...stepsarray, steps];
 		steps = '';
+		console.log(stepsarray);
 	};
 
 	function handleDifficulty(e) {
@@ -237,10 +236,31 @@
 <div class="modal">
 	<div class="modal-box relative">
 		<label for="steps" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-		<h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
-		{#each stepsarray as step}
-			<p class="text-gray-400">{step}</p>
-		{/each}
+		<h3 class="text-3xl font-bold mb-2">Steps</h3>
+		{#if stepsarray.length === 0}
+			<p class="text-gray-400">No steps added</p>
+		{:else}
+			{#each stepsarray as step, i}
+				<div class="flex flex-row items-start bg-accent relative p-2 rounded-xl my-1">
+					<label
+						for="deleteStep"
+						class="btn btn-sm btn-circle text-base-100 bg-transparent border-transparent absolute right-2 top-2 active:bg-transparent hover:bg-transparent"
+						on:click={() => {
+							stepsarray = stepsarray.filter((item) => item !== step);
+							nsteps--;
+						}}
+						on:keyup
+					>
+						✕
+					</label>
+
+					<div class="bg-secondary rounded-full h-8 aspect-square text-white text-center p-1 mr-2">
+						{i + 1}.
+					</div>
+					<p class="break-all mb-2 mr-8">{step}</p>
+				</div>
+			{/each}
+		{/if}
 	</div>
 </div>
 
@@ -250,7 +270,7 @@
 	<div class="modal-box relative">
 		<label for="categories" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 		<!-- categories to display -->
-		<h1 class="font-bold text-2xl font-cormorant">Categories</h1>
+		<h1 class="font-bold text-2xl font-cormorant mb-2">Categories</h1>
 		<div class="badges flex flex-row flex-wrap gap-x-2 gap-y-1">
 			{#if $category.length === 0}
 				<p class="text-gray-400">No categories selected</p>
@@ -304,8 +324,8 @@
 			<div
 				class="easy btn text-green-600 font-bold [&.active]:border-secondary"
 				on:click={() => {
-					handleDifficulty('easy')
-					}}
+					handleDifficulty('easy');
+				}}
 				on:keyup
 				class:active={difficulty == 'easy'}
 			>
