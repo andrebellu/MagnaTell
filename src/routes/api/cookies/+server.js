@@ -6,6 +6,8 @@ const maxAge = 60 * 60 * 24 * 90; // 90 days
 const secure = dev ? "" : "Secure;";
 let idToken, remember;
 
+// to implemented: delete all cookies, save only uid
+
 export const POST = async (event) => {
     await event.request.json().then((data) => {
         idToken = data.idToken;

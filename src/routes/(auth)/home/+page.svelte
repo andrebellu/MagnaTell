@@ -13,21 +13,34 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
-	import { signInWithCustomToken } from 'firebase/auth';
+	import { getIdToken } from 'firebase/auth';
+
 	import { auth } from '$lib/firebase/firebase.client';
 
-	export let data
+	let user;
 
 	let cover;
 	let bg_color = 'accent';
 	let starColor = 'yellow-500';
-	let profile = ''
+	let profile = '';
+
+	auth.onAuthStateChanged(() => {
+		if (auth) {
+			try {
+				const token = getIdToken(auth.currentUser, true)
+					.then((token) => {
+						console.log('the best token: ' + token);
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+		}
+	});
 
 	onMount(async () => {
-		if (data.idToken){
-			//await signInWithCustomToken(auth, data.customToken)
-			console.log(data.idToken)
-		}
 		if ($recipes.length == 0) {
 			recipes.set([]);
 
@@ -42,7 +55,7 @@
 						);
 					} else {
 						cover = '/no-image.jpg';
-					};
+					}
 				} catch {
 					cover = '/no-image.jpg';
 				}
@@ -94,6 +107,6 @@
 		{:else}
 			<h1 class="text-3xl font-cormorant font-bold py-4">Recommended</h1>
 		{/if}
-		<Cards {bg_color} {starColor}/>
+		<Cards {bg_color} {starColor} />
 	</div>
 </div>

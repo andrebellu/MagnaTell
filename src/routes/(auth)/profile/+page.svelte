@@ -18,6 +18,8 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
+	import { getIdToken } from 'firebase/auth';
+
 	import {
 		ForkKnife,
 		BookmarkSimple,
@@ -31,6 +33,25 @@
 	import Card from '../../../lib/components/homepage/card/Card.svelte';
 
 	let user;
+
+	auth.onAuthStateChanged(() => {
+		if (auth) {
+			try {
+				const token = getIdToken(auth.currentUser, true)
+					.then((token) => {
+						console.log('the best token: ' + token);
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+			user = auth.currentUser
+		}
+	});
+
+	
 	let cover;
 	let page = 'recipes';
 	let totalAverage = 0;
