@@ -13,12 +13,21 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
+	import { signInWithCustomToken } from 'firebase/auth';
+	import { auth } from '$lib/firebase/firebase.client';
+
+	export let data
+
 	let cover;
 	let bg_color = 'accent';
 	let starColor = 'yellow-500';
 	let profile = ''
 
 	onMount(async () => {
+		if (data.idToken){
+			//await signInWithCustomToken(auth, data.customToken)
+			console.log(data.idToken)
+		}
 		if ($recipes.length == 0) {
 			recipes.set([]);
 

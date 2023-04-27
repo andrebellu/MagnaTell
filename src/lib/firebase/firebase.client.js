@@ -44,4 +44,4 @@ export const auth = getAuth(firebaseApp)
 export const storage = getStorage(firebaseApp)
 export const realDB = getDatabase(firebaseApp);
 
-setPersistence(auth, browserSessionPersistence)
+setPersistence(auth, browserLocalPersistence)

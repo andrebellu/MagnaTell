@@ -9,24 +9,25 @@ let idToken, remember;
 export const POST = async (event) => {
     await event.request.json().then((data) => {
         idToken = data.idToken;
-        remember = false
+        remember = data.remember;
     })
     try {
-        const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
+        //const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
         const uid = await admin.auth().verifyIdToken(idToken).then((decodedToken) => { return decodedToken.uid });
+        const customToken = await admin.auth().createCustomToken(uid);
         if (remember == true) {
-            return new Response(JSON.stringify({ sessionCookie }), {
+            return new Response(JSON.stringify(), {
                 status: 200,
                 headers: {
-                    "Set-Cookie": `uid=${uid}; Max-Age=${maxAge}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , idToken=${sessionCookie}; Max-Age=${maxAge}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
+                    "Set-Cookie": `customToken=${customToken}; Max-Age=${maxAge}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , idToken=${idToken}; Max-Age=${maxAge}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , uid=${uid}; Max-Age=${maxAge}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
                 }
             })
         } else {
 
-            return new Response(JSON.stringify({ sessionCookie }), {
+            return new Response(JSON.stringify(), {
                 status: 200,
                 headers: {
-                    "Set-Cookie": `uid=${uid}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , idToken=${sessionCookie}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
+                    "Set-Cookie": `customToken=${customToken}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , uid=${uid}; HttpOnly; Path=/; ${secure}; SameSite=Strict; , idToken=${idToken}; HttpOnly; Path=/; ${secure}; SameSite=Strict;`
                 }
             })
         }

@@ -4,6 +4,9 @@
 	import { fade, slide } from 'svelte/transition';
 	import Eye from 'phosphor-svelte/lib/Eye';
 	import EyeSlash from 'phosphor-svelte/lib/EyeSlash';
+	import { onMount } from 'svelte';
+	import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from 'firebase/auth';
+	import { auth } from '$lib/firebase/firebase.client';
 
 	let email = '';
 	let password = '';
