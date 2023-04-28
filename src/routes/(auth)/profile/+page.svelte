@@ -191,9 +191,9 @@
 {#if user}
 	<div class="flex justify-items-stretch pl-8 pt-5 pb-10">
 		{#if user.photoURL}
-			<img src={user.photoURL} alt="Profile pic" class="w-24 h-24 rounded-full" />
+			<img src={user.photoURL} alt="Profile pic" class="w-24 h-24 rounded-full object-cover" />
 		{:else}
-			<img src={defaultAvatar} alt="Profile pic" class="w-24 h-24 rounded-full" />
+			<img src={defaultAvatar} alt="Profile pic" class="w-24 h-24 rounded-full object-cover" />
 		{/if}
 		<div class="self-center justify-self-start pl-5">
 			<p class="italic font-inter">Chef</p>
@@ -308,7 +308,18 @@
 					{/if}
 
 					<div class="profile-picture flex items-center gap-x-1 mt-2">
-						<p>Profile picture</p>
+						{#if user.photoURL}<img
+								src={user.photoURL}
+								alt="Profile pic"
+								class="w-16 h-16 rounded-full object-cover"
+							/>
+						{:else}
+							<img
+								src={defaultAvatar}
+								alt="Profile pic"
+								class="w-16 h-16 rounded-full object-cover"
+							/>
+						{/if}
 						<input
 							type="file"
 							id="profilePicture"
@@ -318,8 +329,8 @@
 						/>
 						<button
 							on:click={() => document.getElementById('profilePicture').click()}
-							class="bg-primary p-2 text-white normal-case rounded-full"
-							><Pencil size={10} class="text-white" /></button
+							class="btn bg-primary p-2 text-white border-0 normal-case rounded-full"
+							>Change profile picture</button
 						>
 					</div>
 
