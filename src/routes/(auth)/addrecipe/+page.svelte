@@ -11,7 +11,6 @@
 
 	import { authHandlers } from '../../stores/authStore.js';
 
-	import CardPreview from '../../../lib/components/homepage/card/CardPreview.svelte';
 	import {
 		Lightbulb,
 		ChartBar,
@@ -214,10 +213,16 @@
 
 	const handleFileSelect = (e) => {
 		cover = e.target.files[0];
+
 		if (cover) {
 			let reader = new FileReader();
 			reader.onload = (e) => {
 				cover = e.target.result;
+
+				fetch('/api/nsfw', {
+					method: 'POST',
+					body: JSON.stringify({ image: cover })
+				});
 			};
 			reader.readAsDataURL(cover);
 			hasCover = true;
