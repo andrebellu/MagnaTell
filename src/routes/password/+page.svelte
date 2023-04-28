@@ -12,7 +12,7 @@
 
 <h1 class="text-5xl font-loftygoals pt-12 text-center">M</h1>
 
-<div class="flex justify-center px-6 my-6">
+<div class="flex justify-center items-center px-6 my-6">
 	<div class="w-full xl:w-3/4 lg:w-11/12 flex">
 		<div
 			class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg bg-center"
