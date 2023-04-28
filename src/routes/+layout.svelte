@@ -18,13 +18,13 @@
 </script>
 
 <div class="grid grid-rows-[5rem_auto_4rem] grid-cols-1">
-	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup' && $page.url.pathname !== '/profile'}
+	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup' && $page.url.pathname !== '/profile' && $page.url.pathname !== '/password'}
 		<div class="nav"><Navbar /></div>
 	{/if}
 
 	<div><slot /></div>
 
-	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup'}
+	{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup' && $page.url.pathname !== '/password'}
 		<div class="fixed bottom-0 z-50"><Footer {photoURL} /></div>
 	{/if}
 </div>

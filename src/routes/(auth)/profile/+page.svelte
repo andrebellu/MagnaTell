@@ -335,7 +335,7 @@
 					</div>
 
 					<div class="warning-zone flex flex-col justify-center items-center gap-2 mt-5">
-						<Warning weight="fill" size={30} class="" />
+						<Warning weight="fill" size={48} class="" />
 
 						<h1 class="text-3xl font-cormorant font-bold">Warning zone</h1>
 						<p>Delete profile</p>

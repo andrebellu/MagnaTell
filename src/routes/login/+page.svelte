@@ -54,9 +54,9 @@
 							type="email"
 							autocomplete="email"
 							required
-							class="relative block w-full appearance-none rounded-none 
+							class="relative block w-full appearance-none rounded-none
 							rounded-t-md border border-neutral px-3 py-2
-							placeholder-accent focus:z-10 focus:border-secondary focus:outline-none 
+							placeholder-accent focus:z-10 focus:border-secondary focus:outline-none
 							focus:ring-secondary sm:text-sm"
 							placeholder="Email address"
 							bind:value={email}
@@ -70,9 +70,9 @@
 							{type}
 							autocomplete="current-password"
 							required
-							class="relative block w-full appearance-none rounded-none 
+							class="relative block w-full appearance-none rounded-none
 							rounded-b-md border border-neutral px-3 py-2
-							placeholder-accent focus:z-10 focus:border-secondary focus:outline-none 
+							placeholder-accent focus:z-10 focus:border-secondary focus:outline-none
 							focus:ring-secondary sm:text-sm"
 							placeholder="Password"
 							on:input={(e) => (password = e.target.value)}
@@ -94,7 +94,13 @@
 
 				<div class="flex items-center justify-between">
 					<div class="flex items-center">
-						<input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded" bind:checked={remember}/>
+						<input
+							id="remember-me"
+							name="remember-me"
+							type="checkbox"
+							class="h-4 w-4 rounded"
+							bind:checked={remember}
+						/>
 						<label for="remember-me" class="ml-2 block text-sm">Remember me</label>
 					</div>
 
@@ -105,7 +111,7 @@
 
 				<div>
 					<button
-						class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary 
+						class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary
 						py-2 px-4 text-sm font-medium text-base-100 hover:bg-base-100 hover:text-primary hover:border-primary transition duration-300 ease-in-out"
 						on:click={login}
 					>
@@ -127,19 +133,14 @@
 						Sign in
 					</button>
 				</div>
+			</div>
 		</form>
 		<div class="btns width-full flex justify-center mt-4">
 			<button
 				class="btn btn-ghost flex items-center justify-center align-middle border border-secondary hover:bg-primary hover:text-base-100 hover:border-invisible"
 				on:click={loginGoogle}
 			>
-				<img
-					src="/google.svg"
-					class="rounded-full p-1 mr-4"
-					alt="Google"
-					width="32"
-					height="32"
-				/>
+				<img src="/google.svg" class="rounded-full p-1 mr-4" alt="Google" width="32" height="32" />
 				<p>Login</p>
 			</button>
 		</div>

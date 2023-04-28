@@ -103,12 +103,12 @@ export const authHandlers = {
 	},
 
 	deleteAccount: async () => {
-		await deleteDoc(doc(db, 'users', auth.currentUser.uid))	
+		await deleteDoc(doc(db, 'users', auth.currentUser.uid))
 			.catch((error) => {
 				console.log(error);
 			});
 
-			await deleteUser(auth.currentUser)
+		await deleteUser(auth.currentUser)
 			.then(() => {
 				alert('Account deleted');
 				goto('/login');
@@ -129,7 +129,7 @@ export const authHandlers = {
 		let recKeys = [];
 
 		get(refReal(realDB, 'recipes-grade/')).then((snapshot) => {
-			if(snapshot.exists()){
+			if (snapshot.exists()) {
 				recKeys = Object.keys(snapshot.val());
 			}
 			recKeys.forEach((key) => {
