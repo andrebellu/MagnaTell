@@ -17,6 +17,8 @@
 
 	import { auth } from '$lib/firebase/firebase.client';
 
+	import { request } from '$lib/firebase/fetch';
+
 	let user;
 
 	let cover;
@@ -25,11 +27,12 @@
 	let profile = '';
 
 	auth.onAuthStateChanged(() => {
-		if (auth) {
+		if (auth.currentUser) {
 			try {
-				const token = getIdToken(auth.currentUser, true)
+				getIdToken(auth.currentUser, true)
 					.then((token) => {
-						console.log('the best token: ' + token);
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
 					})
 					.catch((error) => {
 						console.log('error: ', error);

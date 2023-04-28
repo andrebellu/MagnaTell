@@ -5,7 +5,7 @@
     let gradeRead = 0;
     let average = 0;
     let recipeId = ''
-    const uid = JSON.parse(sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')).uid;
+    const uid = JSON.parse(sessionStorage.getItem('user')).uid;
     let gradeWithTime = {grade: 0, time: 0}
 
     page.subscribe(() => {

@@ -22,10 +22,6 @@ export const authHandlers = {
 					alert('The email or password is incorrect');
 				}
 			});
-
-		const idToken = userCredential._tokenResponse.idToken;
-		const refreshToken = userCredential._tokenResponse.refreshToken;
-		await request('/api/cookies', "POST", { idToken, remember, refreshToken });
 	},
 
 	signup: async (email, password, username) => {
@@ -44,10 +40,6 @@ export const authHandlers = {
 		await updateProfile(userRecord.user, {
 			displayName: username
 		});
-
-		const idToken = await getIdToken(userRecord.user, true);
-		const refreshToken = userRecord._tokenResponse.refreshToken;
-		await request('/api/cookies', "POST", { idToken });
 
 		sendEmailVerification(userRecord.user)
 			.then(() => {
@@ -68,11 +60,6 @@ export const authHandlers = {
 			.catch((error) => {
 				console.log(error.customData);
 			});
-
-		const idToken = userGoogle._tokenResponse.idToken;
-		const refreshToken = userGoogle._tokenResponse.refreshToken;
-		const remember = true;
-		await request('/api/cookies', "POST", { idToken, remember, refreshToken });
 
 		const q = query(collection(db, 'users'), where(documentId(), '==', auth.currentUser.uid));
 		let querySnapshot = await getDocs(q);

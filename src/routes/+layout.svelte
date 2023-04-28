@@ -6,14 +6,27 @@
 	import { onMount } from 'svelte';
 	import { auth } from '$lib/firebase/firebase.client';
 	import { browserSessionPersistence, setPersistence } from 'firebase/auth';
+	import { getIdToken } from 'firebase/auth';
+	import { request } from '$lib/firebase/fetch';
 
 	let photoURL = '';
-	let u;
 
-	onMount(() => {
-		auth.onAuthStateChanged((user) => {
-			photoURL = user.photoURL;
-		});
+	auth.onAuthStateChanged(() => {
+		if (auth.currentUser) {
+			try {
+				getIdToken(auth.currentUser, true)
+					.then((token) => {
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+			photoURL = auth.currentUser.photoURL;
+		}
 	});
 </script>
 

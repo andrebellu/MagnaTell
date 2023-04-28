@@ -32,14 +32,14 @@
 	} from 'phosphor-svelte';
 	import Card from '../../../lib/components/homepage/card/Card.svelte';
 
-	let user;
-
+	import { request } from '$lib/firebase/fetch';
 	auth.onAuthStateChanged(() => {
-		if (auth) {
+		if (auth.currentUser) {
 			try {
-				const token = getIdToken(auth.currentUser, true)
+				getIdToken(auth.currentUser, true)
 					.then((token) => {
-						console.log('the best token: ' + token);
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
 					})
 					.catch((error) => {
 						console.log('error: ', error);
@@ -47,11 +47,10 @@
 			} catch (error) {
 				console.log('error 2: ', error);
 			}
-			user = auth.currentUser
 		}
 	});
 
-	
+	let user;	
 	let cover;
 	let page = 'recipes';
 	let totalAverage = 0;
@@ -78,7 +77,7 @@
 		savedRecipesId = [];
 
 		user = JSON.parse(
-			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+			sessionStorage.getItem('user')
 		);
 
 		const q = query(collection(db, 'recipes'), where('uid', '==', user.uid));

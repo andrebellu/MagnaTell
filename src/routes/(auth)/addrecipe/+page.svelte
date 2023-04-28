@@ -22,6 +22,26 @@
 		SmileyWink
 	} from 'phosphor-svelte/lib';
 
+	import { auth } from '$lib/firebase/firebase.client';
+	import { getIdToken } from 'firebase/auth';
+	import { request } from '$lib/firebase/fetch';
+	auth.onAuthStateChanged(() => {
+		if (auth.currentUser) {
+			try {
+				getIdToken(auth.currentUser, true)
+					.then((token) => {
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+		}
+	});
+
 	$: $title_store = title;
 	$: $difficulty_store = difficulty;
 
@@ -73,7 +93,7 @@
 		}
 
 		user = JSON.parse(
-			sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT')
+			sessionStorage.getItem('user')
 		);
 	});
 

@@ -14,6 +14,25 @@
 
 	import { getDocs, query, collection, where, documentId, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 
+	import { getIdToken } from 'firebase/auth';
+	import { request } from '$lib/firebase/fetch';
+	auth.onAuthStateChanged(() => {
+		if (auth.currentUser) {
+			try {
+				getIdToken(auth.currentUser, true)
+					.then((token) => {
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+		}
+	});
+
 	const recipeId = $page.params.recipeId;
 	let recipe = {};
 	let ingredients = [];
@@ -29,7 +48,7 @@
 	onMount(async () => {
 		savedRecipesId = [];
 
-		user = JSON.parse(sessionStorage.getItem('firebase:authUser:AIzaSyDQyGYOMtngwRrN8tpd94ZCgLdH81CdO2o:CLIENT'));
+		user = JSON.parse(sessionStorage.getItem('user'));
 
 		const querySnapshot = await getDoc(doc(db, 'recipes', recipeId));
 		recipe = querySnapshot.data();

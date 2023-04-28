@@ -13,6 +13,26 @@
 	import { storage } from '$lib/firebase/firebase.client';
 	import { ref, getDownloadURL } from 'firebase/storage';
 
+	import { auth } from '$lib/firebase/firebase.client';
+	import { getIdToken } from 'firebase/auth';
+	import { request } from '$lib/firebase/fetch';
+	auth.onAuthStateChanged(() => {
+		if (auth.currentUser) {
+			try {
+				getIdToken(auth.currentUser, true)
+					.then((token) => {
+						request ('api/cookies', "POST", { token })
+						sessionStorage.setItem('user', JSON.stringify(auth.currentUser));
+					})
+					.catch((error) => {
+						console.log('error: ', error);
+					});
+			} catch (error) {
+				console.log('error 2: ', error);
+			}
+		}
+	});
+
 	let search;
 	let cover;
 	let bg_color = 'accent';
