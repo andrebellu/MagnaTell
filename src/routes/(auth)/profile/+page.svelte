@@ -7,16 +7,13 @@
 
 	import { myRecipes } from '../../stores/store';
 
-	import Cards from '../../../lib/components/homepage/cards/Cards.svelte';
-
 	import { collection, query, where, getDocs, documentId } from 'firebase/firestore';
-	import { db } from '$lib/firebase/firebase.client';
 
-	import { ProviderId, sendEmailVerification } from 'firebase/auth';
+	import { ProviderId, sendEmailVerification, updateProfile } from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client';
 
-	import { storage } from '$lib/firebase/firebase.client';
-	import { ref, getDownloadURL } from 'firebase/storage';
+	import { db, storage } from '$lib/firebase/firebase.client';
+	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 	import {
 		ForkKnife,
@@ -44,6 +41,8 @@
 	let savedRecipesId = [];
 
 	let profile = true;
+
+	let profilePic;
 
 	$: if (confirmDelete === 'CONFIRM') {
 		deleteButton = '';
@@ -138,6 +137,24 @@
 		await authHandlers.deleteUserRecipes(user);
 		await authHandlers.deleteAccount();
 	}
+
+	const changeProfilePicture = async (e) => {
+		const file = e.target.files[0];
+		const storageRef = ref(storage, 'users/' + user.uid + '/profile-picture');
+
+		await uploadBytes(storageRef, file);
+
+		const url = await getDownloadURL(storageRef);
+		await updateProfile(auth.currentUser, {
+			photoURL: url
+		})
+			.then(() => {
+				console.log('Profile picture updated');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 </script>
 
 <input type="checkbox" id="deleteAccountModal" class="modal-toggle" />
@@ -225,26 +242,26 @@
 
 		<div class="pt-5 pb-20">
 			{#if page == 'recipes'}
-			{#if $myRecipes.length > 0}
-				<div class="flex flex-wrap flex-row justify-center">
-					{#each $myRecipes as recipe}
-						<div class="card p-2">
-							<Card {recipe} {bg_color} {starColor} {totalAverage} {profile} />
-						</div>
-					{/each}
-				</div>
-			{:else}
-				<div class="flex flex-col items-center justify-center">
-					<p class="text-2xl font-bold">You have no recipes</p>
-					<p class="text-xl">Go to the recipes page and add some!</p>
-				</div>
-			{/if}
+				{#if $myRecipes.length > 0}
+					<div class="flex flex-wrap flex-row justify-center">
+						{#each $myRecipes as recipe}
+							<div class="card p-2">
+								<Card {recipe} {bg_color} {starColor} {totalAverage} {profile} />
+							</div>
+						{/each}
+					</div>
+				{:else}
+					<div class="flex flex-col items-center justify-center">
+						<p class="text-2xl font-bold">You have no recipes</p>
+						<p class="text-xl">Go to the recipes page and add some!</p>
+					</div>
+				{/if}
 			{:else if page == 'favorites'}
 				{#if $mySavedRecipes.length > 0}
 					<div class="flex flex-wrap flex-row justify-center">
 						{#each $mySavedRecipes as recipe}
 							<div class="card p-2">
-								<Card {recipe} {bg_color} {starColor} {totalAverage}/>
+								<Card {recipe} {bg_color} {starColor} {totalAverage} />
 							</div>
 						{/each}
 					</div>
@@ -289,6 +306,23 @@
 							<p id="email" class="font-extrabold">**********</p>
 						</div>
 					{/if}
+
+					<div class="profile-picture flex items-center gap-x-1 mt-2">
+						<p>Profile picture</p>
+						<input
+							type="file"
+							id="profilePicture"
+							class="hidden"
+							bind:value={profilePic}
+							on:change={changeProfilePicture}
+						/>
+						<button
+							on:click={() => document.getElementById('profilePicture').click()}
+							class="bg-primary p-2 text-white normal-case rounded-full"
+							><Pencil size={10} class="text-white" /></button
+						>
+					</div>
+
 					<div class="warning-zone flex flex-col justify-center items-center gap-2 mt-5">
 						<Warning weight="fill" size={30} class="" />
 
@@ -307,83 +341,6 @@
 			{/if}
 		</div>
 	</div>
-	<!-- <div class="email flex justify-center flex-col">
-			<p id="email" class="py-2 rounded-md flex flex-col justify-center text-center">
-				{user.email}{user.emailVerified ? '✔' : '❌'}
-				{#if !user.emailVerified}
-					<button on:click={sendVerificationEmail} class="btn btn-accent btn-xs mt-2"
-						>Send verification email</button
-					>
-				{/if}
-			</p>
-		</div> -->
-	<!---
-		!!Change Password section!!
-		{#if user === 'password'}
-			<div class="password">
-				<p
-					class="btn btn-ghost border-gray-200"
-					on:click={changePassword}
-					on:keydown={changePassword}
-				>
-					Change password
-				</p>
-			</div>
-		{/if}
-		!!Delete account section!!
-		<button on:click={logout} class="btn btn-primary rounded-xl">Logout</button>
-
-		<label for="deleteAccountModal" class="btn btn-outline mt-4 btn-error btn-xs rounded-full"
-			>Delete account</label
-		>
-
-		!!Confirm delete modal!!
-		<input type="checkbox" id="deleteAccountModal" class="modal-toggle" />
-		<div class="modal modal-bottom sm:modal-middle">
-			<div class="modal-box">
-				<h1 class="font-bold text-xl">Are you sure you want to delete your account?</h1>
-				<p class="pt-4 font-bold text-error">
-					If you delete your account all your recipes will be deleted as well.
-				</p>
-				<p class="pb-4 font-bold underline underline-offset-2 text-error">
-					The action cannot be reversed!
-				</p>
-
-				<p class="">To delete your account type CONFIRM</p>
-				<input
-					type="text"
-					class="confirmDelete input input-bordered w-full"
-					placeholder="CONFIRM"
-					bind:value={confirmDelete}
-				/>
-
-				<div class="modal-action">
-					<label
-						for="deleteAccountModal"
-						class="deleteButton btn btn-error {deleteButton}"
-						on:click={deleteAccount}
-						on:keydown={deleteAccount}>Delete</label
-					>
-					<label for="deleteAccountModal" class="btn">Cancel</label>
-				</div>
-			</div>
-		</div>
-		-->
-	<!---
-		!!Recipes display section!!
-		{#if $myRecipes.length === 0}
-			<p class="text-2xl font-bold text-center mb-4 mt-8 font-cormorant">You have no recipes</p>
-		{:else}
-			<div class="recipes pb-4">
-				<h2 class="text-2xl font-bold text-center mb-4 mt-8 font-cormorant">My recipes</h2>
-				<div class="layout flex flex-wrap gap-4 justify-center">
-					{#each $myRecipes as recipe}
-						<Card {recipe} />
-					{/each}
-				</div>
-			</div>
-		{/if}
-		-->
 {/if}
 
 <style>
