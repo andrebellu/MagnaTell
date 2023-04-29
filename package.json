@@ -29,12 +29,9 @@
 	"dependencies": {
 		"@phosphor-icons/web": "^2.0.3",
 		"@sveltejs/adapter-vercel": "^2.0.2",
-		"@tensorflow/tfjs": "^4.4.0",
-		"@tensorflow/tfjs-node": "^4.4.0",
 		"daisyui": "^2.50.0",
 		"firebase": "^9.17.1",
 		"firebase-admin": "^11.5.0",
-		"nsfwjs": "^2.4.2",
 		"tailwind-scrollbar-hide": "^1.1.7"
 	}
 }
