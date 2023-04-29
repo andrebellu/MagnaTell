@@ -6,12 +6,16 @@ export const POST = async (event) => {
     const model = await nsfw.load();
 
     let image = event.request.body;
-    let imageBuffer = Buffer.from(String(image), 'base64');
-    let imageTensor = tf.node.decodeImage(imageBuffer, 3);
 
-    const predictions = await model.classify(imageTensor);
+    //  The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object.
 
-    return new Response(JSON.stringify(predictions), {
+    image = Buffer.from(image, 'base64');
+    image = tf.node.decodeImage(image, 3);
+
+
+    // const predictions = await model.classify(imageTensor);
+
+    return new Response(JSON.stringify(), {
         status: 200,
         headers: {
             'Content-Type': 'application/json'

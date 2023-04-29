@@ -212,17 +212,30 @@
 	};
 
 	const handleFileSelect = (e) => {
-		cover = e.target.files[0];
+		let image = new Image();
+		image.src = URL.createObjectURL(e.target.files[0]);
+
+		nsfwjs.load().then((model) => {
+			console.log('model loaded');
+			model.classify(image).then((predictions) => {
+				console.log(predictions);
+				if (
+					predictions[0].className == 'Porn' ||
+					predictions[0].className == 'Hentai' ||
+					predictions[0].className == 'Sexy'
+				) {
+					document.getElementById('nsfw').checked = true;
+					cover = '/no-image.jpg';
+				} else {
+					cover = e.target.files[0];
+				}
+			});
+		});
 
 		if (cover) {
 			let reader = new FileReader();
 			reader.onload = (e) => {
 				cover = e.target.result;
-
-				fetch('/api/nsfw', {
-					method: 'POST',
-					body: JSON.stringify({ image: cover })
-				});
 			};
 			reader.readAsDataURL(cover);
 			hasCover = true;
@@ -240,6 +253,16 @@
 		difficulty = e;
 	}
 </script>
+
+<!-- nsfw alert -->
+<input type="checkbox" id="nsfw" class="modal-toggle" />
+<div class="modal">
+	<div class="modal-box relative">
+		<label for="nsfw" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+		<h3 class="text-3xl font-bold mb-2">NSFW</h3>
+		<p class="text-gray-400">The image you uploaded is not safe for work.</p>
+	</div>
+</div>
 
 <!-- steps -->
 <input type="checkbox" id="steps" class="modal-toggle" />
@@ -473,7 +496,7 @@
 
 					<label
 						for="categories"
-						class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-r-3xl rounded-l-xl h-10"
+						class="btn btn-secondary btn-sm w-10 p-0 text-white rounded-r-3xl rounded-l-xl h-12"
 						><Eyeglasses size={16} weight="bold" /></label
 					>
 				</div>
